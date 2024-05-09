@@ -5,9 +5,11 @@
 
     import { goto } from '$app/navigation';
 
+    import { base } from '$app/paths';
+
     function onChange(e) {
         const id = e.target.value;
-        goto(`/${id}`);
+        goto(`${id}`);
     }
 </script>
 <header>
@@ -15,11 +17,11 @@
     <p>Mandatsrechner</p>
 
     <select on:change={onChange}>
-        <option value="">Anstehende Wahl auswählen</option>
-        <option value="europawahl2024">Europawahl 2024</option>
-        <option value="nationalratswahl2024" disabled>Nationalratswahl 2024</option>
-        <option value="landtagswahlVorarlberg2024" disabled>Landtagswahl Vorarlberg 2024</option>
-        <option value="landtagswahlSteiermark2024" disabled>Landtagswahl Steiermark 2024</option>
+        <option value="{base}/">Anstehende Wahl auswählen</option>
+        <option value="{base}/europawahl2024">Europawahl 2024</option>
+        <option value="{base}/nationalratswahl2024" disabled>Nationalratswahl 2024</option>
+        <option value="{base}/landtagswahlVorarlberg2024" disabled>Landtagswahl Vorarlberg 2024</option>
+        <option value="{base}/landtagswahlSteiermark2024" disabled>Landtagswahl Steiermark 2024</option>
     </select>
 </header>
 <slot></slot>
