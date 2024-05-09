@@ -67,7 +67,10 @@
                 <input id="input_party_{i}" type="number" bind:value={data.datasets[0].data[i]} min=0 max=100>
             </div>
         {/each}
-        <p>Sonstige: {others >= 0 ? others.toFixed(2) : 0}</p>
+        <div class="input_field_vote_party">
+            <p>Sonstige:</p>
+            <p>{others >= 0 ? others.toFixed(2) : 0}</p>
+        </div>
         {#if others < 0}
 	        <p>Achtung: Gesamtstimmen dürfen 100% nicht überschreiten!</p>
         {/if}
