@@ -45,11 +45,11 @@ header {
 .input_field_vote_party {
     display:flex;
     margin-bottom: 20px;
-}
 
-label {
-    width: 50px;
-    margin: auto 0;
+    label, p {
+        width: 80px;
+        margin: auto 0;
+    }
 }
 
 input {
