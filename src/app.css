@@ -67,18 +67,15 @@ input[type=number] {
 
 .mandate_section {
     display: flex;
-
-    .overview_mandates {
-        margin: auto 100px;
-
-        p {
-            font-size: large;
-        }
-    }
 }
 
 .pie_container {
     width: 40%;
+}
+
+.stack_container {
+    width: 40%;
+    margin: auto;
 }
 
 @media screen and (max-width: 768px) {
@@ -100,6 +97,10 @@ input[type=number] {
     }
 
     .pie_container {
+        width: 100%;
+    }
+
+    .stack_container {
         width: 100%;
     }
 }

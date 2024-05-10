@@ -1,6 +1,8 @@
 <script>
     import { Bar, Pie } from 'svelte-chartjs';
-    import { data, mandateData } from './data';
+    import { data, mandateData, majorityData } from './data';
+    import ChartDataLabels from 'chartjs-plugin-datalabels';
+    import annotationPlugin from 'chartjs-plugin-annotation';
   
     import {
       Chart,
@@ -18,14 +20,21 @@
       Legend,
       BarElement,
       CategoryScale,
-      LinearScale
+      LinearScale,
+      ChartDataLabels,
+      annotationPlugin
     );
 
     let mandates = [];
 
+    let others
+
     $: {
-        data.datasets[0].data = data.datasets[0].data
-        mandates = dhondt([...data.datasets[0].data], 20, 4)
+        others = 100 - data.datasets[0].data.reduce((a, b) => a + b, 0)
+        if (others >= 0) {
+            data.datasets[0].data = data.datasets[0].data
+            mandates = dhondt([...data.datasets[0].data], 20, 4)
+        }
     }
 
     function dhondt(vote_shares, mandate_count, threshold) {
@@ -53,16 +62,22 @@
         return mandates
     }
 
-    let others
-
-    $: mandateData.datasets[0].data = mandates
-    $: others = 100 - data.datasets[0].data.reduce((a, b) => a + b, 0)
+    $: {
+        mandateData.datasets[0].data = mandates
+        for (let i in mandates) {
+            majorityData.datasets[i].data = [mandates[i]]
+        }
+    }
 </script>
 
 <h1>Stimmenanteile</h1>
 <section class="vote_share_section">
     <div class="bar_container">
-        <Bar {data} options={{ responsive: true }} />
+        <Bar {data} options={{ responsive: true, plugins: {
+            datalabels: {
+                display: false
+            }
+        } }} />
     </div>
     
     <div class="input_fields_vote">
@@ -85,12 +100,46 @@
 <h1>Mandatsverteilung</h1>
 <section class="mandate_section">
     <div class="pie_container">
-        <Pie id="mandatesChart" data={mandateData} options={{ responsive: true, circumference: 180, rotation: -90 }} />
+        <Pie id="mandatesChart" data={mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
+            datalabels: {
+                anchor: 'end',
+                align: 'start',
+                color: 'white',
+                formatter: function(value) {
+                    return value > 0 ? value : ''
+                },
+                font: {
+                    weight: 'bold',
+                    size: 20,
+                }
+            }}}} />
     </div>
 
-    <div class="overview_mandates">
-        {#each mandateData.datasets[0].data as party, i}
-            <p>{data.labels[i]}: {party}</p>
-        {/each}
+    <div class="stack_container">
+        <Bar data={majorityData} options={{ responsive: true, indexAxis: 'y', scales: {y: {stacked: true}, x: {stacked: true, max: 20}}, plugins: {
+            annotation: {
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        xMin: 10,
+                        xMax: 10,
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 2,
+                    }
+                }
+            },
+            datalabels: {
+                anchor: 'center',
+                align: 'center',
+                color: 'white',
+                formatter: function(value) {
+                    return value > 0 ? value : ''
+                },
+                font: {
+                    weight: 'bold',
+                    size: 20,
+                }
+            }
+        }}} />
     </div>
 </section>
