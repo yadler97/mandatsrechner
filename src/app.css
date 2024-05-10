@@ -1,3 +1,7 @@
+html {
+    background: white;
+}
+
 p, label {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
