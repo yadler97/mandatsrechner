@@ -80,3 +80,26 @@ input[type=number] {
 .pie_container {
     width: 40%;
 }
+
+@media screen and (max-width: 768px) {
+    .vote_share_section {
+        flex-flow: column;
+    }
+
+    .bar_container {
+        width: 100%;
+    }
+
+    .input_fields_vote {
+        margin: 20px auto;
+        width: 400px;
+    }
+
+    .mandate_section {
+        flex-flow: column;
+    }
+
+    .pie_container {
+        width: 100%;
+    }
+}
