@@ -1,7 +1,3 @@
-body {
-    overflow-x: hidden;
-}
-
 p, label {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -100,7 +96,7 @@ input[type=number] {
 
     .input_fields_vote {
         margin: 20px auto;
-        width: 400px;
+        width: 100%;
     }
 
     .mandate_section {
