@@ -31,3 +31,34 @@ export const mandateData = {
       },
     ],
   };
+
+  export const majorityData = {
+    labels: ['Mandate'],
+    datasets: [
+      {
+        label: 'ÖVP',
+        data: [8],
+        backgroundColor: '#63c3d0',
+      },
+      {
+        label: 'SPÖ',
+        data: [5],
+        backgroundColor: '#E31E2D',
+      },
+      {
+        label: 'FPÖ',
+        data: [3],
+        backgroundColor: '#205CA5',
+      },
+      {
+        label: 'Grüne',
+        data: [3],
+        backgroundColor: '#51A51E',
+      },
+      {
+        label: 'NEOS',
+        data: [1],
+        backgroundColor: '#E84188',
+      },
+    ],
+  };
