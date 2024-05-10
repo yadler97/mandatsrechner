@@ -10,6 +10,7 @@ header {
 
     img {
         height: 50px;
+        margin: auto 0;
     }
 
     p {
@@ -79,6 +80,12 @@ input[type=number] {
 }
 
 @media screen and (max-width: 768px) {
+    header {
+        p {
+            display: none;
+        }
+    }
+
     .vote_share_section {
         flex-flow: column;
     }
