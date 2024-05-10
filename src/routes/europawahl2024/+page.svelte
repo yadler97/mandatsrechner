@@ -25,10 +25,10 @@
 
     $: {
         data.datasets[0].data = data.datasets[0].data
-        mandates = dhondt(data.datasets[0].data, 20)
+        mandates = dhondt([...data.datasets[0].data], 20, 4)
     }
 
-    function dhondt(vote_shares, mandate_count) {
+    function dhondt(vote_shares, mandate_count, threshold) {
         let mandates = []
         let current_divisors = []
         let current_vote_count = [...vote_shares]
@@ -36,6 +36,11 @@
         for (let i in vote_shares) {
             current_divisors.push(1)
             mandates.push(0)
+
+            if (vote_shares[i] < threshold) {
+                vote_shares[i] = 0
+                current_vote_count[i] = 0
+            }
         }
 
         for (let i = 0; i < mandate_count; i++) {
