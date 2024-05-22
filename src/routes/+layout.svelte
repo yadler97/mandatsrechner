@@ -4,8 +4,10 @@
     import logo from '../lib/assets/logo.svg';
 
     import { goto } from '$app/navigation';
-
     import { base } from '$app/paths';
+    import { page } from '$app/stores';
+
+    let path = base + $page.route.id
 
     function onChange(e) {
         const id = e.target.value;
@@ -16,7 +18,7 @@
     <img src={logo} alt="Mandatsrechner-Logo">
     <p>Mandatsrechner</p>
 
-    <select on:change={onChange}>
+    <select on:change={onChange} bind:value={path}>
         <option value="{base}/">Anstehende Wahl auswählen</option>
         <option value="{base}/europawahl2024">Europawahl 2024</option>
         <option value="{base}/nationalratswahl2024" disabled>Nationalratswahl 2024</option>
