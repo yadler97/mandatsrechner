@@ -6,8 +6,8 @@
     setContext('data', data)
     setContext('mandateData', mandateData)
     setContext('majorityData', majorityData)
-    setContext('mandateCount', 20)
-    setContext('threshold', 4)
+    setContext('mandateCount', 36)
+    setContext('threshold', 5)
 </script>
 
 <ElectionCharts />

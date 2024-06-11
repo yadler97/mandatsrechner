@@ -6,7 +6,7 @@
     setContext('data', data)
     setContext('mandateData', mandateData)
     setContext('majorityData', majorityData)
-    setContext('mandateCount', 20)
+    setContext('mandateCount', 183)
     setContext('threshold', 4)
 </script>
 
