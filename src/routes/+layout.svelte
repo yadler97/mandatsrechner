@@ -23,7 +23,8 @@
         <option value="{base}/europawahl2024">Europawahl 2024</option>
         <option value="{base}/nationalratswahl2024">Nationalratswahl 2024</option>
         <option value="{base}/landtagswahlVorarlberg2024">Landtagswahl Vorarlberg 2024</option>
-        <option value="{base}/landtagswahlSteiermark2024" disabled>Landtagswahl Steiermark 2024</option>
+        <option value="{base}/landtagswahlSteiermark2024">Landtagswahl Steiermark 2024</option>
+        <option value="{base}/landtagswahlBurgenland2025" disabled>Landtagswahl Burgenland 2025</option>
     </select>
 </header>
 <slot></slot>
