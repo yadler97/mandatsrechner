@@ -118,12 +118,13 @@ input[type=number] {
 
     .bar_container {
         width: 100%;
+        margin: auto;
     }
 
     .input_fields_vote {
         margin: auto auto;
         padding: 20px;
-        width: 100%;
+        width: 90%;
     }
 
     .mandate_section {
