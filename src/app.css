@@ -1,5 +1,9 @@
-p, label {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+p, label, th, td {
+    font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
+}
+
+p, label, th {
+    font-weight: bold;
 }
 
 header {
@@ -33,14 +37,30 @@ header {
     display: flex;
 }
 
+.info_container {
+    width: 25%;
+    margin: auto;
+}
+
+th {
+    text-align: left;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+}
+
 .bar_container {
-    width: 40%;
+    margin: auto;
+    width: 50%;
+    margin-right: 5%;
 }
 
 .input_fields_vote {
-    margin-top: 50px;
-    margin-left: 50px;
-    width: 400px;
+    margin: auto;
+    width: 20%;
+    margin-left: 5%;
 }
 
 .input_field_vote_party {
@@ -72,6 +92,7 @@ input[type=number] {
 
 .pie_container {
     width: 40%;
+    margin: auto;
 }
 
 .stack_container {
@@ -90,12 +111,18 @@ input[type=number] {
         flex-flow: column;
     }
 
+    .info_container {
+        width: auto;
+        margin-bottom: 20px;
+    }
+
     .bar_container {
         width: 100%;
     }
 
     .input_fields_vote {
-        margin: 20px auto;
+        margin: auto auto;
+        padding: 20px;
         width: 100%;
     }
 

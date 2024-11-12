@@ -31,6 +31,8 @@
     let majorityData = getContext('majorityData');
     let mandateCount = getContext('mandateCount');
     let threshold = getContext('threshold');
+    let apportionmentMethod = getContext('apportionmentMethod');
+    let electionDate = getContext('electionDate');
     let majority = Math.ceil(mandateCount / 2);
 
     let mandates = [];
@@ -41,13 +43,42 @@
         others = 100 - data.datasets[0].data.reduce((a, b) => a + b, 0)
         if (others >= 0) {
             data.datasets[0].data = data.datasets[0].data
-            mandates = dhondt([...data.datasets[0].data], mandateCount, threshold)
+            if (apportionmentMethod == 'D\'Hondt') {
+                mandates = dhondt([...data.datasets[0].data], mandateCount, threshold)
+            } else if (apportionmentMethod == 'Sainte-Laguë') {
+                mandates = saintelague([...data.datasets[0].data], mandateCount, threshold)
+            }
         }
     }
 
     function dhondt(vote_shares, mandate_count, threshold) {
         let mandates = []
         let current_divisors = []
+        let current_vote_count = [...vote_shares]
+
+        for (let i in vote_shares) {
+            current_divisors.push(1)
+            mandates.push(0)
+
+            if (vote_shares[i] < threshold) {
+                vote_shares[i] = 0
+                current_vote_count[i] = 0
+            }
+        }
+
+        for (let i = 0; i < mandate_count; i++) {
+            let idx = current_vote_count.indexOf(Math.max(...current_vote_count));
+            current_divisors[idx] = current_divisors[idx] + 1
+            mandates[idx] = mandates[idx] + 1
+            current_vote_count[idx] = vote_shares[idx] / current_divisors[idx]
+        }
+
+        return mandates
+    }
+
+    function saintelague(vote_shares, mandate_count, threshold) {
+        let mandates = []
+        let current_divisors = new Array(vote_shares.length).fill(0.5);
         let current_vote_count = [...vote_shares]
 
         for (let i in vote_shares) {
@@ -77,9 +108,29 @@
         }
     }
 </script>
-
 <h1>Stimmenanteile</h1>
 <section class="vote_share_section">
+    <div class="info_container">
+        <p>Allgemeine Informationen</p>
+        <table>
+            <tr>
+                <th>Wahltermin</th>
+                <td>{electionDate}</td>
+              </tr>
+              <tr>
+                <th>Abgeordnete</th>
+                <td>{mandateCount}</td>
+              </tr>
+              <tr>
+                <th>Sperrklausel</th>
+                <td>{threshold} %</td>
+              </tr>
+              <tr>
+                <th>Sitzzuteilungsverfahren</th>
+                <td>{apportionmentMethod}</td>
+              </tr>
+        </table>
+    </div>
     <div class="bar_container">
         <Bar {data} options={{ responsive: true, plugins: {
             datalabels: {

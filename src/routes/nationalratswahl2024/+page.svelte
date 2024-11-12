@@ -8,6 +8,8 @@
     setContext('majorityData', majorityData)
     setContext('mandateCount', 183)
     setContext('threshold', 4)
+    setContext('apportionmentMethod', 'D\'Hondt')
+    setContext('electionDate', '29. September 2024')
 </script>
 
 <ElectionCharts />
