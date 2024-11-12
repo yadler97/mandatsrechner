@@ -6,10 +6,10 @@
     setContext('data', data)
     setContext('mandateData', mandateData)
     setContext('majorityData', majorityData)
-    setContext('mandateCount', 48)
-    setContext('threshold', 0)
-    setContext('apportionmentMethod', 'D\'Hondt')
-    setContext('electionDate', '24. November 2024')
+    setContext('mandateCount', 630)
+    setContext('threshold', 5)
+    setContext('apportionmentMethod', 'Sainte-Laguë')
+    setContext('electionDate', 'voraussichtlich 23. Februar 2025')
 </script>
 
 <ElectionCharts />
