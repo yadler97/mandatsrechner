@@ -24,8 +24,12 @@
         <option value="{base}/nationalratswahl2024">Nationalratswahl 2024</option>
         <option value="{base}/landtagswahlVorarlberg2024">Landtagswahl Vorarlberg 2024</option>
         <option value="{base}/landtagswahlSteiermark2024">Landtagswahl Steiermark 2024</option>
-        <option value="{base}/landtagswahlBurgenland2025" disabled>Landtagswahl Burgenland 2025</option>
+        <option value="{base}/landtagswahlBurgenland2025">Landtagswahl Burgenland 2025</option>
         <option value="{base}/bundestagswahl2025">Bundestagswahl 2025</option>
+        <option value="{base}/landtagswahlWien2025" disabled>Landtags- und Gemeinderatswahl Wien 2025</option>
+        <option value="{base}/bezirksvertretungswahlenWien2025" disabled>Bezirksvertretungswahlen Wien 2025</option>
+
+        <option value="{base}/spielwiese">Spielwiese</option>
     </select>
 </header>
 <slot></slot>
