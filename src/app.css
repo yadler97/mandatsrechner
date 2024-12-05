@@ -139,3 +139,28 @@ input[type=number] {
         width: 100%;
     }
 }
+
+.valuePadding {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    font-size: 16px;
+    display: flex;
+}
+.valuePadding input {
+    box-shadow: none;
+    border: none;
+    border-radius: 0px;
+    padding: 0px;
+    outline: none;
+}
+
+.selectApportionmentMethod {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    font-size: 16px;
+    display: flex;
+}
