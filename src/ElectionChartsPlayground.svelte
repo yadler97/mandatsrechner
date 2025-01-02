@@ -34,12 +34,17 @@
     let apportionmentMethod = 'D\'Hondt';
     let majority = 0;
     $: {
-        majority = Math.ceil(mandateCount / 2);
+        majority = Math.floor((mandateCount / 2) + 1);
     }
 
     let mandates = [];
 
     let others;
+
+    let selectedParties = mandateCount;
+    $: {
+        selectedParties = mandateCount;
+    }
 
     $: {
         others = 100 - data.datasets[0].data.reduce((a, b) => a + b, 0)
@@ -196,7 +201,29 @@
                     weight: 'bold',
                     size: 20,
                 }
+            },
+            legend: {
+                onClick: function(event, legendItem) {
+                    if (legendItem.datasetIndex !== undefined) {
+                        const datasetIndex = legendItem.datasetIndex;
+                        const isVisible = majorityData.datasets[datasetIndex].hidden;
+
+                        // Toggle the visibility of selected party
+                        majorityData.datasets[datasetIndex].hidden = !isVisible;
+
+                        // Calculate sum of selected parties
+                        selectedParties = 0;
+                        majorityData.datasets.forEach((dataset, index) => {
+                            if (!dataset.hidden) {
+                                selectedParties += dataset.data[0];
+                            }
+                        });
+                    }
+                }
             }
         }}} />
+        <p class="majorityText {selectedParties < majority ? 'red' : 'green'}">
+            Mehrheit: {selectedParties}/{majority}
+        </p>
     </div>
 </section>

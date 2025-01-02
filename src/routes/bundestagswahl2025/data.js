@@ -50,6 +50,7 @@ export const mandateData = {
         label: 'CDU',
         data: [40],
         backgroundColor: '#151518',
+        hidden: true,
       },
       {
         label: 'Grüne',
@@ -65,21 +66,25 @@ export const mandateData = {
         label: 'AfD',
         data: [15],
         backgroundColor: '#009EE0',
+        hidden: true,
       },
       {
         label: 'CSU',
         data: [0],
         backgroundColor: '#008AC5',
+        hidden: true,
       },
       {
         label: 'Linke',
         data: [0],
         backgroundColor: '#BE3075',
+        hidden: true,
       },
       {
         label: 'BSW',
         data: [0],
         backgroundColor: '#7D254F',
+        hidden: true,
       },
     ],
   };

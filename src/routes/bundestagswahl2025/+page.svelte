@@ -9,7 +9,7 @@
     setContext('mandateCount', 630)
     setContext('threshold', 5)
     setContext('apportionmentMethod', 'Sainte-Laguë')
-    setContext('electionDate', 'voraussichtlich 23. Februar 2025')
+    setContext('electionDate', '23. Februar 2025')
 </script>
 
 <ElectionCharts />

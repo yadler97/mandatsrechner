@@ -49,16 +49,19 @@ export const mandateData = {
         label: 'FPÖ',
         data: [5],
         backgroundColor: '#205CA5',
+        hidden: true,
       },
       {
         label: 'SPÖ',
         data: [4],
         backgroundColor: '#E31E2D',
+        hidden: true,
       },
       {
         label: 'NEOS',
         data: [3],
         backgroundColor: '#E84188',
+        hidden: true,
       },
     ],
   };
