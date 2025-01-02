@@ -100,6 +100,18 @@ input[type=number] {
     margin: auto;
 }
 
+.majorityText {
+    text-align: center;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
 @media screen and (max-width: 768px) {
     header {
         p {
