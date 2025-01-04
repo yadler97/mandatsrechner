@@ -36,14 +36,23 @@
     $: {
         majority = Math.floor((mandateCount / 2) + 1);
     }
+    let twoThirdsMajority = 0;
+    $: {
+        twoThirdsMajority = Math.ceil((mandateCount / 3 * 2));
+    }
 
     let mandates = [];
 
     let others;
 
-    let selectedParties = mandateCount;
+    let selectedParties = 0;
     $: {
-        selectedParties = mandateCount;
+        selectedParties = 0;
+        majorityData.datasets.forEach((dataset, index) => {
+            if (!dataset.hidden) {
+                selectedParties += dataset.data[0];
+            }
+        });
     }
 
     $: {
@@ -181,12 +190,19 @@
         <Bar data={majorityData} options={{ responsive: true, indexAxis: 'y', scales: {y: {stacked: true}, x: {stacked: true, max: mandateCount}}, plugins: {
             annotation: {
                 annotations: {
-                    line1: {
+                    majorityLine: {
                         type: 'line',
                         xMin: majority,
                         xMax: majority,
                         borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 2,
+                        borderWidth: 3,
+                    },
+                    twoThirdsMajorityLine: {
+                        type: 'line',
+                        xMin: twoThirdsMajority,
+                        xMax: twoThirdsMajority,
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 1,
                     }
                 }
             },
@@ -210,20 +226,15 @@
 
                         // Toggle the visibility of selected party
                         majorityData.datasets[datasetIndex].hidden = !isVisible;
-
-                        // Calculate sum of selected parties
-                        selectedParties = 0;
-                        majorityData.datasets.forEach((dataset, index) => {
-                            if (!dataset.hidden) {
-                                selectedParties += dataset.data[0];
-                            }
-                        });
                     }
                 }
             }
         }}} />
         <p class="majorityText {selectedParties < majority ? 'red' : 'green'}">
             Mehrheit: {selectedParties}/{majority}
+        </p>
+        <p class="majorityText {selectedParties < twoThirdsMajority ? 'red' : 'green'}">
+            Zweidrittelmehrheit: {selectedParties}/{twoThirdsMajority}
         </p>
     </div>
 </section>
