@@ -33,8 +33,8 @@
     let threshold = getContext('threshold');
     let apportionmentMethod = getContext('apportionmentMethod');
     let electionDate = getContext('electionDate');
-    let majority = Math.floor((mandateCount / 2) + 1);
-    let twoThirdsMajority = Math.ceil((mandateCount / 3 * 2));
+    let majority = Math.floor(($mandateCount / 2) + 1);
+    let twoThirdsMajority = Math.ceil(($mandateCount / 3 * 2));
 
     let mandates = [];
 
@@ -43,7 +43,7 @@
     let selectedParties = 0;
     $: {
         selectedParties = 0;
-        majorityData.datasets.forEach((dataset, index) => {
+        $majorityData.datasets.forEach((dataset, index) => {
             if (!dataset.hidden) {
                 selectedParties += dataset.data[0];
             }
@@ -51,13 +51,13 @@
     }
 
     $: {
-        others = 100 - data.datasets[0].data.reduce((a, b) => a + b, 0)
-        if (others >= 0) {
-            data.datasets[0].data = data.datasets[0].data
+        others = 100 - $data.datasets[0].data.reduce((a, b) => a + b, 0)
+        if (others >= -0.00001) {
+            $data.datasets[0].data = $data.datasets[0].data
             if (apportionmentMethod == 'D\'Hondt') {
-                mandates = dhondt([...data.datasets[0].data], mandateCount, threshold)
+                mandates = dhondt([...$data.datasets[0].data], $mandateCount, threshold)
             } else if (apportionmentMethod == 'Sainte-Laguë') {
-                mandates = saintelague([...data.datasets[0].data], mandateCount, threshold)
+                mandates = saintelague([...$data.datasets[0].data], $mandateCount, threshold)
             }
         }
     }
@@ -113,9 +113,9 @@
     }
 
     $: {
-        mandateData.datasets[0].data = mandates
+        $mandateData.datasets[0].data = mandates
         for (let i in mandates) {
-            majorityData.datasets[i].data = [mandates[i]]
+            $majorityData.datasets[i].data = [mandates[i]]
         }
     }
 </script>
@@ -130,7 +130,7 @@
               </tr>
               <tr>
                 <th>Abgeordnete</th>
-                <td>{mandateCount}</td>
+                <td>{$mandateCount}</td>
               </tr>
               <tr>
                 <th>Sperrklausel</th>
@@ -143,7 +143,7 @@
         </table>
     </div>
     <div class="bar_container">
-        <Bar {data} options={{ responsive: true, plugins: {
+        <Bar data={$data} options={{ responsive: true, plugins: {
             datalabels: {
                 display: false
             }
@@ -151,17 +151,17 @@
     </div>
     
     <div class="input_fields_vote">
-        {#each data.datasets[0].data as party, i}
+        {#each $data.datasets[0].data as party, i}
             <div class="input_field_vote_party">
-                <label for="input_party_{i}">{data.labels[i]}</label>
-                <input id="input_party_{i}" type="number" bind:value={data.datasets[0].data[i]} min=0 max=100>
+                <label for="input_party_{i}">{$data.labels[i]}</label>
+                <input id="input_party_{i}" type="number" bind:value={$data.datasets[0].data[i]} min=0 max=100>
             </div>
         {/each}
         <div class="input_field_vote_party">
             <p>Sonstige:</p>
             <p>{others >= 0 ? others.toFixed(2) : 0}</p>
         </div>
-        {#if others < 0}
+        {#if others < -0.00001}
 	        <p>Achtung: Gesamtstimmen dürfen 100% nicht überschreiten!</p>
         {/if}
     </div>
@@ -170,7 +170,7 @@
 <h1>Mandatsverteilung</h1>
 <section class="mandate_section">
     <div class="pie_container">
-        <Pie id="mandatesChart" data={mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
+        <Pie id="mandatesChart" data={$mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
             datalabels: {
                 anchor: 'end',
                 align: 'start',
@@ -186,7 +186,7 @@
     </div>
 
     <div class="stack_container">
-        <Bar data={majorityData} options={{ responsive: true, indexAxis: 'y', scales: {y: {stacked: true}, x: {stacked: true, max: mandateCount}}, plugins: {
+        <Bar data={$majorityData} options={{ responsive: true, indexAxis: 'y', scales: {y: {stacked: true}, x: {stacked: true, max: $mandateCount}}, plugins: {
             annotation: {
                 annotations: {
                     majorityLine: {
@@ -221,10 +221,10 @@
                 onClick: function(event, legendItem) {
                     if (legendItem.datasetIndex !== undefined) {
                         const datasetIndex = legendItem.datasetIndex;
-                        const isVisible = majorityData.datasets[datasetIndex].hidden;
+                        const isVisible = $majorityData.datasets[datasetIndex].hidden;
 
                         // Toggle the visibility of selected party
-                        majorityData.datasets[datasetIndex].hidden = !isVisible;
+                        $majorityData.datasets[datasetIndex].hidden = !isVisible;
                     }
                 }
             }

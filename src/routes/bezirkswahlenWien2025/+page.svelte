@@ -1,0 +1,83 @@
+<script>
+    import { data, mandateData, majorityData } from './data';
+	import ElectionCharts from './../../ElectionCharts.svelte';
+    import { setContext } from 'svelte'
+    import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
+	import { writable } from 'svelte/store';
+
+    let district = $page.url.searchParams.get('bezirk') || '1';
+    let mandateCount = writable(0);
+    let dataObj = writable();
+    let mandateDataObj = writable();
+    let majorityDataObj = writable();
+
+    setContext('mandateCount', mandateCount);
+    setContext('data', dataObj);
+    setContext('mandateData', mandateDataObj);
+    setContext('majorityData', majorityDataObj);
+
+    const updateDistrict = (selectedDistrict) => {
+        district = selectedDistrict;
+
+        // Update context based on the selected district
+        const districtInt = parseInt(district);
+        $dataObj = data[districtInt - 1];
+        $mandateDataObj = mandateData[districtInt - 1];
+        $majorityDataObj =  majorityData[districtInt - 1];
+
+        // Set the mandate count based on the district
+        if (districtInt == 1 || districtInt == 4 || districtInt == 5 || districtInt == 6 || districtInt == 7 || districtInt == 8 || districtInt == 9 || districtInt == 13 || districtInt == 17 || districtInt == 18) {
+            $mandateCount = 40;
+        } else if (districtInt == 19) {
+            $mandateCount = 48;
+        } else if (districtInt == 15) {
+            $mandateCount = 50;
+        } else if (districtInt == 3 || districtInt == 14 || districtInt == 20) {
+            $mandateCount = 56;
+        } else if (districtInt == 12) {
+            $mandateCount = 58;
+        } else if (districtInt == 2 || districtInt == 10 || districtInt == 11 || districtInt == 16 || districtInt == 21 || districtInt == 22 || districtInt == 23) {
+            $mandateCount = 60;
+        }
+    };
+
+    updateDistrict(district);
+
+    const gotoDistrict = (selectedDistrict) => {
+        goto(`?bezirk=${selectedDistrict}`, { replaceState: true });
+        updateDistrict(selectedDistrict);
+    }
+
+    setContext('threshold', 0)
+    setContext('apportionmentMethod', 'D\'Hondt')
+    setContext('electionDate', '27. April 2025')
+</script>
+
+<select bind:value={district} on:change={() => gotoDistrict(district)} class="district_select">
+    <option value="1">1., Innere Stadt</option>
+    <option value="2">2., Leopoldstadt</option>
+    <option value="3">3., Landstraße</option>
+    <option value="4">4., Wiedem</option>
+    <option value="5">5., Margareten</option>
+    <option value="6">6., Mariahilf</option>
+    <option value="7">7., Neubau</option>
+    <option value="8">8., Josefstadt</option>
+    <option value="9">9., Alsergrund</option>
+    <option value="10">10., Favoriten</option>
+    <option value="11">11., Simmering</option>
+    <option value="12">12., Meidling</option>
+    <option value="13">13., Hietzing</option>
+    <option value="14">14., Penzing</option>
+    <option value="15">15., Rudolfsheim-Fünfhaus</option>
+    <option value="16">16., Ottakring</option>
+    <option value="17">17., Hernals</option>
+    <option value="18">18., Währing</option>
+    <option value="19">19., Döbling</option>
+    <option value="20">20., Brigittenau</option>
+    <option value="21">21., Floridsdorf</option>
+    <option value="22">22., Donaustadt</option>
+    <option value="23">23., Liesing</option>
+</select>
+
+<ElectionCharts />
