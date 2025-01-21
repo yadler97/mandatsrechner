@@ -58,7 +58,7 @@
     <option value="1">1., Innere Stadt</option>
     <option value="2">2., Leopoldstadt</option>
     <option value="3">3., Landstraße</option>
-    <option value="4">4., Wiedem</option>
+    <option value="4">4., Wieden</option>
     <option value="5">5., Margareten</option>
     <option value="6">6., Mariahilf</option>
     <option value="7">7., Neubau</option>
