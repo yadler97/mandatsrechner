@@ -64,6 +64,8 @@
                 mandates = dhondt([...$data.datasets[0].data], $mandateCount, threshold)
             } else if (apportionmentMethod == 'Sainte-Laguë') {
                 mandates = saintelague([...$data.datasets[0].data], $mandateCount, threshold)
+            } else if (apportionmentMethod == 'Hare-Niemeyer') {
+                mandates = hareniemeyer([...$data.datasets[0].data], $mandateCount, threshold)
             }
         }
     }
@@ -116,6 +118,34 @@
         }
 
         return mandates
+    }
+
+    function hareniemeyer(vote_shares, mandate_count, threshold) {
+        let mandates = []
+        const eligibleShares = vote_shares.filter(share => share >= threshold);
+        const totalEligibleShares = eligibleShares.reduce((sum, share) => sum + share, 0);
+
+        const hareQuotient = totalEligibleShares / mandate_count;
+
+        mandates = vote_shares.map(share => {
+            if (share < threshold) return 0;
+            const initialMandates = Math.floor(share / hareQuotient);
+            const remainder = share % hareQuotient;
+            return { initialMandates, remainder };
+        });
+
+        let allocatedMandates = mandates.reduce((sum, p) => sum + (p.initialMandates || 0), 0);
+        const remainingMandates = mandate_count - allocatedMandates;
+
+        const remainderSorted = mandates
+            .map((p, index) => ({ index, remainder: p.remainder || 0 }))
+            .sort((a, b) => b.remainder - a.remainder);
+
+        for (let i = 0; i < remainingMandates; i++) {
+            mandates[remainderSorted[i].index].initialMandates += 1;
+        }
+
+        return mandates.map(p => (p.initialMandates || 0));
     }
 
     $: {
