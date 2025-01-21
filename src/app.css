@@ -22,15 +22,19 @@ header {
         font-weight: bold;
         margin-left: 20px;
     }
+}
 
-    select {
-        margin: 0 0 0 auto;
-        padding: 8px;
-        border-radius: 10px;
-        border: 1px solid #aaa;
-        box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
-        font-size: 14px;
-    }
+select {
+    margin: 0 0 0 auto;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    font-size: 14px;
+}
+
+.district_select {
+    margin-top: 10px;
 }
 
 .vote_share_section {

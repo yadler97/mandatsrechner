@@ -27,7 +27,7 @@
         <option value="{base}/landtagswahlBurgenland2025">Landtagswahl Burgenland 2025</option>
         <option value="{base}/bundestagswahl2025">Bundestagswahl 2025</option>
         <option value="{base}/landtagswahlWien2025" disabled>Landtagswahl Wien 2025</option>
-        <option value="{base}/bezirkswahlenWien2025" disabled>Bezirkswahlen Wien 2025</option>
+        <option value="{base}/bezirkswahlenWien2025">Bezirkswahlen Wien 2025</option>
 
         <option value="{base}/spielwiese">Spielwiese</option>
     </select>
