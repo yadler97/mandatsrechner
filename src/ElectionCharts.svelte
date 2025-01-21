@@ -33,8 +33,14 @@
     let threshold = getContext('threshold');
     let apportionmentMethod = getContext('apportionmentMethod');
     let electionDate = getContext('electionDate');
-    let majority = Math.floor(($mandateCount / 2) + 1);
-    let twoThirdsMajority = Math.ceil(($mandateCount / 3 * 2));
+    let majority = 0;
+    $: {
+        majority = Math.floor(($mandateCount / 2) + 1);
+    }
+    let twoThirdsMajority = 0;
+    $: {
+        twoThirdsMajority = Math.ceil(($mandateCount / 3 * 2));
+    }
 
     let mandates = [];
 
