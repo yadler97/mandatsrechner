@@ -177,6 +177,17 @@
         <Bar {data} options={{ responsive: true, plugins: {
             datalabels: {
                 display: false
+            },
+            annotation: {
+                annotations: threshold > 0 ? {
+                    majorityLine: {
+                        type: 'line',
+                        yMin: threshold,
+                        yMax: threshold,
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 2,
+                    }
+                } : {} // Empty object if threshold is 0 or less
             }
         } }} />
     </div>
