@@ -3,10 +3,10 @@
 <script>
     const dataModules = import.meta.glob('/src/routes/**/data.js');
     import { base } from '$app/paths';
-  
+
     let upcomingRoutes = [];
     let pastRoutes = [];
-  
+
     Promise.all(
         Object.entries(dataModules).map(async ([path, resolver]) => {
             const module = await resolver();

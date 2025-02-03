@@ -7,7 +7,10 @@
     import { base } from '$app/paths';
     import { page } from '$app/stores';
 
-    let path = base + $page.route.id
+    let path
+    $: {
+        path = base + $page.route.id;
+    }
 
     function onChange(e) {
         const id = e.target.value;

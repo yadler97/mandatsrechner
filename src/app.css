@@ -61,7 +61,7 @@ td {
     margin-right: 5%;
 
     canvas {
-        min-height: 250px;
+        min-height: 350px;
     }
 }
 
@@ -192,6 +192,10 @@ input[type=number] {
     .bar_container {
         width: 100%;
         margin: auto;
+
+        canvas {
+            min-height: 250px;
+        }
     }
 
     .input_fields_vote {
