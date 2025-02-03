@@ -1,5 +1,5 @@
 export const data = {
-  labels: ['SPD', 'Grüne', 'CDU/CSU', 'Linke', 'AfD', 'FDP', 'Volt', 'BSW'],
+  labels: ['SPD', 'Grüne', 'CDU', 'Linke', 'AfD', 'FDP', 'Volt', 'BSW'],
   datasets: [
     {
       label: 'SPD',
@@ -53,7 +53,7 @@ export const data = {
 };
 
 export const mandateData = {
-    labels: ['SPD', 'Grüne', 'CDU/CSU', 'Linke', 'AfD', 'FDP', 'Volt', 'BSW'],
+    labels: ['SPD', 'Grüne', 'CDU', 'Linke', 'AfD', 'FDP', 'Volt', 'BSW'],
     datasets: [
       {
         label: 'Mandate',
