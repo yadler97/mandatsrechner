@@ -11,6 +11,7 @@
     setContext('threshold', 5)
     setContext('apportionmentMethod', 'D\'Hondt')
     setContext('electionDate', '27. April 2025')
+    setContext('note', 'Aufgrund des mehrstufigen Ermittlungsverfahrens kann es zu geringfügigen Abweichungen zur tatsächlchen Mandatsverteilung kommen.')
 </script>
 
 <ElectionCharts />

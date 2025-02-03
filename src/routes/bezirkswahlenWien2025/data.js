@@ -2,231 +2,1677 @@ export const data = [
     {
         labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'LINKS', 'HC'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [40.52, 22.97, 17.38, 11.06, 4.85, 1.62, 1.6],
-                backgroundColor: ['#63c3d0', '#E31E2D', '#51A51E', '#E84188', '#205CA5', '#5C0AA3', '#173253'],
-            },
+        {
+            label: 'ÖVP',
+            index: 0,
+            data: [40.52, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'SPÖ',
+            index: 1,
+            data: [0, 22.97, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 2,
+            data: [0, 0, 17.38, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 11.06, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 4.85, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 1.62, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.6],
+            backgroundColor: '#173253',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'LINKS', 'HC', 'BIER', 'SÖZ', 'KURZ', 'VOLT', 'VOLK'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [35.38, 30.56, 12.44, 6.63, 5.03, 4.45, 2.27, 1.5, 0.87, 0.56, 0.17, 0.14],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#205CA5', '#5C0AA3', '#173253', '#FFCC00', '#3C2D82', '#00FFFF', '#8A2BE2', '#FF69B4'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [35.38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 30.56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 12.44, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 6.63, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 5.03, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 4.45, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.27, 0, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.5, 0, 0, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.87, 0, 0, 0],
+            backgroundColor: '#3C2D82',
+        },
+        
+        {
+            label: 'KURZ',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.56, 0, 0],
+            backgroundColor: '#00FFFF',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 10,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.17, 0],
+            backgroundColor: '#8A2BE2',
+        },
+        
+        {
+            label: 'VOLK',
+            index: 11,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.14],
+            backgroundColor: '#FF69B4',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'LINKS', 'HC', 'BIER', 'SÖZ', 'KURZ', 'VOLT'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [37.02, 23.1, 17.07, 8.8, 4.73, 3.73, 2.28, 1.72, 0.72, 0.67, 0.16],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#205CA5', '#5C0AA3', '#173253', '#FFCC00', '#3C2D82', '#00FFFF', '#8A2BE2'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [37.02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 23.1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 17.07, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 8.8, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 4.73, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.73, 0, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.28, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.72, 0, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.72, 0, 0],
+            backgroundColor: '#3C2D82',
+        },
+        
+        {
+            label: 'KURZ',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.67, 0],
+            backgroundColor: '#00FFFF',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 10,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.16],
+            backgroundColor: '#8A2BE2',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'LINKS', 'FPÖ', 'HC', 'BIER', 'VOLT'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [33.23, 28.1, 19.79, 8.63, 3.66, 3.44, 1.5, 1.37, 0.27],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#5C0AA3', '#205CA5', '#173253', '#FFCC00', '#8A2BE2'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [33.23, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 28.1, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 19.79, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 8.63, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 4,
+            data: [0, 0, 0, 0, 3.66, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.44, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.5, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.37, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.27],
+            backgroundColor: '#8A2BE2',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'LINKS', 'FPÖ', 'HC', 'BIER', 'SÖZ', 'VOLT'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [35.31, 28.22, 13.84, 7.49, 5.27, 4.66, 1.95, 1.94, 1.05, 0.27],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#5C0AA3', '#205CA5', '#173253', '#FFCC00', '#3C2D82', '#8A2BE2'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [35.31, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 28.22, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 13.84, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 7.49, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 4,
+            data: [0, 0, 0, 0, 5.27, 0, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 4.66, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.95, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.94, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.05, 0],
+            backgroundColor: '#3C2D82',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.27],
+            backgroundColor: '#8A2BE2',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'LINKS', 'FPÖ', 'BIER', 'HC', 'VOLT'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [37.2, 30.43, 14.87, 7.05, 3.81, 3.58, 1.54, 1.27, 0.25],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#5C0AA3', '#205CA5', '#FFCC00', '#173253', '#8A2BE2'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [37.2, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 30.43, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 14.87, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 7.05, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 4,
+            data: [0, 0, 0, 0, 3.81, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.58, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'BIER',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.54, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'HC',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.27, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.25],
+            backgroundColor: '#8A2BE2',
+        },
+        
         ],
     },
     {
         labels: ['GRÜNE', 'SPÖ', 'ÖVP', 'NEOS', 'LINKS', 'FPÖ', 'WANDL', 'BIER', 'HC', 'VOLT', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [44.91, 20.6, 13.72, 7.87, 4.76, 2.98, 2.13, 1.42, 1.03, 0.31, 0.27],
-                backgroundColor: ['#51A51E', '#E31E2D', '#63c3d0', '#E84188', '#5C0AA3', '#205CA5', '#4B0082', '#FFCC00', '#173253', '#8A2BE2', '#3C2D82'],
-            },
+        {
+            label: 'GRÜNE',
+            index: 0,
+            data: [44.91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'SPÖ',
+            index: 1,
+            data: [0, 20.6, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 13.72, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 7.87, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 4,
+            data: [0, 0, 0, 0, 4.76, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 2.98, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'WANDL',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.13, 0, 0, 0, 0],
+            backgroundColor: '#4B0082',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.42, 0, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'HC',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.03, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.31, 0],
+            backgroundColor: '#8A2BE2',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 10,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.27],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['GRÜNE', 'ÖVP', 'SPÖ', 'NEOS', 'LINKS', 'FPÖ', 'BIER', 'HC', 'VOLT'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [33.59, 30.55, 18.58, 7.25, 4.01, 3.4, 1.43, 0.94, 0.24],
-                backgroundColor: ['#51A51E', '#63c3d0', '#E31E2D', '#E84188', '#5C0AA3', '#205CA5', '#FFCC00', '#173253', '#8A2BE2'],
-            },
+        {
+            label: 'GRÜNE',
+            index: 0,
+            data: [33.59, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 30.55, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'SPÖ',
+            index: 2,
+            data: [0, 0, 18.58, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 7.25, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 4,
+            data: [0, 0, 0, 0, 4.01, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.4, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'BIER',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.43, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'HC',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 0.94, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.24],
+            backgroundColor: '#8A2BE2',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'LINKS', 'FPÖ', 'BIER', 'HC', 'VOLT', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [31.45, 29.21, 18.32, 9.57, 4.38, 3.66, 1.52, 1.26, 0.35, 0.28],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#5C0AA3', '#205CA5', '#FFCC00', '#173253', '#8A2BE2', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [31.45, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 29.21, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 18.32, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 9.57, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 4,
+            data: [0, 0, 0, 0, 4.38, 0, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.66, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'BIER',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.52, 0, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'HC',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.26, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.35, 0],
+            backgroundColor: '#8A2BE2',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.28],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'ÖVP', 'FPÖ', 'GRÜNE', 'HC', 'NEOS', 'SÖZ', 'BIER', 'LINKS', 'VOLT'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [47.4, 18.0, 10.52, 8.98, 4.32, 4.15, 3.17, 1.75, 1.57, 0.14],
-                backgroundColor: ['#E31E2D', '#63c3d0', '#205CA5', '#51A51E', '#173253', '#E84188', '#3C2D82', '#FFCC00', '#5C0AA3', '#8A2BE2'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [47.4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 18.0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 2,
+            data: [0, 0, 10.52, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 3,
+            data: [0, 0, 0, 8.98, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'HC',
+            index: 4,
+            data: [0, 0, 0, 0, 4.32, 0, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 4.15, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 3.17, 0, 0, 0],
+            backgroundColor: '#3C2D82',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.75, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.57, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.14],
+            backgroundColor: '#8A2BE2',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'FPÖ', 'ÖVP', 'GRÜNE', 'NEOS', 'HC', 'BIER', 'SÖZ', 'LINKS'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [41.49, 28.44, 11.3, 6.72, 3.53, 2.99, 2.31, 2.12, 1.1],
-                backgroundColor: ['#E31E2D', '#205CA5', '#63c3d0', '#51A51E', '#E84188', '#173253', '#FFCC00', '#3C2D82', '#5C0AA3'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [41.49, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 1,
+            data: [0, 28.44, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 11.3, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 3,
+            data: [0, 0, 0, 6.72, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 4,
+            data: [0, 0, 0, 0, 3.53, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'HC',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 2.99, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.31, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 2.12, 0],
+            backgroundColor: '#3C2D82',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.1],
+            backgroundColor: '#5C0AA3',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'PH', 'LINKS', 'BIER', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [42.0, 16.85, 15.91, 6.85, 5.84, 3.21, 3.06, 2.46, 2.05, 1.77],
-                backgroundColor: ['#E31E2D', '#63c3d0', '#51A51E', '#205CA5', '#E84188', '#173253', '#7FFF00', '#5C0AA3', '#FFCC00', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [42.0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 16.85, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 2,
+            data: [0, 0, 15.91, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 3,
+            data: [0, 0, 0, 6.85, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 4,
+            data: [0, 0, 0, 0, 5.84, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'HC',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.21, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'PH',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 3.06, 0, 0, 0],
+            backgroundColor: '#7FFF00',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 2.46, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'BIER',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 2.05, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1.77],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'LINKS', 'BIER', 'WIR', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [44.25, 22.28, 15.06, 8.87, 3.9, 1.76, 1.23, 1.22, 1.05, 0.37],
-                backgroundColor: ['#63c3d0', '#E31E2D', '#51A51E', '#E84188', '#205CA5', '#173253', '#5C0AA3', '#FFCC00', '#D2691E', '#3C2D82'],
-            },
+        {
+            label: 'ÖVP',
+            index: 0,
+            data: [44.25, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'SPÖ',
+            index: 1,
+            data: [0, 22.28, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 2,
+            data: [0, 0, 15.06, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 8.87, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 3.9, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'HC',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 1.76, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.23, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.22, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'WIR',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.05, 0],
+            backgroundColor: '#D2691E',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.37],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'LINKS', 'BIER', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [36.94, 23.57, 18.32, 7.44, 6.44, 2.53, 1.96, 1.95, 0.85],
-                backgroundColor: ['#E31E2D', '#63c3d0', '#51A51E', '#E84188', '#205CA5', '#173253', '#5C0AA3', '#FFCC00', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [36.94, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 23.57, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 2,
+            data: [0, 0, 18.32, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 7.44, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 6.44, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'HC',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 2.53, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.96, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.95, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.85],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'FPÖ', 'LINKS', 'NEOS', 'HC', 'BIER', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [38.53, 23.89, 13.4, 6.12, 5.71, 5.49, 2.62, 2.37, 1.87],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#205CA5', '#5C0AA3', '#E84188', '#173253', '#FFCC00', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [38.53, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 23.89, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 13.4, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 3,
+            data: [0, 0, 0, 6.12, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 4,
+            data: [0, 0, 0, 0, 5.71, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 5.49, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.62, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 2.37, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.87],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'LINKS', 'HC', 'SÖZ', 'BIER', 'KURZ', 'PdA'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [39.03, 20.01, 16.83, 6.07, 6.02, 4.33, 2.82, 1.95, 1.86, 0.86, 0.21],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#205CA5', '#5C0AA3', '#173253', '#3C2D82', '#FFCC00', '#00FFFF', '#DC143C'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [39.03, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 20.01, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 16.83, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 6.07, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 6.02, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 4.33, 0, 0, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.82, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.95, 0, 0, 0],
+            backgroundColor: '#3C2D82',
+        },
+        
+        {
+            label: 'BIER',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.86, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'KURZ',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.86, 0],
+            backgroundColor: '#00FFFF',
+        },
+        
+        {
+            label: 'PdA',
+            index: 10,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.21],
+            backgroundColor: '#DC143C',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'LINKS', 'HC', 'BIER', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [33.21, 24.28, 19.71, 8.28, 5.56, 3.96, 2.06, 1.7, 1.24],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#E84188', '#205CA5', '#5C0AA3', '#173253', '#FFCC00', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [33.21, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 24.28, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 19.71, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 8.28, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 5.56, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.96, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.06, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.7, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.24],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['GRÜNE', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'LINKS', 'BIER', 'HC', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [38.7, 27.48, 17.86, 8.07, 2.74, 2.14, 1.3, 1.24, 0.46],
-                backgroundColor: ['#51A51E', '#63c3d0', '#E31E2D', '#E84188', '#205CA5', '#5C0AA3', '#FFCC00', '#173253', '#3C2D82'],
-            },
+        {
+            label: 'GRÜNE',
+            index: 0,
+            data: [38.7, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 27.48, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'SPÖ',
+            index: 2,
+            data: [0, 0, 17.86, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 8.07, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 2.74, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 2.14, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'BIER',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.3, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'HC',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.24, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.46],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'LINKS', 'BIER', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [36.89, 26.92, 16.02, 9.77, 5.1, 1.88, 1.42, 1.41, 0.58],
-                backgroundColor: ['#63c3d0', '#E31E2D', '#51A51E', '#E84188', '#205CA5', '#173253', '#5C0AA3', '#FFCC00', '#3C2D82'],
-            },
+        {
+            label: 'ÖVP',
+            index: 0,
+            data: [36.89, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'SPÖ',
+            index: 1,
+            data: [0, 26.92, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 2,
+            data: [0, 0, 16.02, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 3,
+            data: [0, 0, 0, 9.77, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 4,
+            data: [0, 0, 0, 0, 5.1, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'HC',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 1.88, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 1.42, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.41, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0.58],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'FPÖ', 'NEOS', 'LINKS', 'HC', 'BIER', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [45.02, 17.27, 14.78, 7.35, 4.99, 3.64, 3.1, 2.09, 1.76],
-                backgroundColor: ['#E31E2D', '#51A51E', '#63c3d0', '#205CA5', '#E84188', '#5C0AA3', '#173253', '#FFCC00', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [45.02, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 1,
+            data: [0, 17.27, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 2,
+            data: [0, 0, 14.78, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 3,
+            data: [0, 0, 0, 7.35, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 4,
+            data: [0, 0, 0, 0, 4.99, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.64, 0, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 3.1, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 2.09, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.76],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'ÖVP', 'FPÖ', 'GRÜNE', 'WIFF', 'NEOS', 'HC', 'BIER', 'SÖZ', 'LINKS', 'WIEN', 'VOLT'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [44.52, 18.11, 9.64, 9.19, 5.23, 4.65, 4.46, 1.91, 1.03, 0.89, 0.19, 0.15],
-                backgroundColor: ['#E31E2D', '#63c3d0', '#205CA5', '#51A51E', '#00008B', '#E84188', '#173253', '#FFCC00', '#3C2D82', '#5C0AA3', '#B8860B', '#8A2BE2'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [44.52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 18.11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 2,
+            data: [0, 0, 9.64, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 3,
+            data: [0, 0, 0, 9.19, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'WIFF',
+            index: 4,
+            data: [0, 0, 0, 0, 5.23, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#00008B',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 4.65, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'HC',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 4.46, 0, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.91, 0, 0, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.03, 0, 0, 0],
+            backgroundColor: '#3C2D82',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.89, 0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'WIEN',
+            index: 10,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.19, 0],
+            backgroundColor: '#B8860B',
+        },
+        
+        {
+            label: 'VOLT',
+            index: 11,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15],
+            backgroundColor: '#8A2BE2',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'BIER', 'LINKS', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [45.08, 19.81, 10.99, 9.76, 5.98, 3.86, 2.29, 1.22, 1.01],
-                backgroundColor: ['#E31E2D', '#63c3d0', '#51A51E', '#205CA5', '#E84188', '#173253', '#FFCC00', '#5C0AA3', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [45.08, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 19.81, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 2,
+            data: [0, 0, 10.99, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 3,
+            data: [0, 0, 0, 9.76, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 4,
+            data: [0, 0, 0, 0, 5.98, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'HC',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.86, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'BIER',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.29, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.22, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.01],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
     {
         labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'PRO', 'BIER', 'LINKS', 'SÖZ'],
         datasets: [
-            {
-                label: 'Stimmenanteil in %',
-                data: [40.4, 22.85, 12.16, 7.99, 7.28, 3.16, 2.27, 1.93, 1.0, 0.96],
-                backgroundColor: ['#E31E2D', '#63c3d0', '#51A51E', '#205CA5', '#E84188', '#173253', '#006400', '#FFCC00', '#5C0AA3', '#3C2D82'],
-            },
+        {
+            label: 'SPÖ',
+            index: 0,
+            data: [40.4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#E31E2D',
+        },
+        
+        {
+            label: 'ÖVP',
+            index: 1,
+            data: [0, 22.85, 0, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#63c3d0',
+        },
+        
+        {
+            label: 'GRÜNE',
+            index: 2,
+            data: [0, 0, 12.16, 0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#51A51E',
+        },
+        
+        {
+            label: 'FPÖ',
+            index: 3,
+            data: [0, 0, 0, 7.99, 0, 0, 0, 0, 0, 0],
+            backgroundColor: '#205CA5',
+        },
+        
+        {
+            label: 'NEOS',
+            index: 4,
+            data: [0, 0, 0, 0, 7.28, 0, 0, 0, 0, 0],
+            backgroundColor: '#E84188',
+        },
+        
+        {
+            label: 'HC',
+            index: 5,
+            data: [0, 0, 0, 0, 0, 3.16, 0, 0, 0, 0],
+            backgroundColor: '#173253',
+        },
+        
+        {
+            label: 'PRO',
+            index: 6,
+            data: [0, 0, 0, 0, 0, 0, 2.27, 0, 0, 0],
+            backgroundColor: '#006400',
+        },
+        
+        {
+            label: 'BIER',
+            index: 7,
+            data: [0, 0, 0, 0, 0, 0, 0, 1.93, 0, 0],
+            backgroundColor: '#FFCC00',
+        },
+        
+        {
+            label: 'LINKS',
+            index: 8,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 1.0, 0],
+            backgroundColor: '#5C0AA3',
+        },
+        
+        {
+            label: 'SÖZ',
+            index: 9,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.96],
+            backgroundColor: '#3C2D82',
+        },
+        
         ],
     },
 ]
