@@ -97,12 +97,20 @@ for index, (district_id, (party_list, percentage_list)) in enumerate(districts_s
     data_text += f"""
     {{
         labels: {party_list},
-        datasets: [
-            {{
-                label: 'Stimmenanteil in %',
-                data: {percentage_list},
-                backgroundColor: {[party_color_dict.get(party, "#FFFFFF") for party in party_list]},
-            }},
+        datasets: ["""
+
+    for idx, party in enumerate(party_list):
+    # Create the dataset for each party
+        data_text += f"""
+        {{
+            label: '{party}',
+            index: {idx},
+            data: [{', '.join(['0' if i != idx else str(percentage_list[i]) for i in range(len(party_list))])}],
+            backgroundColor: '{party_color_dict.get(party, "#FFFFFF")}',
+        }},
+        """
+
+    data_text += f"""
         ],
     }},"""
 

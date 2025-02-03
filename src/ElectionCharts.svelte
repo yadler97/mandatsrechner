@@ -33,6 +33,7 @@
     let threshold = getContext('threshold');
     let apportionmentMethod = getContext('apportionmentMethod');
     let electionDate = getContext('electionDate');
+    let note = getContext('note');
     let majority = 0;
     $: {
         majority = Math.floor(($mandateCount / 2) + 1);
@@ -57,15 +58,15 @@
     }
 
     $: {
-        others = 100 - $data.datasets[0].data.reduce((a, b) => a + b, 0)
+        let votesShares = $data.datasets.map(party => party.data[party.index]);
+        others = 100 - votesShares.reduce((a, b) => a + b, 0)
         if (others >= -0.00001) {
-            $data.datasets[0].data = $data.datasets[0].data
             if (apportionmentMethod == 'D\'Hondt') {
-                mandates = dhondt([...$data.datasets[0].data], $mandateCount, threshold)
+                mandates = dhondt([...votesShares], $mandateCount, threshold)
             } else if (apportionmentMethod == 'Sainte-Laguë') {
-                mandates = saintelague([...$data.datasets[0].data], $mandateCount, threshold)
+                mandates = saintelague([...votesShares], $mandateCount, threshold)
             } else if (apportionmentMethod == 'Hare-Niemeyer') {
-                mandates = hareniemeyer([...$data.datasets[0].data], $mandateCount, threshold)
+                mandates = hareniemeyer([...votesShares], $mandateCount, threshold)
             }
         }
     }
@@ -181,7 +182,27 @@
     <div class="bar_container">
         <Bar data={$data} options={{ responsive: true, plugins: {
             datalabels: {
-                display: false
+                anchor: 'end',  // Positions the labels above the bars
+                align: 'top',
+                color: 'black',
+                font: {
+                    weight: 'bold',
+                },
+                formatter: (value, context) => {
+                    const { chart, dataIndex, datasetIndex } = context;
+
+                    // Only place label on the last dataset in the stack
+                    const lastDatasetIndex = chart.data.datasets.length - 1;
+                    if (datasetIndex !== lastDatasetIndex) return ''; // Hide for other stacks
+
+                    // Sum all values in this category (column)
+                    const total = chart.data.datasets.reduce((sum, dataset) => {
+                    const val = dataset.data[dataIndex];
+                    return typeof val === 'number' ? sum + val : sum;
+                    }, 0);
+
+                    return total.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // Display total value once per stack
+                },
             },
             annotation: {
                 annotations: threshold > 0 ? {
@@ -194,14 +215,22 @@
                     }
                 } : {} // Empty object if threshold is 0 or less
             }
-        } }} />
+        },
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
+    },
+  }, }} />
     </div>
     
     <div class="input_fields_vote">
-        {#each $data.datasets[0].data as party, i}
+        {#each $data.datasets as party, i}
             <div class="input_field_vote_party">
-                <label for="input_party_{i}">{$data.labels[i]}</label>
-                <input id="input_party_{i}" type="number" bind:value={$data.datasets[0].data[i]} min=0 max=100>
+                <label for="input_party_{i}">{party.label}</label>
+                <input id="input_party_{i}" type="number" bind:value={$data.datasets[i].data[party.index]} min=0 max=100>
             </div>
         {/each}
         <div class="input_field_vote_party">
@@ -215,6 +244,9 @@
 </section>
 
 <h1>Mandatsverteilung</h1>
+{#if note}
+    <p>Achtung: {note}</p>
+{/if}
 <section class="mandate_section">
     <div class="pie_container">
         <Pie id="mandatesChart" data={$mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {

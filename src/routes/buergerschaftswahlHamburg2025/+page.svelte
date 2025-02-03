@@ -7,11 +7,10 @@
     setContext('data', writable(data))
     setContext('mandateData', writable(mandateData))
     setContext('majorityData', writable(majorityData))
-    setContext('mandateCount', writable(36))
-    setContext('threshold', 4)
-    setContext('apportionmentMethod', 'D\'Hondt')
-    setContext('electionDate', '19. Jänner 2025')
-    setContext('note', 'Aufgrund des mehrstufigen Ermittlungsverfahrens kann es zu geringfügigen Abweichungen zur tatsächlchen Mandatsverteilung kommen.')
+    setContext('mandateCount', writable(121))
+    setContext('threshold', 5)
+    setContext('apportionmentMethod', 'Sainte-Laguë')
+    setContext('electionDate', '2. März 2025')
 </script>
 
 <ElectionCharts />
