@@ -180,7 +180,7 @@
         </table>
     </div>
     <div class="bar_container">
-        <Bar data={$data} options={{ responsive: true, plugins: {
+        <Bar data={$data} options={{ responsive: true, maintainAspectRatio: false, plugins: {
             datalabels: {
                 anchor: 'end',  // Positions the labels above the bars
                 align: 'top',
@@ -214,11 +214,6 @@
                         borderWidth: 2,
                     }
                 } : {} // Empty object if threshold is 0 or less
-            },
-        },
-        layout: {
-            padding: {
-                bottom: -70,
             },
         },
         scales: {

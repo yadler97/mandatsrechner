@@ -174,9 +174,29 @@
         </table>
     </div>
     <div class="bar_container">
-        <Bar {data} options={{ responsive: true, plugins: {
+        <Bar {data} options={{ responsive: true, maintainAspectRatio: false, plugins: {
             datalabels: {
-                display: false
+                anchor: 'end',  // Positions the labels above the bars
+                align: 'top',
+                color: 'black',
+                font: {
+                    weight: 'bold',
+                },
+                formatter: (value, context) => {
+                    const { chart, dataIndex, datasetIndex } = context;
+
+                    // Only place label on the last dataset in the stack
+                    const lastDatasetIndex = chart.data.datasets.length - 1;
+                    if (datasetIndex !== lastDatasetIndex) return ''; // Hide for other stacks
+
+                    // Sum all values in this category (column)
+                    const total = chart.data.datasets.reduce((sum, dataset) => {
+                    const val = dataset.data[dataIndex];
+                    return typeof val === 'number' ? sum + val : sum;
+                    }, 0);
+
+                    return total.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // Display total value once per stack
+                },
             },
             annotation: {
                 annotations: threshold > 0 ? {
@@ -189,7 +209,15 @@
                     }
                 } : {} // Empty object if threshold is 0 or less
             }
-        } }} />
+        },
+        scales: {
+            y: {
+                suggestedMax: Math.max(...data.labels.map((_, index) => 
+                    data.datasets.reduce((sum, party) => sum + (party.data[index] || 0), 0)
+                )) + 5
+            },
+        }
+    }} />
     </div>
     
     <div class="input_fields_vote">

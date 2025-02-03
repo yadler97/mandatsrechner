@@ -59,6 +59,10 @@ td {
     margin: auto;
     width: 50%;
     margin-right: 5%;
+
+    canvas {
+        min-height: 250px;
+    }
 }
 
 .input_fields_vote {
