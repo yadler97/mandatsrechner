@@ -214,16 +214,25 @@
                         borderWidth: 2,
                     }
                 } : {} // Empty object if threshold is 0 or less
-            }
+            },
         },
-  scales: {
-    x: {
-      stacked: true,
-    },
-    y: {
-      stacked: true,
-    },
-  }, }} />
+        layout: {
+            padding: {
+                bottom: -70,
+            },
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true,
+                suggestedMax: Math.max(...$data.labels.map((_, index) => 
+                    $data.datasets.reduce((sum, party) => sum + (party.data[index] || 0), 0)
+                )) + 5
+            },
+        }
+    }} />
     </div>
     
     <div class="input_fields_vote">
