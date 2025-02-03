@@ -43,6 +43,13 @@
         twoThirdsMajority = Math.ceil(($mandateCount / 3 * 2));
     }
 
+    const dateObj = new Date(electionDate);
+    electionDate = dateObj.toLocaleDateString("de-AT", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                });
+
     let mandates = [];
 
     let others;

@@ -1,5 +1,5 @@
 <script>
-    import { data, mandateData, majorityData } from './data';
+    import { data, mandateData, majorityData, date } from './data';
 	import ElectionCharts from '../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
 	import { writable } from 'svelte/store';
@@ -10,7 +10,7 @@
     setContext('mandateCount', writable(36))
     setContext('threshold', 4)
     setContext('apportionmentMethod', 'D\'Hondt')
-    setContext('electionDate', '19. Jänner 2025')
+    setContext('electionDate', date)
     setContext('note', 'Aufgrund des mehrstufigen Ermittlungsverfahrens kann es zu geringfügigen Abweichungen zur tatsächlchen Mandatsverteilung kommen.')
 </script>
 

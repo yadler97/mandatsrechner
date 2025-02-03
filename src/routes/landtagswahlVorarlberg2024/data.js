@@ -1,3 +1,6 @@
+export const name = 'Landtagswahl Vorarlberg 2024';
+export const date = '2024-10-13'
+
 export const data = {
   labels: ['ÖVP', 'Grüne', 'FPÖ', 'SPÖ', 'NEOS'],
   datasets: [

@@ -1,5 +1,5 @@
 <script>
-    import { data, mandateData, majorityData } from './data';
+    import { data, mandateData, majorityData, date } from './data';
 	import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
 	import { writable } from 'svelte/store';
@@ -10,7 +10,7 @@
     setContext('mandateCount', writable(20))
     setContext('threshold', 4)
     setContext('apportionmentMethod', 'D\'Hondt')
-    setContext('electionDate', '9. Juni 2024')
+    setContext('electionDate', date)
 </script>
 
 <ElectionCharts />
