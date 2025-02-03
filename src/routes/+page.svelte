@@ -20,7 +20,7 @@
                 .replace('/src/routes/', '')
                 .replace('/data.js', '');
 
-            const imagePath = `src/routes/${route}/flag.jpg`;
+            const imagePath = `flags/${route}.jpg`;
 
             return { route: route || 'home', name, dateStr, imagePath };
         })
