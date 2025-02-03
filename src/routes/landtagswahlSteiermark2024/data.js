@@ -1,3 +1,6 @@
+export const name = 'Landtagswahl Steiermark 2024';
+export const date = '2024-11-24'
+
 export const data = {
   labels: ['ÖVP', 'SPÖ', 'FPÖ', 'Grüne', 'KPÖ', 'NEOS'],
   datasets: [

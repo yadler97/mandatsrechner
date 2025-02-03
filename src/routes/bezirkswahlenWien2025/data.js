@@ -1,3 +1,6 @@
+export const name = 'Bezirksvertretungswahlen Wien 2025';
+export const date = '2025-04-27'
+
 export const data = [
     {
         labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'LINKS', 'HC'],

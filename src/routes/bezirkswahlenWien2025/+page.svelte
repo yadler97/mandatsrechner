@@ -1,5 +1,5 @@
 <script>
-    import { data, mandateData, majorityData } from './data';
+    import { data, mandateData, majorityData, date } from './data';
 	import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
     import { page } from '$app/stores';
@@ -58,7 +58,7 @@
 
     setContext('threshold', 0)
     setContext('apportionmentMethod', 'D\'Hondt')
-    setContext('electionDate', '27. April 2025')
+    setContext('electionDate', date)
 </script>
 
 <select bind:value={district} on:change={() => gotoDistrict(district)} class="district_select">

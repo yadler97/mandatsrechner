@@ -19,7 +19,7 @@
     <p>Mandatsrechner</p>
 
     <select on:change={onChange} bind:value={path}>
-        <option value="{base}/">Anstehende Wahl auswählen</option>
+        <option value="{base}/">Wahl auswählen</option>
         <option value="{base}/europawahl2024">Europawahl 2024</option>
         <option value="{base}/nationalratswahl2024">Nationalratswahl 2024</option>
         <option value="{base}/landtagswahlVorarlberg2024">Landtagswahl Vorarlberg 2024</option>

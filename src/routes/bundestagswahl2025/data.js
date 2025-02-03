@@ -1,3 +1,6 @@
+export const name = 'Bundestagswahl 2025';
+export const date = '2025-02-23'
+
 export const data = {
   labels: ['SPD', 'CDU/CSU', 'Grüne', 'FDP', 'AfD', 'Linke', 'BSW'],
   datasets: [
