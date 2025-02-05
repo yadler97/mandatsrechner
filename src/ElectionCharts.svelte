@@ -178,7 +178,11 @@
               </tr>
               <tr>
                 <th>Sperrklausel</th>
-                <td>{threshold} %</td>
+                <td>{#if threshold > 0}
+                    {threshold} %
+                  {:else}
+                    keine
+                  {/if}</td>
               </tr>
               <tr>
                 <th>Sitzzuteilungsverfahren</th>

@@ -18,8 +18,10 @@
     }
 </script>
 <header>
-    <img src={logo} alt="Mandatsrechner-Logo">
-    <p>Mandatsrechner</p>
+    <a href="{base}/">
+        <img src={logo} alt="Mandatsrechner-Logo">
+        <p>Mandatsrechner</p>
+    </a>
 
     <select on:change={onChange} bind:value={path}>
         <option value="{base}/">Wahl auswählen</option>

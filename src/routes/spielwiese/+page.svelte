@@ -1,3 +1,7 @@
+<svelte:head>
+   <title>Mandatsrechner - Spielwiese</title>
+</svelte:head>
+
 <script>
     import { data, mandateData, majorityData } from './data';
     import { setContext } from 'svelte';

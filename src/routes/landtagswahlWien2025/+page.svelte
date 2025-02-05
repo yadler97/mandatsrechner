@@ -1,5 +1,9 @@
+<svelte:head>
+   <title>Mandatsrechner - {name}</title>
+</svelte:head>
+
 <script>
-    import { data, mandateData, majorityData, date } from './data';
+    import { data, mandateData, majorityData, date, name } from './data';
 	import ElectionCharts from '../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
 	import { writable } from 'svelte/store';

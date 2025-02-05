@@ -1,4 +1,4 @@
-p, label, th, td, h1, h3 {
+p, label, th, td, h1, h2, h3 {
     font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -8,24 +8,41 @@ p, label, th {
 
 header {
     display: flex;
-    padding: 10px;
+    padding: 5px;
     box-shadow: 0 0 15px 8px rgba(0,0,0,0.06);
     border-radius: 10px;
 
-    img {
-        height: 50px;
-        margin: auto 0;
+    a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        background-color: white;
+        padding: 5px;
+        border-radius: 10px;
+
+        img {
+            height: 50px;
+            margin: auto 0;
+        }
+
+        p {
+            font-size: larger;
+            font-weight: bold;
+            margin-left: 20px;
+        }
     }
 
-    p {
-        font-size: larger;
-        font-weight: bold;
-        margin-left: 20px;
+    a:hover {
+        filter: brightness(95%);
+    }
+
+    a:focus {
+        filter: brightness(90%);
     }
 }
 
 select {
-    margin: 0 0 0 auto;
+    margin: 5px 5px 5px auto;
     padding: 8px;
     border-radius: 10px;
     border: 1px solid #aaa;
