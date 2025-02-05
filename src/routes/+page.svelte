@@ -1,3 +1,7 @@
+<svelte:head>
+   <title>Mandatsrechner</title>
+</svelte:head>
+
 <h1>Willkommen zum großen Mandatsrechner!</h1>
 
 <script>
@@ -57,7 +61,7 @@
     });
 </script>
 
-<h1>Anstehende Wahlen</h1>
+<h2>Anstehende Wahlen</h2>
 <div class="scroll-container">
     {#each upcomingRoutes as { route, name, dateStr, imagePath }}
         <a href="{base}/{route}" class="card-link">
@@ -72,7 +76,7 @@
     {/each}
 </div>
 
-<h1>Vergangene Wahlen</h1>
+<h2>Vergangene Wahlen</h2>
 <div class="scroll-container">
     {#each pastRoutes as { route, name, dateStr, imagePath }}
         <a href="{base}/{route}" class="card-link">
