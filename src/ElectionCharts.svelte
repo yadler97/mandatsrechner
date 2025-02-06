@@ -1,5 +1,5 @@
 <script>
-    import { Bar, Pie } from 'svelte-chartjs';
+    import { Bar, Doughnut } from 'svelte-chartjs';
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -33,6 +33,7 @@
     let threshold = getContext('threshold');
     let apportionmentMethod = getContext('apportionmentMethod');
     let electionDate = getContext('electionDate');
+    let baseMandateRule = getContext('baseMandateRule');
     let note = getContext('note');
     let majority = 0;
     $: {
@@ -65,20 +66,30 @@
     }
 
     $: {
-        let votesShares = $data.datasets.map(party => party.data[party.index]);
-        others = 100 - votesShares.reduce((a, b) => a + b, 0)
-        if (others >= -0.00001) {
-            if (apportionmentMethod == 'D\'Hondt') {
-                mandates = dhondt([...votesShares], $mandateCount, threshold)
-            } else if (apportionmentMethod == 'Sainte-Laguë') {
-                mandates = saintelague([...votesShares], $mandateCount, threshold)
-            } else if (apportionmentMethod == 'Hare-Niemeyer') {
-                mandates = hareniemeyer([...votesShares], $mandateCount, threshold)
-            }
-        }
+        mandates = calcMandates($data.datasets);
     }
 
-    function dhondt(vote_shares, mandate_count, threshold) {
+    function calcMandates(dataset) {
+        let votesShares = dataset.map(party => party.data[party.index]);
+        others = 100 - votesShares.reduce((a, b) => a + b, 0);
+        let eligibleShares = votesShares.map((value, index) => {
+            const checkbox = document.getElementById(`checkbox_party_${index}`);
+            const isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+            return (value < threshold && !isChecked) ? 0 : value;
+        });
+        if (others >= -0.00001) {
+            if (apportionmentMethod == 'D\'Hondt') {
+                mandates = dhondt([...eligibleShares], $mandateCount);
+            } else if (apportionmentMethod == 'Sainte-Laguë') {
+                mandates = saintelague([...eligibleShares], $mandateCount);
+            } else if (apportionmentMethod == 'Hare-Niemeyer') {
+                mandates = hareniemeyer([...eligibleShares], $mandateCount);
+            }
+        }
+        return mandates;
+    }
+
+    function dhondt(vote_shares, mandate_count) {
         let mandates = []
         let current_divisors = []
         let current_vote_count = [...vote_shares]
@@ -86,11 +97,6 @@
         for (let i in vote_shares) {
             current_divisors.push(1)
             mandates.push(0)
-
-            if (vote_shares[i] < threshold) {
-                vote_shares[i] = 0
-                current_vote_count[i] = 0
-            }
         }
 
         for (let i = 0; i < mandate_count; i++) {
@@ -103,7 +109,7 @@
         return mandates
     }
 
-    function saintelague(vote_shares, mandate_count, threshold) {
+    function saintelague(vote_shares, mandate_count) {
         let mandates = []
         let current_divisors = new Array(vote_shares.length).fill(0.5);
         let current_vote_count = [...vote_shares]
@@ -111,11 +117,6 @@
         for (let i in vote_shares) {
             current_divisors.push(1)
             mandates.push(0)
-
-            if (vote_shares[i] < threshold) {
-                vote_shares[i] = 0
-                current_vote_count[i] = 0
-            }
         }
 
         for (let i = 0; i < mandate_count; i++) {
@@ -128,15 +129,13 @@
         return mandates
     }
 
-    function hareniemeyer(vote_shares, mandate_count, threshold) {
+    function hareniemeyer(vote_shares, mandate_count) {
         let mandates = []
-        const eligibleShares = vote_shares.filter(share => share >= threshold);
-        const totalEligibleShares = eligibleShares.reduce((sum, share) => sum + share, 0);
+        const totalEligibleShares = vote_shares.reduce((sum, share) => sum + share, 0);
 
         const hareQuotient = totalEligibleShares / mandate_count;
 
         mandates = vote_shares.map(share => {
-            if (share < threshold) return 0;
             const initialMandates = Math.floor(share / hareQuotient);
             const remainder = share % hareQuotient;
             return { initialMandates, remainder };
@@ -247,6 +246,12 @@
                 <label for="input_party_{i}">{party.label}</label>
                 <input id="input_party_{i}" type="number" bind:value={$data.datasets[i].data[party.index]} min=0 max=100>
             </div>
+            {#if $data.datasets[i].data[party.index] < threshold && baseMandateRule}
+            <div class="base_mandate_checkbox">
+                <label for="checkbox_party_{i}">3 Grundmandate?</label>
+                <input id="checkbox_party_{i}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
+            </div>
+            {/if}
         {/each}
         <div class="input_field_vote_party">
             <p>Sonstige:</p>
@@ -264,7 +269,7 @@
 {/if}
 <section class="mandate_section">
     <div class="pie_container">
-        <Pie id="mandatesChart" data={$mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
+        <Doughnut id="mandatesChart" data={$mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
             datalabels: {
                 anchor: 'end',
                 align: 'start',

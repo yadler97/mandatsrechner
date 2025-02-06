@@ -1,5 +1,5 @@
 <script>
-    import { Bar, Pie } from 'svelte-chartjs';
+    import { Bar, Doughnut } from 'svelte-chartjs';
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -240,7 +240,7 @@
 <h1>Mandatsverteilung</h1>
 <section class="mandate_section">
     <div class="pie_container">
-        <Pie id="mandatesChart" data={mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
+        <Doughnut id="mandatesChart" data={mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
             datalabels: {
                 anchor: 'end',
                 align: 'start',

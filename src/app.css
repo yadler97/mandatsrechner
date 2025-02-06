@@ -61,6 +61,7 @@ select {
 .info_container {
     width: 25%;
     margin: auto;
+    max-width: 400px;
 }
 
 th {
@@ -75,27 +76,31 @@ td {
 .bar_container {
     margin: auto;
     width: 50%;
-    margin-right: 5%;
 
     canvas {
-        min-height: 350px;
+        min-height: 400px;
     }
 }
 
 .input_fields_vote {
     margin: auto;
     width: 20%;
-    margin-left: 5%;
+    max-width: 400px;
 }
 
 .input_field_vote_party {
     display:flex;
+    margin-top: 20px;
     margin-bottom: 20px;
 
     label, p {
         width: 80px;
         margin: auto 0;
     }
+}
+
+.base_mandate_checkbox {
+    text-align: center;
 }
 
 input {
@@ -219,6 +224,7 @@ input[type=number] {
         margin: auto auto;
         padding: 20px;
         width: 90%;
+        max-width: 100%;
     }
 
     .mandate_section {

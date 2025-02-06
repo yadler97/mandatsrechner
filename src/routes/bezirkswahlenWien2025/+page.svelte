@@ -60,9 +60,10 @@
         updateDistrict(selectedDistrict);
     }
 
-    setContext('threshold', 0)
-    setContext('apportionmentMethod', 'D\'Hondt')
-    setContext('electionDate', date)
+    setContext('threshold', 0);
+    setContext('apportionmentMethod', 'D\'Hondt');
+    setContext('electionDate', date);
+    setContext('baseMandateRule', false);
 </script>
 
 <select bind:value={district} on:change={() => gotoDistrict(district)} class="district_select">
