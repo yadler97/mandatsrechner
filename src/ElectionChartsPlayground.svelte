@@ -153,6 +153,20 @@
             majorityData.datasets[i].data = [mandates[i]]
         }
     }
+
+    function validateMandateCount(event) {
+        let value = event.target.value;
+        if (Number(value) > 1000) {
+            mandateCount = 1000;
+        }
+    }
+
+    function validateThreshold(event) {
+        let value = event.target.value;
+        if (Number(value) > 100) {
+            threshold = 100;
+        }
+    }
 </script>
 <h1>Stimmenanteile</h1>
 <section class="vote_share_section">
@@ -161,15 +175,15 @@
         <table>
             <tr>
                 <th><label for="input_mandate_count">Abgeordnete</label></th>
-                <td><input id="input_mandate_count" type="number" bind:value={mandateCount} min=0 max=1000></td>
+                <td><input id="input_mandate_count" type="number" bind:value={mandateCount} min=0 max=1000 on:input={validateMandateCount}></td>
             </tr>
             <tr>
                 <th><label for="input_threshold">Sperrklausel</label></th>
-                <td><span class="valuePadding"><input id="input_threshold" type="number" bind:value={threshold} min=0 max=100> %</span></td>
+                <td><span class="valuePadding"><input id="input_threshold" type="number" bind:value={threshold} min=0 max=100 on:input={validateThreshold}> %</span></td>
             </tr>
             <tr>
                 <th><label for="input_apportionment_method">Sitzzuteilungsverfahren</label></th>
-                <td><select class="selectApportionmentMethod" bind:value={apportionmentMethod}><option>D'Hondt</option><option>Sainte-Laguë</option><option>Hare-Niemeyer</option></select></td>
+                <td><select class="selectApportionmentMethod" id="input_apportionment_method" bind:value={apportionmentMethod}><option>D'Hondt</option><option>Sainte-Laguë</option><option>Hare-Niemeyer</option></select></td>
             </tr>
         </table>
     </div>

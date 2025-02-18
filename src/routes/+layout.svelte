@@ -24,7 +24,7 @@
         <p>Mandatsrechner</p>
     </a>
 
-    <select on:change={onChange} bind:value={path}>
+    <select on:change={onChange} bind:value={path} aria-label="Wahl auswählen">
         <option value="{base}/">Wahl auswählen</option>
         <option value="{base}/europawahl2024">Europawahl 2024</option>
         <option value="{base}/landtagswahlSachsen2024">Landtagswahl Sachsen 2024</option>
