@@ -248,7 +248,7 @@
             </div>
             {#if $data.datasets[i].data[party.index] < threshold && baseMandateRule}
             <div class="base_mandate_checkbox">
-                <label for="checkbox_party_{i}">3 Grundmandate?</label>
+                <label for="checkbox_party_{i}">{baseMandateRule} Grundmandat(e)?</label>
                 <input id="checkbox_party_{i}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
             </div>
             {/if}

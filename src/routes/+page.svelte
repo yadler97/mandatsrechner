@@ -1,5 +1,7 @@
 <svelte:head>
-   <title>Mandatsrechner</title>
+    <title>Mandatsrechner</title>
+    <meta property="og:title" content="Mandatsrechner">
+    <meta name="twitter:title" content="Mandatsrechner">
 </svelte:head>
 
 <h1>Willkommen zum großen Mandatsrechner!</h1>

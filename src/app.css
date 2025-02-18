@@ -39,10 +39,13 @@ header {
     a:focus {
         filter: brightness(90%);
     }
+
+    select {
+        margin: 5px 5px 5px auto;
+    }
 }
 
 select {
-    margin: 5px 5px 5px auto;
     padding: 8px;
     border-radius: 10px;
     border: 1px solid #aaa;
@@ -71,6 +74,12 @@ th {
 
 td {
     padding: 10px;
+
+    input {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
 }
 
 .bar_container {
@@ -213,6 +222,7 @@ input[type=number] {
 
     .bar_container {
         width: 100%;
+        min-width: auto !important;
         margin: auto;
 
         canvas {
@@ -263,4 +273,57 @@ input[type=number] {
     box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
     font-size: 16px;
     display: flex;
+}
+
+section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info_container {
+    flex: 1;
+    max-width: 400px;
+}
+
+.bar_container {
+    flex: 2;
+    min-width: 500px;
+}
+
+.input_fields_vote {
+    flex: 1;
+    max-width: 300px;
+}
+
+table {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+th {
+    min-width: 180px;
+    max-width: 200px;
+}
+
+td {
+    min-width: 150px;
+}
+
+tr {
+    display: block;
+}
+
+th, td {
+    display: inline-block;
 }

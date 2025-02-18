@@ -1,5 +1,7 @@
 <svelte:head>
    <title>Mandatsrechner - {name}</title>
+   <meta property="og:title" content="Mandatsrechner - {name}">
+   <meta name="twitter:title" content="Mandatsrechner - {name}">
 </svelte:head>
 
 <script>
@@ -15,7 +17,7 @@
     setContext('threshold', 5);
     setContext('apportionmentMethod', 'Sainte-Laguë');
     setContext('electionDate', date);
-    setContext('baseMandateRule', true);
+    setContext('baseMandateRule', 3);
 </script>
 
 <ElectionCharts />

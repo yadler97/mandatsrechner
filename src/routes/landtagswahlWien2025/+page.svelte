@@ -1,5 +1,7 @@
 <svelte:head>
    <title>Mandatsrechner - {name}</title>
+   <meta property="og:title" content="Mandatsrechner - {name}">
+   <meta name="twitter:title" content="Mandatsrechner - {name}">
 </svelte:head>
 
 <script>
