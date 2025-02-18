@@ -1,5 +1,7 @@
 <svelte:head>
    <title>Mandatsrechner - Spielwiese</title>
+   <meta property="og:title" content="Mandatsrechner - Spielwiese">
+   <meta name="twitter:title" content="Mandatsrechner - Spielwiese">
 </svelte:head>
 
 <script>
