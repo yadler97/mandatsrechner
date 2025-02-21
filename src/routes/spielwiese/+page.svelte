@@ -8,10 +8,11 @@
     import { data, mandateData, majorityData } from './data';
     import { setContext } from 'svelte';
 	import ElectionChartsPlayground from '../../ElectionChartsPlayground.svelte';
+    import { writable } from 'svelte/store';
 
-    setContext('data', data)
-    setContext('mandateData', mandateData)
-    setContext('majorityData', majorityData)
+    setContext('data', writable(data))
+    setContext('mandateData', writable(mandateData))
+    setContext('majorityData', writable(majorityData))
 </script>
 
 <ElectionChartsPlayground />

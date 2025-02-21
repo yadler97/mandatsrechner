@@ -2,6 +2,7 @@
     import { Bar, Doughnut } from 'svelte-chartjs';
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
+    import { dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
 
     import { getContext } from 'svelte'
 
@@ -89,76 +90,16 @@
         return mandates;
     }
 
-    function dhondt(vote_shares, mandate_count) {
-        let mandates = []
-        let current_divisors = []
-        let current_vote_count = [...vote_shares]
-
-        for (let i in vote_shares) {
-            current_divisors.push(1)
-            mandates.push(0)
-        }
-
-        for (let i = 0; i < mandate_count; i++) {
-            let idx = current_vote_count.indexOf(Math.max(...current_vote_count));
-            current_divisors[idx] = current_divisors[idx] + 1
-            mandates[idx] = mandates[idx] + 1
-            current_vote_count[idx] = vote_shares[idx] / current_divisors[idx]
-        }
-
-        return mandates
-    }
-
-    function saintelague(vote_shares, mandate_count) {
-        let mandates = []
-        let current_divisors = new Array(vote_shares.length).fill(0.5);
-        let current_vote_count = [...vote_shares]
-
-        for (let i in vote_shares) {
-            current_divisors.push(1)
-            mandates.push(0)
-        }
-
-        for (let i = 0; i < mandate_count; i++) {
-            let idx = current_vote_count.indexOf(Math.max(...current_vote_count));
-            current_divisors[idx] = current_divisors[idx] + 1
-            mandates[idx] = mandates[idx] + 1
-            current_vote_count[idx] = vote_shares[idx] / current_divisors[idx]
-        }
-
-        return mandates
-    }
-
-    function hareniemeyer(vote_shares, mandate_count) {
-        let mandates = []
-        const totalEligibleShares = vote_shares.reduce((sum, share) => sum + share, 0);
-
-        const hareQuotient = totalEligibleShares / mandate_count;
-
-        mandates = vote_shares.map(share => {
-            const initialMandates = Math.floor(share / hareQuotient);
-            const remainder = share % hareQuotient;
-            return { initialMandates, remainder };
-        });
-
-        let allocatedMandates = mandates.reduce((sum, p) => sum + (p.initialMandates || 0), 0);
-        const remainingMandates = mandate_count - allocatedMandates;
-
-        const remainderSorted = mandates
-            .map((p, index) => ({ index, remainder: p.remainder || 0 }))
-            .sort((a, b) => b.remainder - a.remainder);
-
-        for (let i = 0; i < remainingMandates; i++) {
-            mandates[remainderSorted[i].index].initialMandates += 1;
-        }
-
-        return mandates.map(p => (p.initialMandates || 0));
-    }
-
     $: {
         $mandateData.datasets[0].data = mandates
         for (let i in mandates) {
             $majorityData.datasets[i].data = [mandates[i]]
+        }
+    }
+
+    function validatePartyShare(index, partyIndex) {
+        if ($data.datasets[index].data[partyIndex] > 100) {
+            $data.datasets[index].data[partyIndex] = 100;
         }
     }
 </script>
@@ -244,7 +185,7 @@
         {#each $data.datasets as party, i}
             <div class="input_field_vote_party">
                 <label for="input_party_{i}">{party.label}</label>
-                <input id="input_party_{i}" type="number" bind:value={$data.datasets[i].data[party.index]} min=0 max=100>
+                <span class="valuePadding"><input id="input_party_{i}" type="number" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
             </div>
             {#if $data.datasets[i].data[party.index] < threshold && baseMandateRule}
             <div class="base_mandate_checkbox">
