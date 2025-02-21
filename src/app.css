@@ -1,4 +1,4 @@
-p, label, th, td, h1, h2, h3 {
+p, label, th, td, h1, h2, h3, span {
     font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -74,12 +74,6 @@ th {
 
 td {
     padding: 10px;
-
-    input {
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box;
-    }
 }
 
 .bar_container {
@@ -121,8 +115,9 @@ input {
 }
 
 input[type=number] {
-    max-width: 65%;
-    width: 65%;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .mandate_section {
@@ -291,11 +286,17 @@ section {
 .bar_container {
     flex: 2;
     min-width: 500px;
+    max-width: 1000px;
 }
 
 .input_fields_vote {
     flex: 1;
     max-width: 300px;
+
+    .valuePadding {
+        width: 100%;
+        margin-left: 20px;
+    }
 }
 
 table {

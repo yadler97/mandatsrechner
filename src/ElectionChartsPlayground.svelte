@@ -2,6 +2,7 @@
     import { Bar, Doughnut } from 'svelte-chartjs';
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
+    import { dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
 
     import { getContext } from 'svelte'
 
@@ -48,7 +49,7 @@
     let selectedParties = 0;
     $: {
         selectedParties = 0;
-        majorityData.datasets.forEach((dataset, index) => {
+        $majorityData.datasets.forEach((dataset, index) => {
             if (!dataset.hidden) {
                 selectedParties += dataset.data[0];
             }
@@ -56,101 +57,33 @@
     }
 
     $: {
-        others = 100 - data.datasets[0].data.reduce((a, b) => a + b, 0)
-        if (others >= 0) {
-            data.datasets[0].data = data.datasets[0].data
-            if (apportionmentMethod == 'D\'Hondt') {
-                mandates = dhondt([...data.datasets[0].data], mandateCount, threshold)
-            } else if (apportionmentMethod == 'Sainte-Laguë') {
-                mandates = saintelague([...data.datasets[0].data], mandateCount, threshold)
-            } else if (apportionmentMethod == 'Hare-Niemeyer') {
-                mandates = hareniemeyer([...data.datasets[0].data], mandateCount, threshold)
-            }
-        }
+        mandates = calcMandates($data.datasets, mandateCount, apportionmentMethod, threshold);
     }
 
-    function dhondt(vote_shares, mandate_count, threshold) {
-        let mandates = []
-        let current_divisors = []
-        let current_vote_count = [...vote_shares]
-
-        for (let i in vote_shares) {
-            current_divisors.push(1)
-            mandates.push(0)
-
-            if (vote_shares[i] < threshold) {
-                vote_shares[i] = 0
-                current_vote_count[i] = 0
-            }
-        }
-
-        for (let i = 0; i < mandate_count; i++) {
-            let idx = current_vote_count.indexOf(Math.max(...current_vote_count));
-            current_divisors[idx] = current_divisors[idx] + 1
-            mandates[idx] = mandates[idx] + 1
-            current_vote_count[idx] = vote_shares[idx] / current_divisors[idx]
-        }
-
-        return mandates
-    }
-
-    function saintelague(vote_shares, mandate_count, threshold) {
-        let mandates = []
-        let current_divisors = new Array(vote_shares.length).fill(0.5);
-        let current_vote_count = [...vote_shares]
-
-        for (let i in vote_shares) {
-            current_divisors.push(1)
-            mandates.push(0)
-
-            if (vote_shares[i] < threshold) {
-                vote_shares[i] = 0
-                current_vote_count[i] = 0
-            }
-        }
-
-        for (let i = 0; i < mandate_count; i++) {
-            let idx = current_vote_count.indexOf(Math.max(...current_vote_count));
-            current_divisors[idx] = current_divisors[idx] + 1
-            mandates[idx] = mandates[idx] + 1
-            current_vote_count[idx] = vote_shares[idx] / current_divisors[idx]
-        }
-
-        return mandates
-    }
-
-    function hareniemeyer(vote_shares, mandate_count, threshold) {
-        let mandates = []
-        const eligibleShares = vote_shares.filter(share => share >= threshold);
-        const totalEligibleShares = eligibleShares.reduce((sum, share) => sum + share, 0);
-
-        const hareQuotient = totalEligibleShares / mandate_count;
-
-        mandates = vote_shares.map(share => {
-            if (share < threshold) return 0;
-            const initialMandates = Math.floor(share / hareQuotient);
-            const remainder = share % hareQuotient;
-            return { initialMandates, remainder };
+    function calcMandates(dataset, mandateCount, apportionmentMethod, threshold) {
+        let votesShares = dataset.map(party => party.data[party.index]);
+        others = 100 - votesShares.reduce((a, b) => a + b, 0);
+        let eligibleShares = votesShares.map((value, index) => {
+            const checkbox = document.getElementById(`checkbox_party_${index}`);
+            const isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+            return (value < threshold && !isChecked) ? 0 : value;
         });
-
-        let allocatedMandates = mandates.reduce((sum, p) => sum + (p.initialMandates || 0), 0);
-        const remainingMandates = mandate_count - allocatedMandates;
-
-        const remainderSorted = mandates
-            .map((p, index) => ({ index, remainder: p.remainder || 0 }))
-            .sort((a, b) => b.remainder - a.remainder);
-
-        for (let i = 0; i < remainingMandates; i++) {
-            mandates[remainderSorted[i].index].initialMandates += 1;
+        if (others >= -0.00001) {
+            if (apportionmentMethod == 'D\'Hondt') {
+                mandates = dhondt([...eligibleShares], mandateCount);
+            } else if (apportionmentMethod == 'Sainte-Laguë') {
+                mandates = saintelague([...eligibleShares], mandateCount);
+            } else if (apportionmentMethod == 'Hare-Niemeyer') {
+                mandates = hareniemeyer([...eligibleShares], mandateCount);
+            }
         }
-
-        return mandates.map(p => (p.initialMandates || 0));
+        return mandates;
     }
 
     $: {
-        mandateData.datasets[0].data = mandates
+        $mandateData.datasets[0].data = mandates
         for (let i in mandates) {
-            majorityData.datasets[i].data = [mandates[i]]
+            $majorityData.datasets[i].data = [mandates[i]]
         }
     }
 
@@ -165,6 +98,12 @@
         let value = event.target.value;
         if (Number(value) > 100) {
             threshold = 100;
+        }
+    }
+
+    function validatePartyShare(index, partyIndex) {
+        if ($data.datasets[index].data[partyIndex] > 100) {
+            $data.datasets[index].data[partyIndex] = 100;
         }
     }
 </script>
@@ -188,7 +127,7 @@
         </table>
     </div>
     <div class="bar_container">
-        <Bar {data} options={{ responsive: true, maintainAspectRatio: false, plugins: {
+        <Bar data={$data} options={{ responsive: true, maintainAspectRatio: false, plugins: {
             datalabels: {
                 anchor: 'end',  // Positions the labels above the bars
                 align: 'top',
@@ -222,12 +161,16 @@
                         borderWidth: 2,
                     }
                 } : {} // Empty object if threshold is 0 or less
-            }
+            },
         },
         scales: {
+            x: {
+                stacked: true,
+            },
             y: {
-                suggestedMax: Math.max(...data.labels.map((_, index) => 
-                    data.datasets.reduce((sum, party) => sum + (party.data[index] || 0), 0)
+                stacked: true,
+                suggestedMax: Math.max(...$data.labels.map((_, index) => 
+                    $data.datasets.reduce((sum, party) => sum + (party.data[index] || 0), 0)
                 )) + 5
             },
         }
@@ -235,10 +178,10 @@
     </div>
     
     <div class="input_fields_vote">
-        {#each data.datasets[0].data as party, i}
+        {#each $data.datasets as party, i}
             <div class="input_field_vote_party">
-                <label for="input_party_{i}">{data.labels[i]}</label>
-                <input id="input_party_{i}" type="number" bind:value={data.datasets[0].data[i]} min=0 max=100>
+                <label for="input_party_{i}">{party.label}</label>
+                <span class="valuePadding"><input id="input_party_{i}" type="number" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
             </div>
         {/each}
         <div class="input_field_vote_party">
@@ -254,7 +197,7 @@
 <h1>Mandatsverteilung</h1>
 <section class="mandate_section">
     <div class="pie_container">
-        <Doughnut id="mandatesChart" data={mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
+        <Doughnut id="mandatesChart" data={$mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
             datalabels: {
                 anchor: 'end',
                 align: 'start',
@@ -270,7 +213,7 @@
     </div>
 
     <div class="stack_container">
-        <Bar data={majorityData} options={{ responsive: true, indexAxis: 'y', scales: {y: {stacked: true}, x: {stacked: true, max: mandateCount}}, plugins: {
+        <Bar data={$majorityData} options={{ responsive: true, indexAxis: 'y', scales: {y: {stacked: true}, x: {stacked: true, max: mandateCount}}, plugins: {
             annotation: {
                 annotations: {
                     majorityLine: {
@@ -305,10 +248,10 @@
                 onClick: function(event, legendItem) {
                     if (legendItem.datasetIndex !== undefined) {
                         const datasetIndex = legendItem.datasetIndex;
-                        const isVisible = majorityData.datasets[datasetIndex].hidden;
+                        const isVisible = $majorityData.datasets[datasetIndex].hidden;
 
                         // Toggle the visibility of selected party
-                        majorityData.datasets[datasetIndex].hidden = !isVisible;
+                        $majorityData.datasets[datasetIndex].hidden = !isVisible;
                     }
                 }
             }
