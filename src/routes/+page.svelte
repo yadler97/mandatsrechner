@@ -65,30 +65,38 @@
 
 <h2>Anstehende Wahlen</h2>
 <div class="scroll-container">
-    {#each upcomingRoutes as { route, name, dateStr, imagePath }}
-        <a href="{base}/{route}" class="card-link">
-            <div class="card">
-                <img src={imagePath} alt="Flag" class="card-image" />
-                <div class="card-content">
-                    <h3>{name}</h3>
-                    <p>{dateStr}</p>
+    {#if upcomingRoutes.length > 0}
+        {#each upcomingRoutes as { route, name, dateStr, imagePath }}
+            <a href="{base}/{route}" class="card-link">
+                <div class="card">
+                    <img src={imagePath} alt="Flag" class="card-image" />
+                    <div class="card-content">
+                        <h3>{name}</h3>
+                        <p>{dateStr}</p>
+                    </div>
                 </div>
-            </div>
-        </a>
-    {/each}
+            </a>
+        {/each}
+    {:else}
+        <p>keine</p>
+    {/if}
 </div>
 
 <h2>Vergangene Wahlen</h2>
 <div class="scroll-container">
-    {#each pastRoutes as { route, name, dateStr, imagePath }}
-        <a href="{base}/{route}" class="card-link">
-            <div class="card">
-                <img src={imagePath} alt="Flag" class="card-image" />
-                <div class="card-content">
-                    <h3>{name}</h3>
-                    <p>{dateStr}</p>
+    {#if pastRoutes.length > 0}
+        {#each pastRoutes as { route, name, dateStr, imagePath }}
+            <a href="{base}/{route}" class="card-link">
+                <div class="card">
+                    <img src={imagePath} alt="Flag" class="card-image" />
+                    <div class="card-content">
+                        <h3>{name}</h3>
+                        <p>{dateStr}</p>
+                    </div>
                 </div>
-            </div>
-        </a>
-    {/each}
+            </a>
+        {/each}
+    {:else}
+        <p>keine</p>
+    {/if}
 </div>

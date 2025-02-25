@@ -2,7 +2,7 @@
     import { Bar, Doughnut } from 'svelte-chartjs';
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
-    import { dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
+    import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
 
     import { getContext } from 'svelte'
 
@@ -69,11 +69,11 @@
             return (value < threshold && !isChecked) ? 0 : value;
         });
         if (others >= -0.00001) {
-            if (apportionmentMethod == 'D\'Hondt') {
+            if (apportionmentMethod == ApportionmentMethods.DHONDT) {
                 mandates = dhondt([...eligibleShares], mandateCount);
-            } else if (apportionmentMethod == 'Sainte-Laguë') {
+            } else if (apportionmentMethod == ApportionmentMethods.SAINTE_LAGUE) {
                 mandates = saintelague([...eligibleShares], mandateCount);
-            } else if (apportionmentMethod == 'Hare-Niemeyer') {
+            } else if (apportionmentMethod == ApportionmentMethods.HARE_NIEMEYER) {
                 mandates = hareniemeyer([...eligibleShares], mandateCount);
             }
         }
@@ -197,7 +197,7 @@
 <h1>Mandatsverteilung</h1>
 <section class="mandate_section">
     <div class="pie_container">
-        <Doughnut id="mandatesChart" data={$mandateData} options={{ responsive: true, circumference: 180, rotation: -90, plugins: {
+        <Doughnut id="mandatesChart" data={$mandateData} options={{ responsive: true, cutout: '40%', circumference: 180, rotation: -90, plugins: {
             datalabels: {
                 anchor: 'end',
                 align: 'start',
