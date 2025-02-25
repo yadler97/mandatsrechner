@@ -1,3 +1,9 @@
+export const ApportionmentMethods = {
+    DHONDT: "D'Hondt",
+    SAINTE_LAGUE: "Sainte-Laguë",
+    HARE_NIEMEYER: "Hare-Niemeyer"
+};
+
 export function dhondt(vote_shares, mandate_count) {
     let mandates: number[] = [];
     let current_divisors: number[] = [];
@@ -24,7 +30,7 @@ export function saintelague(vote_shares, mandate_count) {
     let current_vote_count = [...vote_shares];
 
     for (let i in vote_shares) {
-        current_divisors.push(1);
+        current_vote_count[i] = current_vote_count[i] / current_divisors[i]
         mandates.push(0);
     }
 

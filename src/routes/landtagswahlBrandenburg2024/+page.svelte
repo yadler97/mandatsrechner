@@ -9,13 +9,14 @@
 	import ElectionCharts from '../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
 	import { writable } from 'svelte/store';
+    import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
     setContext('data', writable(data));
     setContext('mandateData', writable(mandateData));
     setContext('majorityData', writable(majorityData));
     setContext('mandateCount', writable(88));
     setContext('threshold', 5);
-    setContext('apportionmentMethod', 'Hare-Niemeyer');
+    setContext('apportionmentMethod', ApportionmentMethods.HARE_NIEMEYER);
     setContext('electionDate', date);
     setContext('baseMandateRule', 1);
     setContext('note', 'Aufgrund von Überhang- und Ausgleichsmandaten kann es zu einer höheren Gesamtmandatszahl kommen.');

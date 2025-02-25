@@ -11,6 +11,7 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 	import { writable } from 'svelte/store';
+    import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
     let district = $page.url.searchParams.get('bezirk') || '1';
     let districtInt = parseInt(district);
@@ -63,7 +64,7 @@
     }
 
     setContext('threshold', 0);
-    setContext('apportionmentMethod', 'D\'Hondt');
+    setContext('apportionmentMethod', ApportionmentMethods.DHONDT);
     setContext('electionDate', date);
     setContext('baseMandateRule', false);
 </script>
