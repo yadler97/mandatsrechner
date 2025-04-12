@@ -41,17 +41,17 @@
         $majorityDataObj =  majorityData[districtInt - 1];
 
         // Set the mandate count based on the district
-        if (districtInt == 1 || districtInt == 4 || districtInt == 5 || districtInt == 6 || districtInt == 7 || districtInt == 8 || districtInt == 9 || districtInt == 13 || districtInt == 17 || districtInt == 18) {
+        if (districtInt == 1 || districtInt == 4 || districtInt == 5 || districtInt == 6 || districtInt == 7 || districtInt == 8 || districtInt == 9 || districtInt == 13 || districtInt == 18) {
             $mandateCount = 40;
+        } else if (districtInt == 17) {
+            $mandateCount = 42;
         } else if (districtInt == 19) {
-            $mandateCount = 48;
-        } else if (districtInt == 15) {
             $mandateCount = 50;
-        } else if (districtInt == 3 || districtInt == 14 || districtInt == 20) {
+        } else if (districtInt == 15) {
+            $mandateCount = 52;
+        } else if (districtInt == 20) {
             $mandateCount = 56;
-        } else if (districtInt == 12) {
-            $mandateCount = 58;
-        } else if (districtInt == 2 || districtInt == 10 || districtInt == 11 || districtInt == 16 || districtInt == 21 || districtInt == 22 || districtInt == 23) {
+        } else if (districtInt == 2 || districtInt == 3 || districtInt == 10 || districtInt == 11 || districtInt == 12 || districtInt == 14 || districtInt == 16 || districtInt == 21 || districtInt == 22 || districtInt == 23) {
             $mandateCount = 60;
         }
     };

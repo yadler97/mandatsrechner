@@ -7,24 +7,24 @@
     import { getContext } from 'svelte'
 
     import {
-      Chart,
-      Title,
-      Tooltip,
-      Legend,
-      BarElement,
-      CategoryScale,
-      LinearScale,
+        Chart,
+        Title,
+        Tooltip,
+        Legend,
+        BarElement,
+        CategoryScale,
+        LinearScale,
     } from 'chart.js/auto';
 
     Chart.register(
-      Title,
-      Tooltip,
-      Legend,
-      BarElement,
-      CategoryScale,
-      LinearScale,
-      ChartDataLabels,
-      annotationPlugin
+        Title,
+        Tooltip,
+        Legend,
+        BarElement,
+        CategoryScale,
+        LinearScale,
+        ChartDataLabels,
+        annotationPlugin
     );
 
     let data = getContext('data');
@@ -181,7 +181,7 @@
         {#each $data.datasets as party, i}
             <div class="input_field_vote_party">
                 <label for="input_party_{i}">{party.label}</label>
-                <span class="valuePadding"><input id="input_party_{i}" type="number" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
+                <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
             </div>
         {/each}
         <div class="input_field_vote_party">
