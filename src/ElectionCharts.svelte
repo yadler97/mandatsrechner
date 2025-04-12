@@ -7,24 +7,24 @@
     import { getContext } from 'svelte'
 
     import {
-      Chart,
-      Title,
-      Tooltip,
-      Legend,
-      BarElement,
-      CategoryScale,
-      LinearScale,
+        Chart,
+        Title,
+        Tooltip,
+        Legend,
+        BarElement,
+        CategoryScale,
+        LinearScale,
     } from 'chart.js/auto';
 
     Chart.register(
-      Title,
-      Tooltip,
-      Legend,
-      BarElement,
-      CategoryScale,
-      LinearScale,
-      ChartDataLabels,
-      annotationPlugin
+        Title,
+        Tooltip,
+        Legend,
+        BarElement,
+        CategoryScale,
+        LinearScale,
+        ChartDataLabels,
+        annotationPlugin
     );
 
     let data = getContext('data');
@@ -71,10 +71,18 @@
     }
 
     function calcMandates(dataset) {
-        let votesShares = dataset.map(party => party.data[party.index]);
+        let filteredIndices = dataset
+            .map((party, index) => party.order != 2 ? index : -1)
+            .filter(index => index !== -1);
+
+        let votesShares = filteredIndices
+            .map(index => dataset[index].data[dataset[index].index]);
+
         others = 100 - votesShares.reduce((a, b) => a + b, 0);
-        let eligibleShares = votesShares.map((value, index) => {
-            const checkbox = document.getElementById(`checkbox_party_${index}`);
+
+        let eligibleShares = votesShares.map((value, filteredIndex) => {
+            const originalIndex = filteredIndices[filteredIndex];
+            const checkbox = document.getElementById(`checkbox_party_${originalIndex}`);
             const isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
             return (value < threshold && !isChecked) ? 0 : value;
         });
@@ -91,7 +99,7 @@
     }
 
     $: {
-        $mandateData.datasets[0].data = mandates
+        $mandateData.datasets[1].data = mandates
         for (let i in mandates) {
             $majorityData.datasets[i].data = [mandates[i]]
         }
@@ -147,13 +155,55 @@
                     if (datasetIndex !== lastDatasetIndex) return ''; // Hide for other stacks
 
                     // Sum all values in this category (column)
-                    const total = chart.data.datasets.reduce((sum, dataset) => {
-                    const val = dataset.data[dataIndex];
-                    return typeof val === 'number' ? sum + val : sum;
+                    const totalCurrent = chart.data.datasets.reduce((sum, dataset) => {
+                        const val = dataset.data[dataIndex];
+                        return typeof val === 'number' && dataset.order != 2 ? sum + val : sum;
                     }, 0);
 
-                    return total.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // Display total value once per stack
+                    const totalPrevious = chart.data.datasets.reduce((sum, dataset) => {
+                        const val = dataset.data[dataIndex];
+                        return typeof val === 'number' && dataset.order != 1 ? sum + val : sum;
+                    }, 0);
+
+                    const diff = totalCurrent - totalPrevious;
+                    let diffString;
+                    if (diff > 0) {
+                        diffString = "+" + diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    } else if (diff == 0) {
+                        diffString = "±" + diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    } else {
+                        diffString = diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    }
+
+                    return [totalCurrent.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), diffString];
                 },
+                labels: {
+                    0: {
+                        color: 'black',
+                    },
+                    1: {
+                        color: (context) => {
+                            const { chart, dataIndex, datasetIndex } = context;
+                            const totalCurrent = chart.data.datasets.reduce((sum, dataset) => {
+                                const val = dataset.data[dataIndex];
+                                return typeof val === 'number' && dataset.order != 2 ? sum + val : sum;
+                            }, 0);
+
+                            const totalPrevious = chart.data.datasets.reduce((sum, dataset) => {
+                                const val = dataset.data[dataIndex];
+                                return typeof val === 'number' && dataset.order != 1 ? sum + val : sum;
+                            }, 0);
+                            const diff = totalCurrent - totalPrevious;
+                            if (diff > 0) {
+                                return 'green';
+                            } else if (diff == 0) {
+                                return 'black';
+                            } else {
+                                return 'red';
+                            }
+                        }
+                    }
+                }
             },
             annotation: {
                 annotations: threshold > 0 ? {
@@ -166,6 +216,17 @@
                     }
                 } : {} // Empty object if threshold is 0 or less
             },
+            legend: {
+                display: true,
+                labels: {
+                    filter: (legendItem, chartData) => {
+                        const visibleLabels = chartData.datasets
+                            .filter(item => item.order != 2)
+                            .map(item => item.label);
+                        return visibleLabels.includes(legendItem.text);
+                    },
+                },
+            }
         },
         scales: {
             x: {
@@ -174,7 +235,7 @@
             y: {
                 stacked: true,
                 suggestedMax: Math.max(...$data.labels.map((_, index) => 
-                    $data.datasets.reduce((sum, party) => sum + (party.data[index] || 0), 0)
+                    $data.datasets.reduce((sum, party) => sum + (party.order != 2 ? party.data[index] : 0 || 0), 0)
                 )) + 5
             },
         }
@@ -183,15 +244,17 @@
     
     <div class="input_fields_vote">
         {#each $data.datasets as party, i}
-            <div class="input_field_vote_party">
-                <label for="input_party_{i}">{party.label}</label>
-                <span class="valuePadding"><input id="input_party_{i}" type="number" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
-            </div>
-            {#if $data.datasets[i].data[party.index] < threshold && baseMandateRule}
-            <div class="base_mandate_checkbox">
-                <label for="checkbox_party_{i}">{baseMandateRule} Grundmandat(e)?</label>
-                <input id="checkbox_party_{i}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
-            </div>
+            {#if $data.datasets[i].order != 2}
+                <div class="input_field_vote_party">
+                    <label for="input_party_{i}">{party.label}</label>
+                    <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
+                </div>
+                {#if $data.datasets[i].data[party.index] < threshold && baseMandateRule}
+                    <div class="base_mandate_checkbox">
+                        <label for="checkbox_party_{i}">{baseMandateRule} Grundmandat(e)?</label>
+                        <input id="checkbox_party_{i}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
+                    </div>
+                {/if}
             {/if}
         {/each}
         <div class="input_field_vote_party">
@@ -222,7 +285,29 @@
                     weight: 'bold',
                     size: 20,
                 }
-            }}}} />
+            },
+            legend: {
+                display: true,
+                labels: {
+                    generateLabels: function(chart) {
+                        const dataset = chart.data.datasets[1];
+                        const labels = chart.data.labels || [];
+                        const backgroundColors = dataset.backgroundColor || [];
+
+                        return labels.map((label, i) => ({
+                            text: String(label),
+                            fillStyle: Array.isArray(backgroundColors) ? backgroundColors[i] || 'gray' : 'gray', 
+                            strokeStyle: Array.isArray(backgroundColors) ? backgroundColors[i] || 'gray' : 'gray', 
+                            lineWidth: 0,
+                            index: i
+                        }));
+                    }
+                },
+                onClick: () => {
+                    return false;
+                }
+            }
+            }}} />
     </div>
 
     <div class="stack_container">
