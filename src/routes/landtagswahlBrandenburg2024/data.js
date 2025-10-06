@@ -1,7 +1,7 @@
 import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Brandenburg 2024';
-export const date = '2024-09-22'
+export const date = ['2024-09-22'];
 
 export const data = {
   labels: ['SPD', 'AfD', 'CDU', 'Grüne', 'Linke', 'BVB/FW', 'FDP', 'BSW'],

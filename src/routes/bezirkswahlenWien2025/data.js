@@ -1,7 +1,7 @@
 import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Bezirksvertretungswahlen Wien 2025';
-export const date = '2025-04-27'
+export const date = ['2025-04-27'];
 
 export const data = [
     {

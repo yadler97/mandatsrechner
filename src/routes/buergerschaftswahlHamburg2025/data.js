@@ -1,7 +1,7 @@
 import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Bürgerschaftswahl Hamburg 2025';
-export const date = '2025-03-02'
+export const date = ['2025-03-02'];
 
 export const data = {
   labels: ['SPD', 'Grüne', 'CDU', 'Linke', 'AfD', 'FDP', 'Volt', 'BSW'],

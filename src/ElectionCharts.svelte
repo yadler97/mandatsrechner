@@ -45,12 +45,26 @@
         twoThirdsMajority = Math.ceil(($mandateCount / 3 * 2));
     }
 
-    const dateObj = new Date(electionDate);
-    electionDate = dateObj.toLocaleDateString("de-AT", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                });
+    if (electionDate.length == 1) {
+        const dateObj = new Date(electionDate[0]);
+        electionDate = dateObj.toLocaleDateString("de-AT", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    } else {
+        const startDateObj = new Date(electionDate[0]);
+        const endDateObj = new Date(electionDate[1]);
+        electionDate = `${startDateObj.toLocaleDateString("de-AT", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        })} - ${endDateObj.toLocaleDateString("de-AT", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        })}`;
+    }
 
     let mandates = [];
 
