@@ -38,6 +38,12 @@
         <option value="{base}/buergerschaftswahlHamburg2025">Bürgerschaftswahl Hamburg 2025</option>
         <option value="{base}/landtagswahlWien2025">Landtagswahl Wien 2025</option>
         <option value="{base}/bezirkswahlenWien2025">Bezirkswahlen Wien 2025</option>
+        <option value="{base}/tweedeKamerverkiezingen2025">Tweede Kamerverkiezingen 2025</option>
+        <option value="{base}/landtagswahlBadenWürttemberg2026">Landtagswahl Baden-Württemberg 2026</option>
+        <option value="{base}/landtagswahlRheinlandPfalz2026">Landtagswahl Rheinland-Pfalz 2026</option>
+        <option value="{base}/landtagswahlSachsenAnhalt2026">Landtagswahl Sachsen-Anhalt 2026</option>
+        <option value="{base}/abgeordnetenhauswahlBerlin2026">Abgeordnetenhauswahl Berlin 2026</option>
+        <option value="{base}/landtagswahlMecklenburgVorpommern2026">Landtagswahl Mecklenburg-Vorpommern 2026</option>
 
         <option value="{base}/spielwiese">Spielwiese</option>
     </select>
