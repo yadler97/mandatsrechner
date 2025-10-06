@@ -1,7 +1,7 @@
 import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Nationalratswahl 2024';
-export const date = '2024-09-29'
+export const date = ['2024-09-29'];
 
 export const data = {
   labels: ['ÖVP', 'SPÖ', 'FPÖ', 'Grüne', 'NEOS', 'BIER', 'KPÖ'],

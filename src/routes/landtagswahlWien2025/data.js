@@ -1,7 +1,7 @@
 import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Landtags- und Gemeinderatswahl Wien 2025';
-export const date = '2025-04-27'
+export const date = ['2025-04-27'];
 
 export const data = {
   labels: ['SPÖ', 'ÖVP', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ'],

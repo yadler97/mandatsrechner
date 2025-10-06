@@ -20,7 +20,7 @@
             // @ts-ignore
             const name = module.name ?? "Unnamed Route";
             // @ts-ignore
-            const dateStr = module.date ?? "Unknown Date";
+            const electionDate = module.date ?? "Unknown Date";
 
             const route = path
                 .replace('/src/routes/', '')
@@ -28,7 +28,7 @@
 
             const imagePath = `flags/${route}.jpg`;
 
-            return { route: route || 'home', name, dateStr, imagePath };
+            return { route: route || 'home', name, electionDate, imagePath };
         })
     ).then((results) => {
         const today = new Date().setHours(0, 0, 0, 0);
@@ -36,21 +36,36 @@
         const upcomingTemp = [];
         const pastTemp = [];
 
-        results.forEach(({ route, name, dateStr, imagePath  }) => {
-            const dateObj = new Date(dateStr);
-            const date = dateObj.setHours(0, 0, 0, 0);
-  
-            if (!isNaN(date)) {
-                const formattedDate = dateObj.toLocaleDateString("de-AT", {
+        results.forEach(({ route, name, electionDate, imagePath  }) => {
+            let date;
+            if (electionDate.length == 1) {
+                const dateObj = new Date(electionDate[0]);
+                date = dateObj.setHours(0, 0, 0, 0);
+                electionDate = dateObj.toLocaleDateString("de-AT", {
                     day: "numeric",
                     month: "long",
                     year: "numeric",
                 });
+            } else {
+                const startDateObj = new Date(electionDate[0]);
+                const endDateObj = new Date(electionDate[1]);
+                date = endDateObj.setHours(0, 0, 0, 0);
+                electionDate = `${startDateObj.toLocaleDateString("de-AT", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                })} - ${endDateObj.toLocaleDateString("de-AT", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                })}`;
+            }
   
+            if (!isNaN(date)) {
                 if (date >= today) {
-                    upcomingTemp.push({ route, name, dateStr: formattedDate, date, imagePath });
+                    upcomingTemp.push({ route, name, electionDate, date, imagePath });
                 } else {
-                    pastTemp.push({ route, name, dateStr: formattedDate, date, imagePath });
+                    pastTemp.push({ route, name, electionDate, date, imagePath });
                 }
             }
         });
@@ -66,13 +81,13 @@
 <h2>Anstehende Wahlen</h2>
 <div class="scroll-container">
     {#if upcomingRoutes.length > 0}
-        {#each upcomingRoutes as { route, name, dateStr, imagePath }}
+        {#each upcomingRoutes as { route, name, electionDate, imagePath }}
             <a href="{base}/{route}" class="card-link">
                 <div class="card">
                     <img src={imagePath} alt="Flag" class="card-image" />
                     <div class="card-content">
                         <h3>{name}</h3>
-                        <p>{dateStr}</p>
+                        <p>{electionDate}</p>
                     </div>
                 </div>
             </a>
@@ -85,13 +100,13 @@
 <h2>Vergangene Wahlen</h2>
 <div class="scroll-container">
     {#if pastRoutes.length > 0}
-        {#each pastRoutes as { route, name, dateStr, imagePath }}
+        {#each pastRoutes as { route, name, electionDate, imagePath }}
             <a href="{base}/{route}" class="card-link">
                 <div class="card">
                     <img src={imagePath} alt="Flag" class="card-image" />
                     <div class="card-content">
                         <h3>{name}</h3>
-                        <p>{dateStr}</p>
+                        <p>{electionDate}</p>
                     </div>
                 </div>
             </a>

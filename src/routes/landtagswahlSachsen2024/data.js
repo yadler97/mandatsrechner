@@ -1,7 +1,7 @@
 import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Sachsen 2024';
-export const date = '2024-09-01'
+export const date = ['2024-09-01'];
 
 export const data = {
   labels: ['CDU', 'AfD', 'Linke', 'Grüne', 'SPD', 'FDP', 'FW', 'BSW'],
