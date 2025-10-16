@@ -15,8 +15,8 @@
     setContext('mandateData', writable(mandateData));
     setContext('majorityData', writable(majorityData));
     setContext('mandateCount', writable(183));
-    setContext('threshold', 4);
-    setContext('apportionmentMethod', ApportionmentMethods.DHONDT);
+    setContext('threshold', writable(4));
+    setContext('apportionmentMethod', writable(ApportionmentMethods.DHONDT));
     setContext('electionDate', date);
     setContext('baseMandateRule', false);
 </script>

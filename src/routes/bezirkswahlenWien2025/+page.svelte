@@ -63,8 +63,8 @@
         updateDistrict(selectedDistrict);
     }
 
-    setContext('threshold', 0);
-    setContext('apportionmentMethod', ApportionmentMethods.DHONDT);
+    setContext('threshold', writable(0));
+    setContext('apportionmentMethod', writable(ApportionmentMethods.DHONDT));
     setContext('electionDate', date);
     setContext('baseMandateRule', false);
 </script>

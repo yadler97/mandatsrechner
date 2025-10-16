@@ -98,14 +98,14 @@
             const originalIndex = filteredIndices[filteredIndex];
             const checkbox = document.getElementById(`checkbox_party_${originalIndex}`);
             const isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
-            return (value < threshold && !isChecked) ? 0 : value;
+            return (value < $threshold && !isChecked) ? 0 : value;
         });
         if (others >= -0.00001) {
-            if (apportionmentMethod == ApportionmentMethods.DHONDT) {
+            if ($apportionmentMethod == ApportionmentMethods.DHONDT) {
                 mandates = dhondt([...eligibleShares], $mandateCount);
-            } else if (apportionmentMethod == ApportionmentMethods.SAINTE_LAGUE) {
+            } else if ($apportionmentMethod == ApportionmentMethods.SAINTE_LAGUE) {
                 mandates = saintelague([...eligibleShares], $mandateCount);
-            } else if (apportionmentMethod == ApportionmentMethods.HARE_NIEMEYER) {
+            } else if ($apportionmentMethod == ApportionmentMethods.HARE_NIEMEYER) {
                 mandates = hareniemeyer([...eligibleShares], $mandateCount);
             }
         }
@@ -140,15 +140,15 @@
               </tr>
               <tr>
                 <th>Sperrklausel</th>
-                <td>{#if threshold > 0}
-                    {threshold} %
+                <td>{#if $threshold > 0}
+                    {$threshold} %
                   {:else}
                     keine
                   {/if}</td>
               </tr>
               <tr>
                 <th>Sitzzuteilungsverfahren</th>
-                <td>{apportionmentMethod}</td>
+                <td>{$apportionmentMethod}</td>
               </tr>
         </table>
     </div>
@@ -263,7 +263,7 @@
                     <label for="input_party_{i}">{party.label}</label>
                     <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
                 </div>
-                {#if $data.datasets[i].data[party.index] < threshold && baseMandateRule}
+                {#if $data.datasets[i].data[party.index] < $threshold && baseMandateRule}
                     <div class="base_mandate_checkbox">
                         <label for="checkbox_party_{i}">{baseMandateRule} Grundmandat(e)?</label>
                         <input id="checkbox_party_{i}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
