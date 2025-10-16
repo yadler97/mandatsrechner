@@ -36,6 +36,11 @@ export const PartyColoursDE = {
     FW: "rgb(248, 165, 1)",
     VOLT: "rgb(138, 43, 226)",
     TIERSCHUTZ: "rgb(0, 109, 119)",
+    PARTEI: "rgb(181, 21, 43)",
+    OEDP: "rgb(255, 100, 0)",
+    FAMILIE: "rgb(255, 102, 0)",
+    PIRATEN: "rgb(255, 130, 10)",
+    PDF: "rgb(245, 166, 18)",
 };
 
 export const PartyColoursTransDE = {
@@ -50,6 +55,11 @@ export const PartyColoursTransDE = {
     FW: "rgba(248, 165, 1, 0.5)",
     VOLT: "rgba(138, 43, 226, 0.5)",
     TIERSCHUTZ: "rgba(0, 109, 119, 0.5)",
+    PARTEI: "rgba(181, 21, 43, 0.5)",
+    OEDP: "rgba(255, 100, 0, 0.5)",
+    FAMILIE: "rgba(255, 102, 0, 0.5)",
+    PIRATEN: "rgba(255, 130, 10, 0.5)",
+    PDF: "rgba(245, 166, 18, 0.5)",
 };
 
 export const PartyColoursNL = {

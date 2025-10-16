@@ -15,8 +15,8 @@
     setContext('mandateData', writable(mandateData));
     setContext('majorityData', writable(majorityData));
     setContext('mandateCount', writable(88));
-    setContext('threshold', 5);
-    setContext('apportionmentMethod', ApportionmentMethods.HARE_NIEMEYER);
+    setContext('threshold', writable(5));
+    setContext('apportionmentMethod', writable(ApportionmentMethods.HARE_NIEMEYER));
     setContext('electionDate', date);
     setContext('baseMandateRule', 1);
     setContext('note', 'Aufgrund von Überhang- und Ausgleichsmandaten kann es zu einer höheren Gesamtmandatszahl kommen.');

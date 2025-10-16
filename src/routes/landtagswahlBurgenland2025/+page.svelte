@@ -15,8 +15,8 @@
     setContext('mandateData', writable(mandateData));
     setContext('majorityData', writable(majorityData));
     setContext('mandateCount', writable(36));
-    setContext('threshold', 4);
-    setContext('apportionmentMethod', ApportionmentMethods.DHONDT);
+    setContext('threshold', writable(4));
+    setContext('apportionmentMethod', writable(ApportionmentMethods.DHONDT));
     setContext('electionDate', date);
     setContext('baseMandateRule', false);
     setContext('note', 'Aufgrund des mehrstufigen Ermittlungsverfahrens kann es zu geringfügigen Abweichungen zur tatsächlchen Mandatsverteilung kommen.');
