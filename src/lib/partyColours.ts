@@ -97,3 +97,29 @@ export const PartyColoursTransNL = {
   Volt: "rgba(86, 39, 130, 0.5)",
   JA21: "rgba(35, 43, 87, 0.5)",
 };
+
+export const PartyColoursSI = {
+  GS: "rgb(0, 84, 165)",
+  SDS: "rgb(255, 221, 0)",
+  NSi: "rgb(0, 159, 227)",
+  SD: "rgb(227, 6, 19)",
+  Levica: "rgb(147, 40, 140)",
+  DEM: "rgb(0, 48, 135)",
+  RES: "rgb(255, 120, 0)",
+  PIR: "rgb(0, 0, 0)",
+  PVP: "rgb(112, 41, 99)",
+  Minorities: "rgb(128, 128, 128)",
+};
+
+export const PartyColoursTransSI = {
+  GS: "rgba(0, 84, 165, 0.5)",
+  SDS: "rgba(255, 221, 0, 0.5)",
+  NSi: "rgba(0, 159, 227, 0.5)",
+  SD: "rgba(227, 6, 19, 0.5)",
+  Levica: "rgba(147, 40, 140, 0.5)",
+  DEM: "rgba(0, 48, 135, 0.5)",
+  RES: "rgba(255, 120, 0, 0.5)",
+  PIR: "rgba(0, 0, 0, 0.5)",
+  PVP: "rgba(112, 41, 99, 0.5)",
+  Minorities: "rgba(128, 128, 128, 0.5)",
+};

@@ -85,8 +85,12 @@
     }
 
     function calcMandates(dataset) {
+        // Find which seats are reserved
+        const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);
+        const totalReservedSeats = reservedParties.reduce((sum, p) => sum + p.reservedSeats, 0);
+
         let filteredIndices = dataset
-            .map((party, index) => party.order != 2 ? index : -1)
+            .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
             .filter(index => index !== -1);
 
         let votesShares = filteredIndices
@@ -100,15 +104,27 @@
             const isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
             return (value < $threshold && !isChecked) ? 0 : value;
         });
+        
+        // Subtract reserved seats from total mandate count
+        const nonReservedMandateCount = $mandateCount - totalReservedSeats; 
+
         if (others >= -0.00001) {
             if ($apportionmentMethod == ApportionmentMethods.DHONDT) {
-                mandates = dhondt([...eligibleShares], $mandateCount);
+                mandates = dhondt([...eligibleShares], nonReservedMandateCount);
             } else if ($apportionmentMethod == ApportionmentMethods.SAINTE_LAGUE) {
-                mandates = saintelague([...eligibleShares], $mandateCount);
+                mandates = saintelague([...eligibleShares], nonReservedMandateCount);
             } else if ($apportionmentMethod == ApportionmentMethods.HARE_NIEMEYER) {
-                mandates = hareniemeyer([...eligibleShares], $mandateCount);
+                mandates = hareniemeyer([...eligibleShares], nonReservedMandateCount);
             }
         }
+
+        // Add reserved results
+        dataset.forEach((party, i) => {
+            if (party.reservedSeats !== undefined) {
+                mandates[i] = party.reservedSeats;
+            }
+        });
+
         return mandates;
     }
 
@@ -163,6 +179,11 @@
                 },
                 formatter: (value, context) => {
                     const { chart, dataIndex, datasetIndex } = context;
+
+                    const currentDataset = chart.data.datasets[datasetIndex];
+                    if (currentDataset['reservedSeats']) {
+                        return null;
+                    }
 
                     // Only place label on the last dataset in the stack
                     const lastDatasetIndex = chart.data.datasets.length - 1;
@@ -258,7 +279,7 @@
     
     <div class="input_fields_vote">
         {#each $data.datasets as party, i}
-            {#if $data.datasets[i].order != 2}
+            {#if $data.datasets[i].order != 2 && !party.reservedSeats}
                 <div class="input_field_vote_party">
                     <label for="input_party_{i}">{party.label}</label>
                     <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
