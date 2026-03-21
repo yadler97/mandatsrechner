@@ -40,6 +40,7 @@
         <option value="{base}/bezirkswahlenWien2025">Bezirkswahlen Wien 2025</option>
         <option value="{base}/tweedeKamerverkiezingen2025">Tweede Kamerverkiezingen 2025</option>
         <option value="{base}/landtagswahlBadenWürttemberg2026">Landtagswahl Baden-Württemberg 2026</option>
+        <option value="{base}/drzavnozborskeVolitveVSloveniji2026">Državnozborske volitve v Sloveniji 2026</option>
         <option value="{base}/landtagswahlRheinlandPfalz2026">Landtagswahl Rheinland-Pfalz 2026</option>
         <option value="{base}/landtagswahlSachsenAnhalt2026">Landtagswahl Sachsen-Anhalt 2026</option>
         <option value="{base}/abgeordnetenhauswahlBerlin2026">Abgeordnetenhauswahl Berlin 2026</option>
