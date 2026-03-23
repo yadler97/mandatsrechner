@@ -123,3 +123,39 @@ export const PartyColoursTransSI = {
   PVP: "rgba(112, 41, 99, 0.5)",
   Minorities: "rgba(128, 128, 128, 0.5)",
 };
+
+export const PartyColoursDK = {
+  A: "rgb(220, 36, 31)",
+  V: "rgb(0, 0, 139)",
+  M: "rgb(132, 41, 144)",
+  F: "rgb(196, 0, 6)",
+  AE: "rgb(18, 114, 194)",
+  I: "rgb(255, 127, 42)",
+  C: "rgb(3, 69, 54)",
+  OE: "rgb(208, 0, 77)",
+  B: "rgb(255, 0, 144)",
+  AA: "rgb(1, 223, 1)",
+  O: "rgb(231, 208, 30)",
+  H: "rgb(5, 189, 232)",
+  Groenland: "rgb(128, 128, 128)",
+  Faeroeer: "rgb(128, 128, 128)",
+  D: "rgb(0, 40, 70)",
+};
+
+export const PartyColoursTransDK = {
+  A: "rgba(220, 36, 31, 0.5)",
+  V: "rgba(0, 0, 139, 0.5)",
+  M: "rgba(132, 41, 144, 0.5)",
+  F: "rgba(196, 0, 6, 0.5)",
+  AE: "rgba(18, 114, 194, 0.5)",
+  I: "rgba(255, 127, 42, 0.5)",
+  C: "rgba(3, 69, 54, 0.5)",
+  OE: "rgba(208, 0, 77, 0.5)",
+  B: "rgba(255, 0, 144, 0.5)",
+  AA: "rgba(1, 223, 1, 0.5)",
+  O: "rgba(231, 208, 30, 0.5)",
+  H: "rgba(5, 189, 232, 0.5)",
+  Groenland: "rgba(128, 128, 128, 0.5)",
+  Faeroeer: "rgba(128, 128, 128, 0.5)",
+  D: "rgba(0, 40, 70, 0.5)",
+};

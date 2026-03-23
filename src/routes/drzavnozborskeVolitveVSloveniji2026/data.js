@@ -91,7 +91,7 @@ export const majorityData = {
   labels: ["Mandate"],
   datasets: [
     {
-      label: "Gibanje Svoboda",
+      label: "GS",
       data: [41],
       backgroundColor: PartyColoursSI.GS,
       hidden: false,

@@ -42,6 +42,7 @@
         <option value="{base}/landtagswahlBadenWürttemberg2026">Landtagswahl Baden-Württemberg 2026</option>
         <option value="{base}/drzavnozborskeVolitveVSloveniji2026">Državnozborske volitve v Sloveniji 2026</option>
         <option value="{base}/landtagswahlRheinlandPfalz2026">Landtagswahl Rheinland-Pfalz 2026</option>
+        <option value="{base}/folketingsvalgIDanmark2026">Folketingsvalg i Danmark 2026</option>
         <option value="{base}/landtagswahlSachsenAnhalt2026">Landtagswahl Sachsen-Anhalt 2026</option>
         <option value="{base}/abgeordnetenhauswahlBerlin2026">Abgeordnetenhauswahl Berlin 2026</option>
         <option value="{base}/landtagswahlMecklenburgVorpommern2026">Landtagswahl Mecklenburg-Vorpommern 2026</option>
