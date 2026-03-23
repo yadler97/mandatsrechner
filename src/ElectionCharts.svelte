@@ -45,6 +45,38 @@
         twoThirdsMajority = Math.ceil(($mandateCount / 3 * 2));
     }
 
+    let filteredData = { 
+        labels: [], 
+        datasets: [{ data: [], order: 0 }]
+    };
+    $: {
+        const activeIndices = $data.datasets
+            .map((d, i) => (d.reservedSeats === undefined ? i : -1))
+            .filter(i => i !== -1);
+
+        const newLabels = activeIndices.map(i => $data.labels[i]);
+
+        const currentDatasets = $data.datasets.filter(ds => ds.reservedSeats === undefined);
+        
+        const newDatasets = currentDatasets.map((ds, dsIndex) => {
+            const newData = activeIndices.map(i => ds.data[i]);
+
+            const existingDs = filteredData.datasets[dsIndex];
+
+            if (existingDs && existingDs.label === ds.label) {
+                existingDs.data = newData;
+                return existingDs;
+            }
+
+            return { ...ds, data: newData };
+        });
+
+        filteredData = {
+            labels: newLabels,
+            datasets: newDatasets
+        };
+    }
+
     if (electionDate.length == 1) {
         const dateObj = new Date(electionDate[0]);
         electionDate = dateObj.toLocaleDateString("de-AT", {
@@ -146,30 +178,32 @@
     <div class="info_container">
         <p>Allgemeine Informationen</p>
         <table>
-            <tr>
-                <th>Wahltermin</th>
-                <td>{electionDate}</td>
-              </tr>
-              <tr>
-                <th>Abgeordnete</th>
-                <td>{$mandateCount}</td>
-              </tr>
-              <tr>
-                <th>Sperrklausel</th>
-                <td>{#if $threshold > 0}
-                    {$threshold} %
-                  {:else}
-                    keine
-                  {/if}</td>
-              </tr>
-              <tr>
-                <th>Sitzzuteilungsverfahren</th>
-                <td>{$apportionmentMethod}</td>
-              </tr>
+            <tbody>
+                <tr>
+                    <th>Wahltermin</th>
+                    <td>{electionDate}</td>
+                </tr>
+                <tr>
+                    <th>Abgeordnete</th>
+                    <td>{$mandateCount}</td>
+                </tr>
+                <tr>
+                    <th>Sperrklausel</th>
+                    <td>{#if $threshold > 0}
+                        {$threshold} %
+                    {:else}
+                        keine
+                    {/if}</td>
+                </tr>
+                <tr>
+                    <th>Sitzzuteilungsverfahren</th>
+                    <td>{$apportionmentMethod}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
     <div class="bar_container">
-        <Bar data={$data} options={{ responsive: true, maintainAspectRatio: false, plugins: {
+        <Bar data={filteredData} options={{ responsive: true, maintainAspectRatio: false, plugins: {
             datalabels: {
                 anchor: 'end',  // Positions the labels above the bars
                 align: 'top',
@@ -269,8 +303,8 @@
             },
             y: {
                 stacked: true,
-                suggestedMax: Math.max(...$data.labels.map((_, index) => 
-                    $data.datasets.reduce((sum, party) => sum + (party.order != 2 ? party.data[index] : 0 || 0), 0)
+                suggestedMax: Math.max(...filteredData.labels.map((_, index) => 
+                    filteredData.datasets.reduce((sum, party) => sum + (party.order != 2 ? party.data[index] : 0 || 0), 0)
                 )) + 5
             },
         }
