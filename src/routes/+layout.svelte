@@ -9,7 +9,7 @@
 
     let path
     $: {
-        path = base + $page.route.id;
+        path = base + $page.url.pathname;
     }
 
     function onChange(e) {
@@ -39,7 +39,7 @@
         <option value="{base}/landtagswahlWien2025">Landtagswahl Wien 2025</option>
         <option value="{base}/bezirkswahlenWien2025">Bezirkswahlen Wien 2025</option>
         <option value="{base}/tweedeKamerverkiezingen2025">Tweede Kamerverkiezingen 2025</option>
-        <option value="{base}/landtagswahlBadenWürttemberg2026">Landtagswahl Baden-Württemberg 2026</option>
+        <option value="{base}/landtagswahlBadenWuerttemberg2026">Landtagswahl Baden-Württemberg 2026</option>
         <option value="{base}/drzavnozborskeVolitveVSloveniji2026">Državnozborske volitve v Sloveniji 2026</option>
         <option value="{base}/landtagswahlRheinlandPfalz2026">Landtagswahl Rheinland-Pfalz 2026</option>
         <option value="{base}/folketingsvalgIDanmark2026">Folketingsvalg i Danmark 2026</option>

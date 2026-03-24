@@ -50,52 +50,64 @@
         datasets: [{ data: [], order: 0 }]
     };
     $: {
-        const activeIndices = $data.datasets
-            .map((d, i) => (d.reservedSeats === undefined ? i : -1))
-            .filter(i => i !== -1);
+        const activeIndices = $data.labels
+            .map((_, i) => i)
+            .filter(i => $data.datasets.some(ds => ds.index === i && ds.reservedSeats === undefined));
 
         const newLabels = activeIndices.map(i => $data.labels[i]);
+        filteredData.labels = newLabels;
 
-        const currentDatasets = $data.datasets.filter(ds => ds.reservedSeats === undefined);
-        
-        const newDatasets = currentDatasets.map((ds, dsIndex) => {
-            const newData = activeIndices.map(i => ds.data[i]);
+        const sourceDatasets = $data.datasets.filter(ds => ds.reservedSeats === undefined);
 
-            const existingDs = filteredData.datasets[dsIndex];
+        sourceDatasets.forEach((ds, i) => {
+            const newData = activeIndices.map(idx => ds.data[idx] || 0);
 
-            if (existingDs && existingDs.label === ds.label) {
-                existingDs.data = newData;
-                return existingDs;
+            if (!filteredData.datasets[i]) {
+                const { index, ...rest } = ds;
+                filteredData.datasets[i] = { ...rest, data: newData };
+            } else {
+                filteredData.datasets[i].data = newData;
+                filteredData.datasets[i].label = ds.label;
+                filteredData.datasets[i].stack = ds.stack;
+                filteredData.datasets[i].order = ds.order;
+                filteredData.datasets[i].backgroundColor = ds.backgroundColor;
+                filteredData.datasets[i].categoryPercentage = ds.categoryPercentage;
+                filteredData.datasets[i].barPercentage = ds.barPercentage;
+                delete filteredData.datasets[i].index;
             }
-
-            return { ...ds, data: newData };
         });
 
-        filteredData = {
-            labels: newLabels,
-            datasets: newDatasets
-        };
+        if (filteredData.datasets.length > sourceDatasets.length) {
+            filteredData.datasets = filteredData.datasets.slice(0, sourceDatasets.length);
+        }
     }
 
-    if (electionDate.length == 1) {
-        const dateObj = new Date(electionDate[0]);
-        electionDate = dateObj.toLocaleDateString("de-AT", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        });
-    } else {
-        const startDateObj = new Date(electionDate[0]);
-        const endDateObj = new Date(electionDate[1]);
-        electionDate = `${startDateObj.toLocaleDateString("de-AT", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        })} - ${endDateObj.toLocaleDateString("de-AT", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        })}`;
+    let displayDate = "";
+    $: {
+        const rawDates = $electionDate; 
+
+        if (Array.isArray(rawDates) && rawDates.length === 1) {
+            const dateObj = new Date(rawDates[0]);
+            displayDate = dateObj.toLocaleDateString("de-AT", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            });
+        } else if (Array.isArray(rawDates) && rawDates.length === 2) {
+            const start = new Date(rawDates[0]);
+            const end = new Date(rawDates[1]);
+            displayDate = `${start.toLocaleDateString("de-AT", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            })} - ${end.toLocaleDateString("de-AT", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            })}`;
+        } else {
+            displayDate = "Kein Datum";
+        }
     }
 
     let mandates = [];
@@ -181,7 +193,7 @@
             <tbody>
                 <tr>
                     <th>Wahltermin</th>
-                    <td>{electionDate}</td>
+                    <td>{displayDate}</td>
                 </tr>
                 <tr>
                     <th>Abgeordnete</th>
@@ -318,9 +330,9 @@
                     <label for="input_party_{i}">{party.label}</label>
                     <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
                 </div>
-                {#if $data.datasets[i].data[party.index] < $threshold && baseMandateRule}
+                {#if $data.datasets[i].data[party.index] < $threshold && $baseMandateRule}
                     <div class="base_mandate_checkbox">
-                        <label for="checkbox_party_{i}">{baseMandateRule} Grundmandat(e)?</label>
+                        <label for="checkbox_party_{i}">{$baseMandateRule} Grundmandat(e)?</label>
                         <input id="checkbox_party_{i}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
                     </div>
                 {/if}
@@ -337,8 +349,8 @@
 </section>
 
 <h1>Mandatsverteilung</h1>
-{#if note}
-    <p>Achtung: {note}</p>
+{#if $note}
+    <p>Achtung: {$note}</p>
 {/if}
 <section class="mandate_section">
     <div class="pie_container">

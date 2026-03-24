@@ -5,7 +5,7 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, name } from './data';
+    import { data, mandateData, majorityData, date, name } from '../../lib/elections/europawahl2024';
 	import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
     import { page } from '$app/stores';
@@ -64,8 +64,8 @@
         updateCountry(selectedCountry);
     }
 
-    setContext('electionDate', date);
-    setContext('baseMandateRule', false);
+    setContext('electionDate', writable(date));
+    setContext('baseMandateRule', writable(false));
 </script>
 
 <select bind:value={country} on:change={() => gotoCountry(country)} class="district_select">
