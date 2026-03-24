@@ -7,75 +7,61 @@
 <h1>Willkommen zum großen Mandatsrechner!</h1>
 
 <script>
-    const dataModules = import.meta.glob('/src/routes/**/data.js');
     import { base } from '$app/paths';
 
-    let upcomingRoutes = [];
-    let pastRoutes = [];
+    const dataModules = import.meta.glob('/src/lib/elections/*.js', { eager: true });
+    const today = new Date().setHours(0, 0, 0, 0);
 
-    Promise.all(
-        Object.entries(dataModules).map(async ([path, resolver]) => {
-            const module = await resolver();
+    const allElections = Object.entries(dataModules).map(([path, module]) => {
+        const fileName = path.split('/').pop()?.replace('.js', '') ?? 'unknown';
+        // @ts-ignore
+        const name = module.name ?? "Unnamed Route";
+        // @ts-ignore
+        const date = module.date ?? "Unknown Date";
+        
+        let comparisonDate = 0;
+        let electionDate = "";
 
-            // @ts-ignore
-            const name = module.name ?? "Unnamed Route";
-            // @ts-ignore
-            const electionDate = module.date ?? "Unknown Date";
+        if (date.length === 1) {
+            const dateObj = new Date(date[0]);
+            comparisonDate = dateObj.setHours(0, 0, 0, 0);
+            electionDate = dateObj.toLocaleDateString("de-AT", { 
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            });
+        } else if (date.length === 2) {
+            const start = new Date(date[0]);
+            const end = new Date(date[1]);
+            comparisonDate = end.setHours(0, 0, 0, 0);
+            
+            electionDate = `${start.toLocaleDateString("de-AT", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            })} - ${end.toLocaleDateString("de-AT", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            })}`;
+        }
 
-            const route = path
-                .replace('/src/routes/', '')
-                .replace('/data.js', '');
+        return {
+            route: fileName,
+            name,
+            electionDate: electionDate,
+            date: comparisonDate,
+            imagePath: `${base}/flags/${fileName}.jpg`
+        };
+    }).filter(item => item.date !== 0);
 
-            const imagePath = `flags/${route}.jpg`;
+    const upcomingRoutes = allElections
+        .filter(e => e.date >= today)
+        .sort((a, b) => a.date - b.date);
 
-            return { route: route || 'home', name, electionDate, imagePath };
-        })
-    ).then((results) => {
-        const today = new Date().setHours(0, 0, 0, 0);
-
-        const upcomingTemp = [];
-        const pastTemp = [];
-
-        results.forEach(({ route, name, electionDate, imagePath  }) => {
-            let date;
-            if (electionDate.length == 1) {
-                const dateObj = new Date(electionDate[0]);
-                date = dateObj.setHours(0, 0, 0, 0);
-                electionDate = dateObj.toLocaleDateString("de-AT", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                });
-            } else {
-                const startDateObj = new Date(electionDate[0]);
-                const endDateObj = new Date(electionDate[1]);
-                date = endDateObj.setHours(0, 0, 0, 0);
-                electionDate = `${startDateObj.toLocaleDateString("de-AT", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                })} - ${endDateObj.toLocaleDateString("de-AT", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                })}`;
-            }
-  
-            if (!isNaN(date)) {
-                if (date >= today) {
-                    upcomingTemp.push({ route, name, electionDate, date, imagePath });
-                } else {
-                    pastTemp.push({ route, name, electionDate, date, imagePath });
-                }
-            }
-        });
-
-        upcomingTemp.sort((a, b) => a.date - b.date);
-        pastTemp.sort((a, b) => b.date - a.date);
-
-        upcomingRoutes = [...upcomingTemp]; 
-        pastRoutes = [...pastTemp];
-    });
+    const pastRoutes = allElections
+        .filter(e => e.date < today)
+        .sort((a, b) => b.date - a.date);
 </script>
 
 <h2>Anstehende Wahlen</h2>
