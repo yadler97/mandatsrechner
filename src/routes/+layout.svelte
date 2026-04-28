@@ -1,5 +1,5 @@
 <script>
-    import '../app.css'
+    import '../app.css';
 
     import logo from '../lib/assets/logo.svg';
 
@@ -12,6 +12,9 @@
     $: {
         path = base + $page.url.pathname;
     }
+
+    $: slug = $page.url.pathname.split('/').filter(Boolean).pop();
+    $: isElectionPage = slug && slug !== 'mandatsrechner' && slug !== '';
 
     const elections = [
         { id: "europawahl2024", label: "Europawahl 2024" },
@@ -58,10 +61,15 @@
     </a>
 
     <div class="custom-select">
-        <button class="select-trigger" on:click|stopPropagation={() => isOpen = !isOpen} class:has-flag={$page.url.pathname !== '/'}>
-            {#if $page.url.pathname !== '/'}
-                <img src="{base}/flags/{$page.url.pathname.split('/').pop()}.jpg" alt="" class="flag-img">
+        <button
+            class="select-trigger"
+            on:click|stopPropagation={() => isOpen = !isOpen}
+            class:has-flag={isElectionPage}
+        >
+            {#if isElectionPage}
+                <img src="{base}/flags/{slug}.jpg" alt="" class="flag-img">
             {/if}
+
             <span class="label-text">
                 {elections.find(e => `${base}/${e.id}` === path)?.label || 'Wahl auswählen'}
             </span>
@@ -77,7 +85,10 @@
                 </li>
                 {#each elections as election}
                     <li>
-                        <button on:click={() => handleSelect(election.id)} class:active={path.endsWith(election.id)}>
+                        <button
+                            on:click={() => handleSelect(election.id)}
+                            class:active={path.endsWith(election.id)}
+                        >
                             <img src="{base}/flags/{election.id}.jpg" alt="" class="flag-img">
                             {election.label}
                         </button>

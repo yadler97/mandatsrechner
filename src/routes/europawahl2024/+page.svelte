@@ -11,15 +11,20 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 	import { writable } from 'svelte/store';
+    import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
-    let country = $page.url.searchParams.get('country') || 'at';
+    let country = 'at'
 
-    const countries = ["at", "de"];
+    if (browser) {
+        country = $page.url.searchParams.get('country') || 'at';
 
-    if (!countries.includes(country)) {
-        country = 'at';
-        goto(`${$page.url.pathname}?country=${country}`, { replaceState: true });
+        const countries = ["at", "de"];
+
+        if (!countries.includes(country)) {
+            country = 'at';
+            goto(`${$page.url.pathname}?country=${country}`, { replaceState: true });
+        }
     }
 
     let mandateCount = writable(0);
