@@ -7,16 +7,48 @@
     import { base } from '$app/paths';
     import { page } from '$app/stores';
 
-    let path
+    let isOpen = false;
+    let path = "";
     $: {
         path = base + $page.url.pathname;
     }
 
-    function onChange(e) {
-        const id = e.target.value;
-        goto(`${id}`);
+    const elections = [
+        { id: "europawahl2024", label: "Europawahl 2024" },
+        { id: "landtagswahlSachsen2024", label: "Landtagswahl Sachsen 2024" },
+        { id: "landtagswahlThueringen2024", label: "Landtagswahl Thüringen 2024" },
+        { id: "landtagswahlBrandenburg2024", label: "Landtagswahl Brandenburg 2024" },
+        { id: "nationalratswahl2024", label: "Nationalratswahl 2024" },
+        { id: "landtagswahlVorarlberg2024", label: "Landtagswahl Vorarlberg 2024" },
+        { id: "landtagswahlSteiermark2024", label: "Landtagswahl Steiermark 2024" },
+        { id: "landtagswahlBurgenland2025", label: "Landtagswahl Burgenland 2025" },
+        { id: "bundestagswahl2025", label: "Bundestagswahl 2025" },
+        { id: "buergerschaftswahlHamburg2025", label: "Bürgerschaftswahl Hamburg 2025" },
+        { id: "landtagswahlWien2025", label: "Landtagswahl Wien 2025" },
+        { id: "bezirkswahlenWien2025", label: "Bezirkswahlen Wien 2025" },
+        { id: "tweedeKamerverkiezingen2025", label: "Tweede Kamerverkiezingen 2025" },
+        { id: "landtagswahlBadenWuerttemberg2026", label: "Landtagswahl Baden-Württemberg 2026" },
+        { id: "drzavnozborskeVolitveVSloveniji2026", label: "Državnozborske volitve v Sloveniji 2026" },
+        { id: "landtagswahlRheinlandPfalz2026", label: "Landtagswahl Rheinland-Pfalz 2026" },
+        { id: "folketingsvalgIDanmark2026", label: "Folketingsvalg i Danmark 2026" },
+        { id: "landtagswahlSachsenAnhalt2026", label: "Landtagswahl Sachsen-Anhalt 2026" },
+        { id: "abgeordnetenhauswahlBerlin2026", label: "Abgeordnetenhauswahl Berlin 2026" },
+        { id: "landtagswahlMecklenburgVorpommern2026", label: "Landtagswahl Mecklenburg-Vorpommern 2026" },
+        { id: "spielwiese", label: "Spielwiese" }
+    ];
+
+    function handleSelect(id) {
+        isOpen = false;
+        goto(`${base}/${id}`);
+    }
+
+    // Close dropdown when clicking outside
+    function closeClickOutside(e) {
+        if (isOpen && !e.target.closest('.custom-select')) isOpen = false;
     }
 </script>
+
+<svelte:window on:click={closeClickOutside}/>
 
 <header>
     <a href="{base}/">
@@ -24,31 +56,35 @@
         <p>Mandatsrechner</p>
     </a>
 
-    <select on:change={onChange} bind:value={path} aria-label="Wahl auswählen">
-        <option value="{base}/">Wahl auswählen</option>
-        <option value="{base}/europawahl2024">Europawahl 2024</option>
-        <option value="{base}/landtagswahlSachsen2024">Landtagswahl Sachsen 2024</option>
-        <option value="{base}/landtagswahlThueringen2024">Landtagswahl Thüringen 2024</option>
-        <option value="{base}/landtagswahlBrandenburg2024">Landtagswahl Brandenburg 2024</option>
-        <option value="{base}/nationalratswahl2024">Nationalratswahl 2024</option>
-        <option value="{base}/landtagswahlVorarlberg2024">Landtagswahl Vorarlberg 2024</option>
-        <option value="{base}/landtagswahlSteiermark2024">Landtagswahl Steiermark 2024</option>
-        <option value="{base}/landtagswahlBurgenland2025">Landtagswahl Burgenland 2025</option>
-        <option value="{base}/bundestagswahl2025">Bundestagswahl 2025</option>
-        <option value="{base}/buergerschaftswahlHamburg2025">Bürgerschaftswahl Hamburg 2025</option>
-        <option value="{base}/landtagswahlWien2025">Landtagswahl Wien 2025</option>
-        <option value="{base}/bezirkswahlenWien2025">Bezirkswahlen Wien 2025</option>
-        <option value="{base}/tweedeKamerverkiezingen2025">Tweede Kamerverkiezingen 2025</option>
-        <option value="{base}/landtagswahlBadenWuerttemberg2026">Landtagswahl Baden-Württemberg 2026</option>
-        <option value="{base}/drzavnozborskeVolitveVSloveniji2026">Državnozborske volitve v Sloveniji 2026</option>
-        <option value="{base}/landtagswahlRheinlandPfalz2026">Landtagswahl Rheinland-Pfalz 2026</option>
-        <option value="{base}/folketingsvalgIDanmark2026">Folketingsvalg i Danmark 2026</option>
-        <option value="{base}/landtagswahlSachsenAnhalt2026">Landtagswahl Sachsen-Anhalt 2026</option>
-        <option value="{base}/abgeordnetenhauswahlBerlin2026">Abgeordnetenhauswahl Berlin 2026</option>
-        <option value="{base}/landtagswahlMecklenburgVorpommern2026">Landtagswahl Mecklenburg-Vorpommern 2026</option>
+    <div class="custom-select">
+        <button class="select-trigger" on:click|stopPropagation={() => isOpen = !isOpen} class:has-flag={$page.url.pathname !== '/'}>
+            {#if $page.url.pathname !== '/'}
+                <img src="{base}/flags/{$page.url.pathname.split('/').pop()}.jpg" alt="" class="flag-img">
+            {/if}
+            <span class="label-text">
+                {elections.find(e => `${base}/${e.id}` === path)?.label || 'Wahl auswählen'}
+            </span>
+            <span class="chevron">{isOpen ? '▲' : '▼'}</span>
+        </button>
 
-        <option value="{base}/spielwiese">Spielwiese</option>
-    </select>
+        {#if isOpen}
+            <ul class="options-list">
+                <li>
+                    <button on:click={() => { isOpen = false; goto(`${base}/`); }}>
+                        Wahl auswählen
+                    </button>
+                </li>
+                {#each elections as election}
+                    <li>
+                        <button on:click={() => handleSelect(election.id)} class:active={path.endsWith(election.id)}>
+                            <img src="{base}/flags/{election.id}.jpg" alt="" class="flag-img">
+                            {election.label}
+                        </button>
+                    </li>
+                {/each}
+            </ul>
+        {/if}
+    </div>
 </header>
 
 <slot></slot>
