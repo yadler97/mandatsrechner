@@ -31,6 +31,7 @@
         { id: "drzavnozborskeVolitveVSloveniji2026", label: "Državnozborske volitve v Sloveniji 2026" },
         { id: "landtagswahlRheinlandPfalz2026", label: "Landtagswahl Rheinland-Pfalz 2026" },
         { id: "folketingsvalgIDanmark2026", label: "Folketingsvalg i Danmark 2026" },
+        { id: "gemeinderatswahlGraz2026", label: "Gemeinderatswahl Graz 2026" },
         { id: "landtagswahlSachsenAnhalt2026", label: "Landtagswahl Sachsen-Anhalt 2026" },
         { id: "abgeordnetenhauswahlBerlin2026", label: "Abgeordnetenhauswahl Berlin 2026" },
         { id: "landtagswahlMecklenburgVorpommern2026", label: "Landtagswahl Mecklenburg-Vorpommern 2026" },
