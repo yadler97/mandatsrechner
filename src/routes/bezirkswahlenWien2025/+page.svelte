@@ -5,7 +5,7 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, name } from '../../lib/elections/bezirkswahlenWien2025';
+    import { data, mandateData, majorityData, date, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
 	import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
     import { page } from '$app/stores';
@@ -66,6 +66,7 @@
     setContext('threshold', writable(0));
     setContext('apportionmentMethod', writable(ApportionmentMethods.DHONDT));
     setContext('electionDate', writable(date));
+    setContext('countryCode', writable(countryCode));
     setContext('baseMandateRule', writable(false));
 </script>
 

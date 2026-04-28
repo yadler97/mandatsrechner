@@ -257,7 +257,7 @@ section {
 .edit-group, .display-group {
     display: flex;
     align-items: center;
-    height: stretch;
+    align-self: stretch;
     gap: 10px;
 }
 
@@ -276,7 +276,7 @@ section {
 
 .color-preview {
     width: 15px;
-    height: stretch;
+    align-self: stretch;
     display: inline-block;
     border: 1px solid #ccc;
 }
@@ -380,6 +380,21 @@ input[type="file"] {
     background: #e0e0e0;
 }
 
+.label-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.eu-group-tag {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    vertical-align: middle;
+    width: fit-content;
+}
+
 table {
     width: 100%;
     table-layout: auto;
@@ -457,5 +472,9 @@ th, td {
 
     .stack_container {
         width: 100%;
+    }
+
+    .remove-btn {
+        font-size: 1.3rem;
     }
 }

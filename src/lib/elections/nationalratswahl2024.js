@@ -3,6 +3,7 @@ import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Nationalratswahl 2024';
 export const date = ['2024-09-29'];
+export const countryCode = 'AT';
 
 export const mandateCount = 183;
 export const threshold = 4;

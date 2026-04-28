@@ -42,8 +42,8 @@ export const data = [
   {
     labels: [
       'CDU/CSU', 'Grüne', 'SPD', 'AfD', 'Linke', 'FDP',
-      'PARTEI', 'FW', 'TIERSCHUTZ', 'ÖDP', 'FAMILIE',
-      'VOLT', 'PIRATEN', 'BSW', 'PDF'
+      'PARTEI', 'FW', 'Tierschutz', 'ÖDP', 'Familie',
+      'Volt', 'PIRATEN', 'BSW', 'PDF'
     ],
     datasets: [
       {
@@ -101,7 +101,7 @@ export const data = [
         backgroundColor: PartyColoursDE.FW,
       },
       {
-        label: 'TIERSCHUTZ',
+        label: 'Tierschutz',
         index: 8,
         data: [0, 0, 0, 0, 0, 0, 0, 0, 1.45, 0, 0, 0, 0, 0, 0],
         backgroundColor: PartyColoursDE.TIERSCHUTZ,
@@ -113,13 +113,13 @@ export const data = [
         backgroundColor: PartyColoursDE.OEDP,
       },
       {
-        label: 'FAMILIE',
+        label: 'Familie',
         index: 10,
         data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0, 0, 0],
         backgroundColor: PartyColoursDE.FAMILIE,
       },
       {
-        label: 'VOLT',
+        label: 'Volt',
         index: 11,
         data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.67, 0, 0, 0],
         backgroundColor: PartyColoursDE.VOLT,
@@ -178,8 +178,8 @@ export const mandateData = [
   {
     labels: [
       'CDU', 'CSU', 'Grüne', 'SPD', 'AfD', 'Linke', 'FDP',
-      'PARTEI', 'FW', 'TIERSCHUTZ', 'ÖDP', 'FAMILIE',
-      'VOLT', 'PIRATEN', 'BSW', 'PDF'
+      'PARTEI', 'FW', 'Tierschutz', 'ÖDP', 'Familie',
+      'Volt', 'PIRATEN', 'BSW', 'PDF'
     ],
     datasets: [
       {
@@ -311,7 +311,7 @@ export const majorityData = [
         backgroundColor: PartyColoursDE.FW,
       },
       {
-        label: 'TIERSCHUTZ',
+        label: 'Tierschutz',
         data: [1],
         backgroundColor: PartyColoursDE.TIERSCHUTZ,
       },
@@ -321,12 +321,12 @@ export const majorityData = [
         backgroundColor: PartyColoursDE.OEDP,
       },
       {
-        label: 'FAMILIE',
+        label: 'Familie',
         data: [1],
         backgroundColor: PartyColoursDE.FAMILIE,
       },
       {
-        label: 'VOLT',
+        label: 'Volt',
         data: [1],
         backgroundColor: PartyColoursDE.VOLT,
       },

@@ -3,6 +3,7 @@ import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Landtags- und Gemeinderatswahl Wien 2025';
 export const date = ['2025-04-27'];
+export const countryCode = 'AT';
 
 export const mandateCount = 100;
 export const threshold = 5;

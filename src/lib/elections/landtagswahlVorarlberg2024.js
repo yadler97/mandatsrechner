@@ -3,6 +3,7 @@ import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Vorarlberg 2024';
 export const date = ['2024-10-13'];
+export const countryCode = 'AT';
 
 export const mandateCount = 36;
 export const threshold = 5;

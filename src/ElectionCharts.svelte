@@ -3,6 +3,8 @@
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
+    import { PartyColoursEU } from '$lib/partyColours';
+    import { EUGroups } from '$lib/euGroups';
 
     import { getContext } from 'svelte'
 
@@ -34,6 +36,7 @@
     let threshold = getContext('threshold');
     let apportionmentMethod = getContext('apportionmentMethod');
     let electionDate = getContext('electionDate');
+    let countryCode = getContext('countryCode');
     let baseMandateRule = getContext('baseMandateRule');
     let note = getContext('note');
     let majority = 0;
@@ -329,7 +332,18 @@
                 <div class="input_field_vote_party">
                     <div class="display-group">
                         <span class="color-preview" style="background-color: {party.backgroundColor}"></span>
-                        <label for="input_party_{i}">{party.label}</label>
+                        <div class="label-stack">
+                            <label for="input_party_{i}">{party.label}</label>
+                            <span 
+                                class="eu-group-tag" 
+                                style="
+                                    background-color: {PartyColoursEU[EUGroups[$countryCode]?.[party.label]]?.bg || '#999999'};
+                                    color: {PartyColoursEU[EUGroups[$countryCode]?.[party.label]]?.text || 'white'};
+                                "
+                            >
+                                {EUGroups[$countryCode]?.[party.label] || 'NI'}
+                            </span>
+                        </div>
                     </div>
                     <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
                 </div>

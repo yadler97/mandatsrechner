@@ -3,6 +3,7 @@ import { PartyColoursDK, PartyColoursTransDK } from "$lib/partyColours";
 
 export const name = 'Folketingsvalg i Danmark 2026';
 export const date = ['2026-03-24'];
+export const countryCode = 'DK';
 
 export const mandateCount = 179;
 export const threshold = 2;

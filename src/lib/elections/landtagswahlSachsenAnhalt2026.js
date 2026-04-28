@@ -3,6 +3,7 @@ import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Sachsen-Anhalt 2026';
 export const date = ['2026-09-06'];
+export const countryCode = 'DE';
 
 export const mandateCount = 83;
 export const threshold = 5;

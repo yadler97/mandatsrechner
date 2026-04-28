@@ -12,6 +12,7 @@
     const thresholdStore = writable(data.threshold);
     const methodStore = writable(data.apportionmentMethod);
     const dateStore = writable(data.date);
+    const countryCodeStore = writable(data.countryCode);
     const baseMandateStore = writable(data.baseMandateRule || false);
     const noteStore = writable(data.note || '');
 
@@ -22,6 +23,7 @@
     setContext('threshold', thresholdStore);
     setContext('apportionmentMethod', methodStore);
     setContext('electionDate', dateStore);
+    setContext('countryCode', countryCodeStore);
     setContext('baseMandateRule', baseMandateStore);
     setContext('note', noteStore);
 
@@ -33,6 +35,7 @@
         thresholdStore.set(data.threshold);
         methodStore.set(data.apportionmentMethod);
         dateStore.set(data.date);
+        countryCodeStore.set(data.countryCode);
         baseMandateStore.set(data.baseMandateRule || false);
         noteStore.set(data.note || '');
     }

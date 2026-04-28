@@ -3,6 +3,7 @@ import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Sachsen 2024';
 export const date = ['2024-09-01'];
+export const countryCode = 'DE';
 
 export const mandateCount = 120;
 export const threshold = 5;

@@ -28,6 +28,7 @@
     let dataObj = writable();
     let mandateDataObj = writable();
     let majorityDataObj = writable();
+    let countryCode = writable();
 
     setContext('mandateCount', mandateCount);
     setContext('threshold', threshold);
@@ -35,6 +36,7 @@
     setContext('data', dataObj);
     setContext('mandateData', mandateDataObj);
     setContext('majorityData', majorityDataObj);
+    setContext('countryCode', countryCode);
 
     const updateCountry = (selectedCountry) => {
         country = selectedCountry;
@@ -46,14 +48,16 @@
             $apportionmentMethod = ApportionmentMethods.DHONDT;
             $dataObj = data[0];
             $mandateDataObj = mandateData[0];
-            $majorityDataObj =  majorityData[0];
+            $majorityDataObj = majorityData[0];
+            $countryCode = "AT";
         } else if (country == 'de') {
             $mandateCount = 96;
             $threshold = 0;
             $apportionmentMethod = ApportionmentMethods.SAINTE_LAGUE;
             $dataObj = data[1];
             $mandateDataObj = mandateData[1];
-            $majorityDataObj =  majorityData[1];
+            $majorityDataObj = majorityData[1];
+            $countryCode = "DE";
         }
     };
 

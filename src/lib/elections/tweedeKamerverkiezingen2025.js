@@ -3,6 +3,7 @@ import { PartyColoursNL, PartyColoursTransNL } from "$lib/partyColours";
 
 export const name = 'Tweede Kamerverkiezingen 2025';
 export const date = ['2025-10-29'];
+export const countryCode = 'NL';
 
 export const mandateCount = 150;
 export const threshold = 0;

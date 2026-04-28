@@ -3,6 +3,7 @@ import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Mecklenburg-Vorpommern 2026';
 export const date = ['2026-09-20'];
+export const countryCode = 'DE';
 
 export const mandateCount = 71;
 export const threshold = 5;
@@ -10,7 +11,7 @@ export const apportionmentMethod = ApportionmentMethods.HARE_NIEMEYER;
 export const note = 'Aufgrund von Überhang- und Ausgleichsmandaten kann es zu einer höheren Gesamtmandatszahl kommen.';
 
 export const data = {
-  labels: ['SPD', 'AfD', 'CDU', 'Linke', 'GRÜNE', 'FDP', 'BSW'],
+  labels: ['SPD', 'AfD', 'CDU', 'Linke', 'Grüne', 'FDP', 'BSW'],
   datasets: [
     {
       label: 'SPD',
@@ -37,7 +38,7 @@ export const data = {
       backgroundColor: PartyColoursDE.LINKE,
     },
     {
-      label: 'GRÜNE',
+      label: 'Grüne',
       index: 4,
       data: [0, 0, 0, 0, 6.30, 0, 0],
       backgroundColor: PartyColoursDE.GRUENE,
@@ -58,7 +59,7 @@ export const data = {
 };
 
 export const mandateData = {
-  labels: ['SPD', 'AfD', 'CDU', 'Linke', 'GRÜNE', 'FDP', 'BSW'],
+  labels: ['SPD', 'AfD', 'CDU', 'Linke', 'Grüne', 'FDP', 'BSW'],
   datasets: [
     {
       label: 'Mandate (2023)',
@@ -116,7 +117,7 @@ export const majorityData = {
       backgroundColor: PartyColoursDE.LINKE,
     },
     {
-      label: 'GRÜNE',
+      label: 'Grüne',
       data: [5],
       backgroundColor: PartyColoursDE.GRUENE,
       hidden: true,
