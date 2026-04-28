@@ -7,6 +7,7 @@
     import { EUGroups } from '$lib/euGroups';
 
     import { getContext } from 'svelte'
+    import { browser } from '$app/environment';
 
     import {
         Chart,
@@ -147,8 +148,11 @@
 
         let eligibleShares = votesShares.map((value, filteredIndex) => {
             const originalIndex = filteredIndices[filteredIndex];
-            const checkbox = document.getElementById(`checkbox_party_${originalIndex}`);
-            const isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+            let isChecked = false;
+            if (browser) {
+                const checkbox = document.getElementById(`checkbox_party_${originalIndex}`);
+                isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+            }
             return (value < $threshold && !isChecked) ? 0 : value;
         });
         
