@@ -199,52 +199,6 @@ input[type=number] {
     color: inherit;
 }
 
-@media screen and (max-width: 768px) {
-    header {
-        p {
-            display: none;
-        }
-    }
-
-    .vote_share_section {
-        flex-flow: column;
-    }
-
-    .info_container {
-        width: auto;
-        margin-bottom: 20px;
-    }
-
-    .bar_container {
-        width: 100%;
-        min-width: auto !important;
-        margin: auto;
-
-        canvas {
-            min-height: 250px;
-        }
-    }
-
-    .input_fields_vote {
-        margin: auto auto;
-        padding: 20px;
-        width: 90%;
-        max-width: 100%;
-    }
-
-    .mandate_section {
-        flex-flow: column;
-    }
-
-    .pie_container {
-        width: 100%;
-    }
-
-    .stack_container {
-        width: 100%;
-    }
-}
-
 .valuePadding {
     padding: 10px;
     border-radius: 10px;
@@ -295,8 +249,135 @@ section {
 
     .valuePadding {
         width: 100%;
+        max-width: 100px;
         margin-left: 20px;
     }
+}
+
+.edit-group, .display-group {
+    display: flex;
+    align-items: center;
+    height: stretch;
+    gap: 10px;
+}
+
+.color-picker {
+    border: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+.color-picker:hover {
+    filter: brightness(0.85);
+}
+
+.color-preview {
+    width: 15px;
+    height: stretch;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+.name-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.name-edit-input {
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    padding: 4px;
+    font-weight: bold;
+    width: 80px;
+}
+
+.edit-icon-btn {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.edit-icon-btn:hover {
+    filter: brightness(0.85);
+}
+
+.config_actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.action-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    text-align: center;
+}
+
+.export-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+.export-btn:hover {
+    background-color: #218838;
+}
+
+.import-label {
+    background-color: #6c757d;
+    color: white;
+    display: inline-block;
+}
+
+.import-label:hover {
+    background-color: #5a6268;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 8px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.remove-btn:hover {
+    opacity: 1;
+}
+
+.add-party-btn {
+    margin-top: 15px;
+    padding: 8px;
+    background: #f0f0f0;
+    border: 1px dashed #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+}
+
+.add-party-btn:hover {
+    background: #e0e0e0;
 }
 
 table {
@@ -327,4 +408,54 @@ tr {
 
 th, td {
     display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        p {
+            display: none;
+        }
+    }
+
+    .vote_share_section {
+        flex-flow: column;
+    }
+
+    .info_container {
+        width: auto;
+        margin-bottom: 20px;
+    }
+
+    .bar_container {
+        width: 100%;
+        min-width: auto !important;
+        margin: auto;
+
+        canvas {
+            min-height: 250px;
+        }
+    }
+
+    .input_fields_vote {
+        margin: auto auto;
+        padding: 20px;
+        width: 90%;
+        max-width: 100%;
+
+        .valuePadding {
+            max-width: 100%;
+        }
+    }
+
+    .mandate_section {
+        flex-flow: column;
+    }
+
+    .pie_container {
+        width: 100%;
+    }
+
+    .stack_container {
+        width: 100%;
+    }
 }

@@ -327,7 +327,10 @@
         {#each $data.datasets as party, i}
             {#if $data.datasets[i].order != 2 && !party.reservedSeats}
                 <div class="input_field_vote_party">
-                    <label for="input_party_{i}">{party.label}</label>
+                    <div class="display-group">
+                        <span class="color-preview" style="background-color: {party.backgroundColor}"></span>
+                        <label for="input_party_{i}">{party.label}</label>
+                    </div>
                     <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
                 </div>
                 {#if $data.datasets[i].data[party.index] < $threshold && $baseMandateRule}
