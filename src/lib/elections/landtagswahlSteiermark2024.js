@@ -3,6 +3,7 @@ import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Steiermark 2024';
 export const date = ['2024-11-24'];
+export const countryCode = 'AT';
 
 export const mandateCount = 48;
 export const threshold = 0;

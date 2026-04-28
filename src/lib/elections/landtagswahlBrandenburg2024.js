@@ -3,6 +3,7 @@ import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Brandenburg 2024';
 export const date = ['2024-09-22'];
+export const countryCode = 'DE';
 
 export const mandateCount = 88;
 export const threshold = 5;

@@ -2,10 +2,11 @@ import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Bezirksvertretungswahlen Wien 2025';
 export const date = ['2025-04-27'];
+export const countryCode = 'AT';
 
 export const data = [
     {
-        labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
+        labels: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
         datasets: [
             {
                 label: 'ÖVP',
@@ -20,7 +21,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 2,
                 data: [0, 0, 17.38, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -52,7 +53,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -61,7 +62,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 30.56, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -111,7 +112,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -120,7 +121,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 23.1, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -176,7 +177,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -185,7 +186,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 28.1, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -217,7 +218,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -226,7 +227,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 28.22, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -270,7 +271,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -279,7 +280,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 30.43, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -311,10 +312,10 @@ export const data = [
         ],
     },
     {
-        labels: ['GRÜNE', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT'],
+        labels: ['Grüne', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT'],
         datasets: [
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 0,
                 data: [44.91, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -358,10 +359,10 @@ export const data = [
         ],
     },
     {
-        labels: ['GRÜNE', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ'],
+        labels: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ'],
         datasets: [
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 0,
                 data: [33.59, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -399,7 +400,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -408,7 +409,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 29.21, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -452,7 +453,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'GRÜNE', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH'],
+        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -473,7 +474,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.FPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 3,
                 data: [0, 0, 0, 8.98, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -517,7 +518,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'FPÖ', 'ÖVP', 'GRÜNE', 'NEOS', 'HC', 'SÖZ', 'KPÖ'],
+        labels: ['SPÖ', 'FPÖ', 'ÖVP', 'Grüne', 'NEOS', 'HC', 'SÖZ', 'KPÖ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -538,7 +539,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.OEVP,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 3,
                 data: [0, 0, 0, 6.72, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -570,7 +571,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -585,7 +586,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.OEVP,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 2,
                 data: [0, 0, 15.91, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -641,7 +642,7 @@ export const data = [
         ],
     },
     {
-        labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
+        labels: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
         datasets: [
             {
                 label: 'ÖVP',
@@ -656,7 +657,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 2,
                 data: [0, 0, 15.06, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -688,7 +689,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -703,7 +704,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.OEVP,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 2,
                 data: [0, 0, 18.32, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -747,7 +748,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -756,7 +757,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 23.89, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -812,7 +813,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -821,7 +822,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 20.01, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -871,7 +872,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -880,7 +881,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 24.28, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -930,10 +931,10 @@ export const data = [
         ],
     },
     {
-        labels: ['GRÜNE', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
+        labels: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
         datasets: [
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 0,
                 data: [38.7, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -983,7 +984,7 @@ export const data = [
         ],
     },
     {
-        labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
+        labels: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
         datasets: [
             {
                 label: 'ÖVP',
@@ -998,7 +999,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 2,
                 data: [0, 0, 16.02, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -1030,7 +1031,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -1039,7 +1040,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.SPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 1,
                 data: [0, 17.27, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -1083,7 +1084,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'GRÜNE', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP'],
+        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -1104,7 +1105,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.FPOE,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 3,
                 data: [0, 0, 0, 9.19, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -1148,7 +1149,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -1163,7 +1164,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.OEVP,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 2,
                 data: [0, 0, 10.99, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -1207,7 +1208,7 @@ export const data = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ'],
         datasets: [
             {
                 label: 'SPÖ',
@@ -1222,7 +1223,7 @@ export const data = [
                 backgroundColor: PartyColoursAT.OEVP,
             },
             {
-                label: 'GRÜNE',
+                label: 'Grüne',
                 index: 2,
                 data: [0, 0, 12.16, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColoursAT.GRUENE,
@@ -1269,7 +1270,7 @@ export const data = [
 
 export const mandateData = [
     {
-        labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
+        labels: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1285,7 +1286,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1301,7 +1302,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE', 'LINKS', 'BIER'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE', 'LINKS', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1317,7 +1318,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1333,7 +1334,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ', 'LINKS'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1349,7 +1350,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1365,7 +1366,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['GRÜNE', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT', 'LINKS'],
+        labels: ['Grüne', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1381,7 +1382,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['GRÜNE', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
+        labels: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1397,7 +1398,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA', 'LINKS'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1413,7 +1414,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'GRÜNE', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH', 'LINKS', 'BIER'],
+        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH', 'LINKS', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1429,7 +1430,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'FPÖ', 'ÖVP', 'GRÜNE', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'BIER'],
+        labels: ['SPÖ', 'FPÖ', 'ÖVP', 'Grüne', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1445,7 +1446,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE', 'LINKS', 'BIER'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE', 'LINKS', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1461,7 +1462,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
+        labels: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1477,7 +1478,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR', 'BIER', 'LINKS'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR', 'BIER', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1493,7 +1494,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA', 'LINKS', 'BIER'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA', 'LINKS', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1509,7 +1510,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS', 'BIER'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1525,7 +1526,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö', 'LINKS'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö', 'LINKS'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1541,7 +1542,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['GRÜNE', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
+        labels: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1557,7 +1558,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['ÖVP', 'SPÖ', 'GRÜNE', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
+        labels: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1573,7 +1574,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'GRÜNE', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ', 'LINKS', 'BIER'],
+        labels: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ', 'LINKS', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1589,7 +1590,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'GRÜNE', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP', 'BIER'],
+        labels: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1605,7 +1606,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP', 'BIER'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1621,7 +1622,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['SPÖ', 'ÖVP', 'GRÜNE', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ', 'BIER'],
+        labels: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ', 'BIER'],
         datasets: [
             {
                 label: 'Mandate (2020)',
@@ -1653,7 +1654,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [17.38],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1688,7 +1689,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [30.56],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1738,7 +1739,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [23.1],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1793,7 +1794,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [28.1],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1828,7 +1829,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [28.22],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1873,7 +1874,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [30.43],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1903,7 +1904,7 @@ export const majorityData = [
         labels: ['Mandate'],
         datasets: [
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [44.91],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1943,7 +1944,7 @@ export const majorityData = [
         labels: ['Mandate'],
         datasets: [
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [33.59],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -1983,7 +1984,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [29.21],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2038,7 +2039,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.FPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [8.98],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2093,7 +2094,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.OEVP
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [6.72],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2133,7 +2134,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.OEVP
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [15.91],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2193,7 +2194,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [15.06],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2233,7 +2234,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.OEVP
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [18.32],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2278,7 +2279,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [23.89],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2333,7 +2334,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [20.01],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2383,7 +2384,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [24.28],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2428,7 +2429,7 @@ export const majorityData = [
         labels: ['Mandate'],
         datasets: [
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [38.7],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2483,7 +2484,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [16.02],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2518,7 +2519,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.SPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [17.27],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2573,7 +2574,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.FPOE
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [9.19],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2623,7 +2624,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.OEVP
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [10.99],
                 "backgroundColor": PartyColoursAT.GRUENE
             },
@@ -2673,7 +2674,7 @@ export const majorityData = [
                 "backgroundColor": PartyColoursAT.OEVP
             },
             {
-                "label": 'GRÜNE',
+                "label": 'Grüne',
                 "data": [12.16],
                 "backgroundColor": PartyColoursAT.GRUENE
             },

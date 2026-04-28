@@ -3,6 +3,7 @@ import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Rheinland-Pfalz 2026';
 export const date = ['2026-03-22'];
+export const countryCode = 'DE';
 
 export const mandateCount = 101;
 export const threshold = 5;

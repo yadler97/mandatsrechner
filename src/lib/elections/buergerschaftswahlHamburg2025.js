@@ -3,6 +3,7 @@ import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Bürgerschaftswahl Hamburg 2025';
 export const date = ['2025-03-02'];
+export const countryCode = 'DE';
 
 export const mandateCount = 121;
 export const threshold = 5;

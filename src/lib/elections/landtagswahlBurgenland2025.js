@@ -3,6 +3,7 @@ import { PartyColoursAT, PartyColoursTransAT } from "$lib/partyColours";
 
 export const name = 'Landtagswahl Burgenland 2025';
 export const date = ['2025-01-19'];
+export const countryCode = 'AT';
 
 export const mandateCount = 36;
 export const threshold = 4;

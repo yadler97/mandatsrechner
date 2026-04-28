@@ -3,6 +3,7 @@ import { PartyColoursSI, PartyColoursTransSI } from "$lib/partyColours";
 
 export const name = 'Državnozborske volitve v Sloveniji 2026';
 export const date = ['2026-03-22'];
+export const countryCode = 'SI';
 
 export const mandateCount = 90;
 export const threshold = 4;

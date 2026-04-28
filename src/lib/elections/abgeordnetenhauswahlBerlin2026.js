@@ -3,6 +3,7 @@ import { PartyColoursDE, PartyColoursTransDE } from "$lib/partyColours";
 
 export const name = 'Abgeordnetenhauswahl Berlin 2026';
 export const date = ['2026-09-20'];
+export const countryCode = 'DE';
 
 export const mandateCount = 130;
 export const threshold = 5;
