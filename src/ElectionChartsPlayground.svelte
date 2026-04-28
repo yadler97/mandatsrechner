@@ -5,6 +5,7 @@
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
 
     import { getContext } from 'svelte'
+    import { browser } from '$app/environment';
 
     import {
         Chart,
@@ -64,8 +65,11 @@
         let votesShares = dataset.map(party => party.data[party.index]);
         others = 100 - votesShares.reduce((a, b) => a + b, 0);
         let eligibleShares = votesShares.map((value, index) => {
-            const checkbox = document.getElementById(`checkbox_party_${index}`);
-            const isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+            let isChecked = false;
+            if (browser) {
+                const checkbox = document.getElementById(`checkbox_party_${index}`);
+                isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+            }
             return (value < threshold && !isChecked) ? 0 : value;
         });
         if (others >= -0.00001) {

@@ -11,14 +11,19 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 	import { writable } from 'svelte/store';
+    import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
-    let district = $page.url.searchParams.get('bezirk') || '1';
-    let districtInt = parseInt(district);
+    let district = '1';
 
-    if (isNaN(districtInt) || districtInt < 1 || districtInt > 23) {
-        districtInt = 1;
-        goto(`${$page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
+    if (browser) {
+        district = $page.url.searchParams.get('bezirk') || '1';
+        let districtInt = parseInt(district);
+
+        if (isNaN(districtInt) || districtInt < 1 || districtInt > 23) {
+            districtInt = 1;
+            goto(`${$page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
+        }
     }
 
     let mandateCount = writable(0);
@@ -35,7 +40,7 @@
         district = selectedDistrict;
 
         // Update context based on the selected district
-        districtInt = parseInt(district);
+        const districtInt = parseInt(district);
         $dataObj = data[districtInt - 1];
         $mandateDataObj = mandateData[districtInt - 1];
         $majorityDataObj =  majorityData[districtInt - 1];
