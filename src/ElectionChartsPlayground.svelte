@@ -106,6 +106,182 @@
             $data.datasets[index].data[partyIndex] = 100;
         }
     }
+
+    function exportConfig() {
+        const config = {
+            data: $data,
+            mandateData: $mandateData,
+            majorityData: $majorityData,
+            settings: {
+                mandateCount,
+                threshold,
+                apportionmentMethod
+            }
+        };
+        
+        const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'mandatsrechner_config.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function importConfig(event) {
+        const target = event.target;
+        const file = target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (!e || !e.target || typeof e.target.result !== 'string') return; // wow, that's ugly
+
+            try {
+                const config = JSON.parse(e.target.result);
+                
+                // update settings
+                mandateCount = config.settings.mandateCount;
+                threshold = config.settings.threshold;
+                apportionmentMethod = config.settings.apportionmentMethod;
+
+                // update svelte stores
+                $data = config.data;
+                $mandateData = config.mandateData;
+                $majorityData = config.majorityData;
+
+                // reset file input so same file can be uploaded twice if needed
+                target.value = '';
+                alert('Konfiguration erfolgreich geladen!');
+            } catch (err) {
+                console.error("Import error:", err);
+                alert('Fehler beim Laden der Datei. Bitte stellen Sie sicher, dass es sich um ein gültiges JSON handelt.');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function updatePartyName(index, newName) {
+        $data.labels[index] = newName;
+        $data.datasets[index].label = newName;
+        $mandateData.labels[index] = newName;
+        $majorityData.datasets[index].label = newName;
+        
+        // trigger reactivity
+        $data = $data;
+        $mandateData = $mandateData;
+        $majorityData = $majorityData;
+    }
+
+    let editingIndex = null; // tracks which party is in "edit mode"
+
+    function toggleEdit(index) {
+        if (editingIndex === index) {
+            editingIndex = null;
+        } else {
+            editingIndex = index;
+        }
+    }
+
+    function handleNameInput(index, event) {
+        updatePartyName(index, event.target.value);
+    }
+
+    function handleKeydown(event) {
+        if (event.key === 'Enter') {
+            editingIndex = null;
+        }
+    }
+
+    function updatePartyColor(index, event) {
+        const newColor = event.target.value;
+
+        $data.datasets[index].backgroundColor = newColor;
+        $mandateData.datasets[0].backgroundColor[index] = newColor;
+        $majorityData.datasets[index].backgroundColor = newColor;
+
+        // trigger reactivity
+        $data = $data;
+        $mandateData = $mandateData;
+        $majorityData = $majorityData;
+    }
+
+    function addParty() {
+        const newIndex = $data.datasets.length;
+
+        if (newIndex >= 26) {
+            alert("Maximale Anzahl von 26 Parteien erreicht.");
+            return;
+        }
+
+        const newLabel = String.fromCharCode(65 + newIndex); // A, B, C...
+        const defaultColor = '#cccccc';
+
+        // 1. update data
+        $data.labels = [...$data.labels, newLabel];
+        
+        // add a 0 to the data array of every EXISTING party
+        $data.datasets.forEach(ds => {
+            ds.data.push(0);
+        });
+
+        // add the NEW party's dataset
+        const newDataArray = new Array($data.labels.length).fill(0);
+        $data.datasets = [...$data.datasets, {
+            label: newLabel,
+            index: newIndex,
+            data: newDataArray,
+            backgroundColor: defaultColor
+        }];
+
+        // 2. update mandateData
+        $mandateData.labels = [...$mandateData.labels, newLabel];
+        $mandateData.datasets[0].data = [...$mandateData.datasets[0].data, 0];
+        $mandateData.datasets[0].backgroundColor = [...$mandateData.datasets[0].backgroundColor, defaultColor];
+
+        // 3. update majorityData
+        $majorityData.datasets = [...$majorityData.datasets, {
+            label: newLabel,
+            data: [0],
+            backgroundColor: defaultColor,
+            hidden: false
+        }];
+    }
+
+    function removeParty(index) {
+        if ($data.datasets.length <= 1) return;
+
+        // 1. update data
+        $data.labels.splice(index, 1);
+        $data.datasets.splice(index, 1);
+
+        // remove the specific index from the data array of ALL remaining parties
+        $data.datasets.forEach((ds) => {
+            ds.data.splice(index, 1);
+        });
+
+        // re-sync the 'index' property so the inputs still point to the right array slot
+        $data.datasets.forEach((ds, i) => {
+            ds.index = i;
+        });
+
+        // 2. update mandateData
+        $mandateData.labels.splice(index, 1);
+        $mandateData.datasets[0].data.splice(index, 1);
+        $mandateData.datasets[0].backgroundColor.splice(index, 1);
+
+        // 3. update majorityData
+        $majorityData.datasets.splice(index, 1);
+
+        // trigger reactivity
+        $data = $data;
+        $mandateData = $mandateData;
+        $majorityData = $majorityData;
+        
+        if (editingIndex === index) editingIndex = null;
+    }
 </script>
 <h1>Stimmenanteile</h1>
 <section class="vote_share_section">
@@ -182,10 +358,70 @@
     <div class="input_fields_vote">
         {#each $data.datasets as party, i}
             <div class="input_field_vote_party">
-                <label for="input_party_{i}">{party.label}</label>
-                <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
+                <div class="name-container">
+                    {#if editingIndex === i}
+                        <div class="edit-group">
+                            <input
+                                type="color"
+                                class="color-picker"
+                                value={party.backgroundColor}
+                                aria-label="Farbe ändern"
+                                title="Farbe ändern"
+                                on:input={(e) => updatePartyColor(i, e)}
+                            />
+                            <input
+                                class="name-edit-input"
+                                type="text"
+                                value={party.label}
+                                on:input={(e) => handleNameInput(i, e)}
+                                on:keydown={handleKeydown}
+                                autoFocus
+                            />
+                        </div>
+                    {:else}
+                        <div class="display-group">
+                            <span class="color-preview" style="background-color: {party.backgroundColor}"></span>
+                            <label for="input_party_{i}">{party.label}</label>
+                        </div>
+                    {/if}
+
+                    <button
+                        class="edit-icon-btn"
+                        on:click={() => toggleEdit(i)}
+                        aria-label={editingIndex === i ? 'Änderungen speichern' : 'Partei bearbeiten'}
+                        title={editingIndex === i ? 'Änderungen speichern' : 'Partei bearbeiten'}
+                    >
+                        {editingIndex === i ? '✅' : '✏️'}
+                    </button>
+                </div>
+                
+                <span class="valuePadding">
+                    <input
+                        id="input_party_{i}"
+                        type="number"
+                        step="any"
+                        bind:value={$data.datasets[i].data[party.index]}
+                        min=0
+                        max=100
+                        on:input={() => validatePartyShare(i, party.index)}
+                    > %
+                </span>
+
+                <button
+                    class="remove-btn"
+                    on:click={() => removeParty(i)}
+                    aria-label="Partei löschen"
+                    title="Partei löschen"
+                >
+                    ✕
+                </button>
             </div>
         {/each}
+
+        <button class="add-party-btn" on:click={addParty}>
+            + Partei hinzufügen
+        </button>
+
         <div class="input_field_vote_party">
             <p>Sonstige:</p>
             <p>{others >= 0 ? others.toFixed(2) : 0}</p>
@@ -264,5 +500,23 @@
         <p class="majorityText {selectedParties < twoThirdsMajority ? 'red' : 'green'}">
             Zweidrittelmehrheit: {selectedParties}/{twoThirdsMajority}
         </p>
+    </div>
+</section>
+
+<section class="config_actions">
+    <div>
+        <button class="action-btn export-btn" on:click={exportConfig}>
+            JSON exportieren
+        </button>
+
+        <label class="action-btn import-label">
+            JSON importieren
+            <input 
+                type="file" 
+                accept=".json" 
+                on:change={importConfig} 
+                hidden 
+            />
+        </label>
     </div>
 </section>
