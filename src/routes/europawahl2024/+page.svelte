@@ -1,7 +1,7 @@
 <svelte:head>
-   <title>Mandatsrechner - {name}</title>
-   <meta property="og:title" content="Mandatsrechner - {name}">
-   <meta name="twitter:title" content="Mandatsrechner - {name}">
+    <title>Mandatsrechner - {name}</title>
+    <meta property="og:title" content="Mandatsrechner - {name}">
+    <meta name="twitter:title" content="Mandatsrechner - {name}">
 </svelte:head>
 
 <script>
@@ -27,6 +27,7 @@
         }
     }
 
+    let nameStore = writable();
     let mandateCount = writable(0);
     let threshold = writable(0);
     let apportionmentMethod = writable();
@@ -35,6 +36,7 @@
     let majorityDataObj = writable();
     let countryCode = writable();
 
+    setContext('name', nameStore);
     setContext('mandateCount', mandateCount);
     setContext('threshold', threshold);
     setContext('apportionmentMethod', apportionmentMethod);
@@ -48,6 +50,7 @@
 
         // Set the parameters based on the country
         if (country == 'at') {
+            $nameStore = `${name} (AT)`;
             $mandateCount = 20;
             $threshold = 4;
             $apportionmentMethod = ApportionmentMethods.DHONDT;
@@ -56,6 +59,7 @@
             $majorityDataObj = majorityData[0];
             $countryCode = "AT";
         } else if (country == 'de') {
+            $nameStore = `${name} (DE)`;
             $mandateCount = 96;
             $threshold = 0;
             $apportionmentMethod = ApportionmentMethods.SAINTE_LAGUE;

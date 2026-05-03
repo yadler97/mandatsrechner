@@ -8,6 +8,7 @@
 
 <script>
     import { base } from '$app/paths';
+	import { formatDate } from '$lib/helper';
 
     const dataModules = import.meta.glob('/src/lib/elections/*.js', { eager: true });
     const today = new Date().setHours(0, 0, 0, 0);
@@ -18,33 +19,11 @@
         const name = module.name ?? "Unnamed Route";
         // @ts-ignore
         const date = module.date ?? "Unknown Date";
-        
-        let comparisonDate = 0;
-        let electionDate = "";
 
-        if (date.length === 1) {
-            const dateObj = new Date(date[0]);
-            comparisonDate = dateObj.setHours(0, 0, 0, 0);
-            electionDate = dateObj.toLocaleDateString("de-AT", { 
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            });
-        } else if (date.length === 2) {
-            const start = new Date(date[0]);
-            const end = new Date(date[1]);
-            comparisonDate = end.setHours(0, 0, 0, 0);
-            
-            electionDate = `${start.toLocaleDateString("de-AT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            })} - ${end.toLocaleDateString("de-AT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            })}`;
-        }
+        const finalDate = new Date(date.at(-1));
+        const comparisonDate = finalDate.setHours(0, 0, 0, 0);
+
+        const electionDate = formatDate(date);
 
         return {
             route: fileName,

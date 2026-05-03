@@ -3,7 +3,8 @@
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
-    import { PartyColoursEU } from '$lib/partyColours';
+    import { formatDate, getMajority, getTwoThirdsMajority } from '$lib/helper';
+    import { PartyColours, PartyColoursEU } from '$lib/partyColours';
     import { EUGroups } from '$lib/euGroups';
 
     import { getContext } from 'svelte'
@@ -30,6 +31,7 @@
         annotationPlugin
     );
 
+    let name = getContext('name');
     let data = getContext('data');
     let mandateData = getContext('mandateData');
     let majorityData = getContext('majorityData');
@@ -42,18 +44,25 @@
     let note = getContext('note');
     let majority = 0;
     $: {
-        majority = Math.floor(($mandateCount / 2) + 1);
+        majority = getMajority($mandateCount);
     }
     let twoThirdsMajority = 0;
     $: {
-        twoThirdsMajority = Math.ceil(($mandateCount / 3 * 2));
+        twoThirdsMajority = getTwoThirdsMajority($mandateCount);
     }
+
+    let barChartData;
+    let previousDatasets = [];
+    let currentElectionName = "";
 
     let filteredData = { 
         labels: [], 
         datasets: [{ data: [], order: 0 }]
     };
+
     $: {
+        const isNewElection = $name !== currentElectionName;
+
         const activeIndices = $data.labels
             .map((_, i) => i)
             .filter(i => $data.datasets.some(ds => ds.index === i && ds.reservedSeats === undefined));
@@ -68,50 +77,58 @@
 
             if (!filteredData.datasets[i]) {
                 const { index, ...rest } = ds;
-                filteredData.datasets[i] = { ...rest, data: newData };
+                filteredData.datasets[i] = { 
+                    ...rest, 
+                    data: newData,
+                    order: 1,
+                    stack: 'current',
+                    categoryPercentage: 0.35,
+                    barPercentage: 3
+                };
             } else {
                 filteredData.datasets[i].data = newData;
                 filteredData.datasets[i].label = ds.label;
-                filteredData.datasets[i].stack = ds.stack;
-                filteredData.datasets[i].order = ds.order;
                 filteredData.datasets[i].backgroundColor = ds.backgroundColor;
-                filteredData.datasets[i].categoryPercentage = ds.categoryPercentage;
-                filteredData.datasets[i].barPercentage = ds.barPercentage;
+                filteredData.datasets[i].order = 1;
+                filteredData.datasets[i].stack = 'current';
+                filteredData.datasets[i].categoryPercentage = 0.35;
+                filteredData.datasets[i].barPercentage = 3;
                 delete filteredData.datasets[i].index;
             }
         });
 
+        if (isNewElection) {
+            previousDatasets = sourceDatasets.map(ds => {
+                const partyKey = ds.label;
+
+                return {
+                    ...ds,
+                    label: `${ds.label} (Previous)`,
+                    data: [...ds.data],
+                    order: 2,
+                    stack: 'previous',
+                    backgroundColor: PartyColours[$countryCode][partyKey]?.trans || ds.backgroundColor, 
+                    categoryPercentage: 0.8,
+                    barPercentage: 0.9,
+                };
+            });
+            currentElectionName = $name;
+        }
+
         if (filteredData.datasets.length > sourceDatasets.length) {
             filteredData.datasets = filteredData.datasets.slice(0, sourceDatasets.length);
         }
+
+        barChartData = {
+            labels: filteredData.labels,
+            datasets: [...previousDatasets, ...filteredData.datasets]
+        };
     }
 
     let displayDate = "";
     $: {
         const rawDates = $electionDate; 
-
-        if (Array.isArray(rawDates) && rawDates.length === 1) {
-            const dateObj = new Date(rawDates[0]);
-            displayDate = dateObj.toLocaleDateString("de-AT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            });
-        } else if (Array.isArray(rawDates) && rawDates.length === 2) {
-            const start = new Date(rawDates[0]);
-            const end = new Date(rawDates[1]);
-            displayDate = `${start.toLocaleDateString("de-AT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            })} - ${end.toLocaleDateString("de-AT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            })}`;
-        } else {
-            displayDate = "Kein Datum";
-        }
+        displayDate = formatDate(rawDates);
     }
 
     let mandates = [];
@@ -132,51 +149,87 @@
         mandates = calcMandates($data.datasets);
     }
 
+    let calculationHistory = [];
+    let eligibleIndices = [];
+
     function calcMandates(dataset) {
-        // Find which seats are reserved
+        const filteredParties = dataset.filter(party => party.order !== 2);
+
+        const totalVotesInDataset = filteredParties.reduce((sum, party) => {
+            return sum + (party.data[party.index] || 0);
+        }, 0);
+
+        others = 100 - totalVotesInDataset;
+
+        const currentIndices = filteredParties
+            .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
+            .filter(index => {
+                if (index === -1) return false;
+                const value = filteredParties[index].data[filteredParties[index].index];
+
+                let isChecked = false;
+                if (browser) {
+                    const checkbox = document.getElementById(`checkbox_party_${index}`);
+                    isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+                }
+                return value >= $threshold || isChecked;
+            });
+
+        eligibleIndices = currentIndices;
+
         const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);
         const totalReservedSeats = reservedParties.reduce((sum, p) => sum + p.reservedSeats, 0);
+        const nonReservedMandateCount = $mandateCount - totalReservedSeats;
 
-        let filteredIndices = dataset
-            .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
-            .filter(index => index !== -1);
+        let eligibleShares = eligibleIndices.map(idx => dataset[idx].data[dataset[idx].index]);
+        let finalMandates = new Array(filteredParties.length).fill(0);
 
-        let votesShares = filteredIndices
-            .map(index => dataset[index].data[dataset[index].index]);
-
-        others = 100 - votesShares.reduce((a, b) => a + b, 0);
-
-        let eligibleShares = votesShares.map((value, filteredIndex) => {
-            const originalIndex = filteredIndices[filteredIndex];
-            let isChecked = false;
-            if (browser) {
-                const checkbox = document.getElementById(`checkbox_party_${originalIndex}`);
-                isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
-            }
-            return (value < $threshold && !isChecked) ? 0 : value;
-        });
-        
-        // Subtract reserved seats from total mandate count
-        const nonReservedMandateCount = $mandateCount - totalReservedSeats; 
-
-        if (others >= -0.00001) {
+        if (eligibleShares.length > 0 && nonReservedMandateCount > 0) {
+            let result;
             if ($apportionmentMethod == ApportionmentMethods.DHONDT) {
-                mandates = dhondt([...eligibleShares], nonReservedMandateCount);
+                result = dhondt(eligibleShares, nonReservedMandateCount);
             } else if ($apportionmentMethod == ApportionmentMethods.SAINTE_LAGUE) {
-                mandates = saintelague([...eligibleShares], nonReservedMandateCount);
-            } else if ($apportionmentMethod == ApportionmentMethods.HARE_NIEMEYER) {
-                mandates = hareniemeyer([...eligibleShares], nonReservedMandateCount);
+                result = saintelague(eligibleShares, nonReservedMandateCount);
+            } else {
+                result = hareniemeyer(eligibleShares, nonReservedMandateCount);
             }
+
+            calculationHistory = result.history || [];
+
+            eligibleIndices.forEach((origIdx, i) => {
+                finalMandates[origIdx] = result.mandates[i];
+            });
         }
 
-        // Add reserved results
         dataset.forEach((party, i) => {
-            if (party.reservedSeats !== undefined) {
-                mandates[i] = party.reservedSeats;
-            }
+            if (party.reservedSeats !== undefined) finalMandates[i] = party.reservedSeats;
         });
 
-        return mandates;
+        return finalMandates;
+    }
+
+    let tableView = 'rounds'; // 'rounds' or 'divisors'
+    let divisorGrid = [];
+    let lowestWinningQuotient = 0;
+
+    $: if (calculationHistory.length > 0) {
+        // Find the quotient that won the very last mandate
+        lowestWinningQuotient = calculationHistory[calculationHistory.length - 1].quotients[
+            calculationHistory[calculationHistory.length - 1].winnerIdx
+        ];
+
+        // Generate the grid (rows = divisors 1, 2, 3...)
+        // We show divisors up to the max seats any single party won + a few extra
+        const maxSeats = Math.max(...mandates) + 1;
+        const currentShares = eligibleIndices.map(idx => $data.datasets[idx].data[$data.datasets[idx].index]);
+        
+        divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
+            const d = $apportionmentMethod === ApportionmentMethods.SAINTE_LAGUE ? (i + 0.5) : (i + 1);
+            return {
+                divisor: d,
+                values: currentShares.map(share => share / d)
+            };
+        });
     }
 
     $: {
@@ -222,7 +275,7 @@
         </table>
     </div>
     <div class="bar_container">
-        <Bar data={filteredData} options={{ responsive: true, maintainAspectRatio: false, plugins: {
+        <Bar data={barChartData} options={{ responsive: true, maintainAspectRatio: false, plugins: {
             datalabels: {
                 anchor: 'end',  // Positions the labels above the bars
                 align: 'top',
@@ -319,6 +372,9 @@
         scales: {
             x: {
                 stacked: true,
+                grid: {
+                    display: false
+                }
             },
             y: {
                 stacked: true,
@@ -462,5 +518,80 @@
         <p class="majorityText {selectedParties < twoThirdsMajority ? 'red' : 'green'}">
             Zweidrittelmehrheit: {selectedParties}/{twoThirdsMajority}
         </p>
+    </div>
+</section>
+
+<h1>Berechnungsschritte</h1>
+<section class="calculation_logic_section">
+    {#if $apportionmentMethod !== ApportionmentMethods.HARE_NIEMEYER}
+        <div class="toggle-group">
+            <button class:active={tableView === 'rounds'} on:click={() => tableView = 'rounds'}>
+                Runden-Ansicht
+            </button>
+            <button class:active={tableView === 'divisors'} on:click={() => tableView = 'divisors'}>
+                Divisor-Tabelle
+            </button>
+        </div>
+    {/if}
+
+    <div class="table_wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-col">
+                        {#if $apportionmentMethod === ApportionmentMethods.HARE_NIEMEYER}
+                            Phase
+                        {:else}
+                            {tableView === 'rounds' ? 'Mandat' : 'Divisor'}
+                        {/if}
+                    </th>
+                    {#each eligibleIndices as idx}
+                        <th>
+                            <div class="party-header">
+                                <span class="color-bar" style="background-color: {$data.datasets[idx].backgroundColor}"></span>
+                                <span class="party-label">{ $data.datasets[idx].label }</span>
+                            </div>
+                        </th>
+                    {/each}
+                </tr>
+            </thead>
+            <tbody>
+                {#if tableView === 'rounds' || $apportionmentMethod === ApportionmentMethods.HARE_NIEMEYER}
+                    {#each calculationHistory as step}
+                        <tr>
+                            <td class="sticky-col">
+                                <strong>
+                                    {#if $apportionmentMethod === ApportionmentMethods.HARE_NIEMEYER}
+                                        {step.seat === 0 ? 'Quote' : `Rest ${step.seat}. Mandat`}
+                                    {:else}
+                                        {step.seat}. Mandat
+                                    {/if}
+                                </strong>
+                            </td>
+                            {#each step.quotients as q, i}
+                                <td class:winner={step.winnerIdx === i} 
+                                    class:initial-row={$apportionmentMethod === ApportionmentMethods.HARE_NIEMEYER && step.seat === 0}>
+                                    { q.toLocaleString('de-AT', { 
+                                        minimumFractionDigits: 3,
+                                        maximumFractionDigits: $apportionmentMethod === ApportionmentMethods.HARE_NIEMEYER ? 5 : 3
+                                    }) }
+                                </td>
+                            {/each}
+                        </tr>
+                    {/each}
+                {:else}
+                    {#each divisorGrid as row}
+                        <tr>
+                            <td class="sticky-col"><strong>/{row.divisor}</strong></td>
+                            {#each row.values as val}
+                                <td class:winner={val >= lowestWinningQuotient}>
+                                    { val.toLocaleString('de-AT', { minimumFractionDigits: 3 }) }
+                                </td>
+                            {/each}
+                        </tr>
+                    {/each}
+                {/if}
+            </tbody>
+        </table>
     </div>
 </section>
