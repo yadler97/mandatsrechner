@@ -1,7 +1,7 @@
 <svelte:head>
-   <title>Mandatsrechner - {name}</title>
-   <meta property="og:title" content="Mandatsrechner - {name}">
-   <meta name="twitter:title" content="Mandatsrechner - {name}">
+    <title>Mandatsrechner - {name}</title>
+    <meta property="og:title" content="Mandatsrechner - {name}">
+    <meta name="twitter:title" content="Mandatsrechner - {name}">
 </svelte:head>
 
 <script>
@@ -26,11 +26,13 @@
         }
     }
 
+    let nameStore = writable();
     let mandateCount = writable(0);
     let dataObj = writable();
     let mandateDataObj = writable();
     let majorityDataObj = writable();
 
+    setContext('name', nameStore);
     setContext('mandateCount', mandateCount);
     setContext('data', dataObj);
     setContext('mandateData', mandateDataObj);
@@ -44,6 +46,7 @@
         $dataObj = data[districtInt - 1];
         $mandateDataObj = mandateData[districtInt - 1];
         $majorityDataObj =  majorityData[districtInt - 1];
+        $nameStore = `${name} (${district}.)`;
 
         // Set the mandate count based on the district
         if (districtInt == 1 || districtInt == 4 || districtInt == 5 || districtInt == 6 || districtInt == 7 || districtInt == 8 || districtInt == 9 || districtInt == 13 || districtInt == 18) {

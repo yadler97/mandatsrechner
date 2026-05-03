@@ -1,3 +1,9 @@
+<svelte:head>
+    <title>Mandatsrechner - {data.name}</title>
+    <meta property="og:title" content="Mandatsrechner - {data.name}">
+    <meta name="twitter:title" content="Mandatsrechner - {data.name}">
+</svelte:head>
+
 <script>
     import ElectionCharts from '../../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
@@ -5,6 +11,7 @@
 
     export let data;
 
+    const nameStore = writable(data.name);
     const dataStore = writable(data.data);
     const mandateDataStore = writable(data.mandateData);
     const majorityDataStore = writable(data.majorityData);
@@ -16,6 +23,7 @@
     const baseMandateStore = writable(data.baseMandateRule || false);
     const noteStore = writable(data.note || '');
 
+    setContext('name', nameStore);
     setContext('data', dataStore);
     setContext('mandateData', mandateDataStore);
     setContext('majorityData', majorityDataStore);
@@ -28,6 +36,7 @@
     setContext('note', noteStore);
 
     $: {
+        nameStore.set(data.name);
         dataStore.set(data.data);
         mandateDataStore.set(data.mandateData);
         majorityDataStore.set(data.majorityData);
@@ -40,11 +49,5 @@
         noteStore.set(data.note || '');
     }
 </script>
-
-<svelte:head>
-   <title>Mandatsrechner - {data.name}</title>
-    <meta property="og:title" content="Mandatsrechner - {data.name}">
-   <meta name="twitter:title" content="Mandatsrechner - {data.name}">
-</svelte:head>
 
 <ElectionCharts />
