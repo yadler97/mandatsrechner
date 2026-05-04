@@ -7,6 +7,8 @@
     import { base } from '$app/paths';
     import { page } from '$app/stores';
 
+    const version = __APP_VERSION__;
+
     let isOpen = false;
     let path = "";
     $: {
@@ -17,27 +19,27 @@
     $: isElectionPage = slug && slug !== 'mandatsrechner' && slug !== '';
 
     const elections = [
-        { id: "europawahl2024", label: "Europawahl 2024" },
-        { id: "landtagswahlSachsen2024", label: "Landtagswahl Sachsen 2024" },
-        { id: "landtagswahlThueringen2024", label: "Landtagswahl Thüringen 2024" },
-        { id: "landtagswahlBrandenburg2024", label: "Landtagswahl Brandenburg 2024" },
-        { id: "nationalratswahl2024", label: "Nationalratswahl 2024" },
-        { id: "landtagswahlVorarlberg2024", label: "Landtagswahl Vorarlberg 2024" },
-        { id: "landtagswahlSteiermark2024", label: "Landtagswahl Steiermark 2024" },
-        { id: "landtagswahlBurgenland2025", label: "Landtagswahl Burgenland 2025" },
-        { id: "bundestagswahl2025", label: "Bundestagswahl 2025" },
-        { id: "buergerschaftswahlHamburg2025", label: "Bürgerschaftswahl Hamburg 2025" },
-        { id: "landtagswahlWien2025", label: "Landtagswahl Wien 2025" },
-        { id: "bezirkswahlenWien2025", label: "Bezirkswahlen Wien 2025" },
-        { id: "tweedeKamerverkiezingen2025", label: "Tweede Kamerverkiezingen 2025" },
-        { id: "landtagswahlBadenWuerttemberg2026", label: "Landtagswahl Baden-Württemberg 2026" },
-        { id: "drzavnozborskeVolitveVSloveniji2026", label: "Državnozborske volitve v Sloveniji 2026" },
-        { id: "landtagswahlRheinlandPfalz2026", label: "Landtagswahl Rheinland-Pfalz 2026" },
-        { id: "folketingsvalgIDanmark2026", label: "Folketingsvalg i Danmark 2026" },
-        { id: "gemeinderatswahlGraz2026", label: "Gemeinderatswahl Graz 2026" },
-        { id: "landtagswahlSachsenAnhalt2026", label: "Landtagswahl Sachsen-Anhalt 2026" },
-        { id: "abgeordnetenhauswahlBerlin2026", label: "Abgeordnetenhauswahl Berlin 2026" },
         { id: "landtagswahlMecklenburgVorpommern2026", label: "Landtagswahl Mecklenburg-Vorpommern 2026" },
+        { id: "abgeordnetenhauswahlBerlin2026", label: "Abgeordnetenhauswahl Berlin 2026" },
+        { id: "landtagswahlSachsenAnhalt2026", label: "Landtagswahl Sachsen-Anhalt 2026" },
+        { id: "gemeinderatswahlGraz2026", label: "Gemeinderatswahl Graz 2026" },
+        { id: "folketingsvalgIDanmark2026", label: "Folketingsvalg i Danmark 2026" },
+        { id: "landtagswahlRheinlandPfalz2026", label: "Landtagswahl Rheinland-Pfalz 2026" },
+        { id: "drzavnozborskeVolitveVSloveniji2026", label: "Državnozborske volitve v Sloveniji 2026" },
+        { id: "landtagswahlBadenWuerttemberg2026", label: "Landtagswahl Baden-Württemberg 2026" },
+        { id: "tweedeKamerverkiezingen2025", label: "Tweede Kamerverkiezingen 2025" },
+        { id: "bezirkswahlenWien2025", label: "Bezirkswahlen Wien 2025" },
+        { id: "landtagswahlWien2025", label: "Landtagswahl Wien 2025" },
+        { id: "buergerschaftswahlHamburg2025", label: "Bürgerschaftswahl Hamburg 2025" },
+        { id: "bundestagswahl2025", label: "Bundestagswahl 2025" },
+        { id: "landtagswahlBurgenland2025", label: "Landtagswahl Burgenland 2025" },
+        { id: "landtagswahlSteiermark2024", label: "Landtagswahl Steiermark 2024" },
+        { id: "landtagswahlVorarlberg2024", label: "Landtagswahl Vorarlberg 2024" },
+        { id: "nationalratswahl2024", label: "Nationalratswahl 2024" },
+        { id: "landtagswahlBrandenburg2024", label: "Landtagswahl Brandenburg 2024" },
+        { id: "landtagswahlThueringen2024", label: "Landtagswahl Thüringen 2024" },
+        { id: "landtagswahlSachsen2024", label: "Landtagswahl Sachsen 2024" },
+        { id: "europawahl2024", label: "Europawahl 2024" },
         { id: "spielwiese", label: "Spielwiese" }
     ];
 
@@ -99,4 +101,10 @@
     </div>
 </header>
 
-<slot></slot>
+<main>
+    <slot></slot>
+</main>
+
+<footer class="version-display">
+    <p>Ver. {version}</p>
+</footer>

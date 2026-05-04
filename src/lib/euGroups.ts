@@ -64,3 +64,15 @@ export const EUGroups = {
     'Levica': 'Left'
   }
 };
+
+export const EUGroupNames = {
+  'EPP': 'Europäische Volkspartei',
+  'S&D': 'Sozialdemokraten',
+  'RE': 'Renew Europe',
+  'G/EFA': 'Die Grünen/Europäische Freie Allianz',
+  'ECR': 'Europäische Konservative und Reformer',
+  'PFE': 'Patrioten für Europa',
+  'ESN': 'Europa der Souveränen Nationen',
+  'Left': 'Die Linke',
+  'NI': 'Fraktionslos'
+};

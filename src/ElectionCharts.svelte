@@ -5,7 +5,7 @@
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
     import { formatDate, getMajority, getTwoThirdsMajority } from '$lib/helper';
     import { PartyColours, PartyColoursEU } from '$lib/partyColours';
-    import { EUGroups } from '$lib/euGroups';
+    import { EUGroupNames, EUGroups } from '$lib/euGroups';
 
     import { getContext } from 'svelte'
     import { browser } from '$app/environment';
@@ -400,6 +400,7 @@
                                     background-color: {PartyColoursEU[EUGroups[$countryCode]?.[party.label]]?.bg || '#999999'};
                                     color: {PartyColoursEU[EUGroups[$countryCode]?.[party.label]]?.text || 'white'};
                                 "
+                                title={EUGroupNames[EUGroups[$countryCode]?.[party.label] || 'NI']}
                             >
                                 {EUGroups[$countryCode]?.[party.label] || 'NI'}
                             </span>
