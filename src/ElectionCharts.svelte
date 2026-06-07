@@ -572,7 +572,7 @@
                             {#each step.quotients as q, i}
                                 <td class:winner={step.winnerIdx === i} 
                                     class:initial-row={$apportionmentMethod === ApportionmentMethods.HARE_NIEMEYER && step.seat === 0}>
-                                    { q.toLocaleString('de-AT', { 
+                                    { (q ?? 0).toLocaleString('de-AT', { 
                                         minimumFractionDigits: 3,
                                         maximumFractionDigits: $apportionmentMethod === ApportionmentMethods.HARE_NIEMEYER ? 5 : 3
                                     }) }
