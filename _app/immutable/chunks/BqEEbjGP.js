@@ -1,0 +1,1 @@
+function e(t){return t.length>0?t.map(n=>new Date(n).toLocaleDateString("de-AT",{day:"numeric",month:"long",year:"numeric"})).join(" - "):"Kein Datum"}function r(t){return Math.floor(t/2+1)}function a(t){return Math.ceil(t/3*2)}export{a,e as f,r as g};
