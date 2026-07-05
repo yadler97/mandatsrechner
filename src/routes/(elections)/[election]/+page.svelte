@@ -7,12 +7,9 @@
 </svelte:head>
 
 <script>
-    import { run } from 'svelte/legacy';
-
     import { page } from '$app/stores';
-    import ElectionChartsNew2 from '../../../ElectionChartsNew2.svelte';
+    import ElectionCharts from '../../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
-    import { writable } from 'svelte/store';
 
     /** @type {{data: any}} */
     let { data } = $props();
@@ -51,4 +48,4 @@
     setContext('electionState', electionState);
 </script>
 
-<ElectionChartsNew2 />
+<ElectionCharts />
