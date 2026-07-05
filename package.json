@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev": "vite dev",
 		"dev:host": "vite dev --host",
-		"build": "vite build",
+		"gen:previews": "node ./genPreviews.js",
+		"build": "npm run gen:previews && vite build",
 		"preview": "vite preview",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -30,6 +31,7 @@
 		"eslint-plugin-svelte": "^3.17.1",
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^3.5.1",
+		"sharp": "^0.35.3",
 		"svelte": "^4.2.20",
 		"svelte-check": "^4.4.6",
 		"tslib": "^2.8.1",

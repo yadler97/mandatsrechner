@@ -2,6 +2,8 @@
     <title>Mandatsrechner - {name}</title>
     <meta property="og:title" content="Mandatsrechner - {name}">
     <meta name="twitter:title" content="Mandatsrechner - {name}">
+    <meta property="og:image" content="https://yadler97.github.io/mandatsrechner/previews/bezirkswahlenWien2025.png">
+    <meta name="twitter:image" content="https://yadler97.github.io/mandatsrechner/previews/bezirkswahlenWien2025.png">
 </svelte:head>
 
 <script>

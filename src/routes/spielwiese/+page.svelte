@@ -2,6 +2,8 @@
     <title>Mandatsrechner - Spielwiese</title>
     <meta property="og:title" content="Mandatsrechner - Spielwiese">
     <meta name="twitter:title" content="Mandatsrechner - Spielwiese">
+    <meta property="og:image" content="https://yadler97.github.io/mandatsrechner/previews/spielwiese.png">
+    <meta name="twitter:image" content="https://yadler97.github.io/mandatsrechner/previews/spielwiese.png">
 </svelte:head>
 
 <script>

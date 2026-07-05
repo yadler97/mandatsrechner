@@ -12,3 +12,5 @@ vite.config.ts.timestamp-*
 # Playwright
 tests/playwright-report/*
 tests/test-results/*
+
+static/previews
