@@ -1,4 +1,6 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { Bar, Doughnut } from 'svelte-chartjs';
     import ChartDataLabels from 'chartjs-plugin-datalabels';
     import annotationPlugin from 'chartjs-plugin-annotation';
@@ -32,38 +34,22 @@
     let data = getContext('data');
     let mandateData = getContext('mandateData');
     let majorityData = getContext('majorityData');
-    let mandateCount = 10;
-    let threshold = 4;
-    let apportionmentMethod = 'D\'Hondt';
-    let majority = 0;
-    $: {
-        majority = getMajority(mandateCount);
-    }
-    let twoThirdsMajority = 0;
-    $: {
-        twoThirdsMajority = getTwoThirdsMajority(mandateCount);
-    }
+    let mandateCount = $state(10);
+    let threshold = $state(4);
+    let apportionmentMethod = $state('D\'Hondt');
 
-    let mandates = [];
+    let majority = $derived(getMajority(mandateCount));
+    let twoThirdsMajority = $derived(getTwoThirdsMajority(mandateCount));
 
-    let others;
+    let mandates = $state([]);
 
-    let selectedParties = 0;
-    $: {
-        selectedParties = 0;
-        $majorityData.datasets.forEach((dataset, index) => {
-            if (!dataset.hidden) {
-                selectedParties += dataset.data[0];
-            }
-        });
-    }
+    let others = $state();
 
-    $: {
-        mandates = calcMandates($data.datasets, mandateCount, apportionmentMethod, threshold);
-    }
+    let selectedParties = $state(0);
 
-    let calculationHistory = [];
-    let eligibleIndices = [];
+
+    let calculationHistory = $state([]);
+    let eligibleIndices = $state([]);
 
     function calcMandates(dataset, mandateCount, apportionmentMethod, threshold) {
         const filteredParties = dataset.filter(party => party.order !== 2);
@@ -121,36 +107,9 @@
         return finalMandates;
     }
 
-    let tableView = 'rounds'; // 'rounds' or 'divisors'
-    let divisorGrid = [];
-    let lowestWinningQuotient = 0;
-
-    $: if (calculationHistory.length > 0) {
-        // Find the quotient that won the very last mandate
-        lowestWinningQuotient = calculationHistory[calculationHistory.length - 1].quotients[
-            calculationHistory[calculationHistory.length - 1].winnerIdx
-        ];
-
-        // Generate the grid (rows = divisors 1, 2, 3...)
-        // We show divisors up to the max seats any single party won + a few extra
-        const maxSeats = Math.max(...mandates) + 1;
-        const currentShares = eligibleIndices.map(idx => $data.datasets[idx].data[$data.datasets[idx].index]);
-        
-        divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
-            const d = apportionmentMethod === ApportionmentMethods.SAINTE_LAGUE ? (i + 0.5) : (i + 1);
-            return {
-                divisor: d,
-                values: currentShares.map(share => share / d)
-            };
-        });
-    }
-
-    $: {
-        $mandateData.datasets[0].data = mandates
-        for (let i in mandates) {
-            $majorityData.datasets[i].data = [mandates[i]]
-        }
-    }
+    let tableView = $state('rounds'); // 'rounds' or 'divisors'
+    let divisorGrid = $state([]);
+    let lowestWinningQuotient = $state(0);
 
     function validateMandateCount(event) {
         let value = event.target.value;
@@ -240,7 +199,7 @@
         $majorityData = $majorityData;
     }
 
-    let editingIndex = null; // tracks which party is in "edit mode"
+    let editingIndex = $state(null); // tracks which party is in "edit mode"
 
     function toggleEdit(index) {
         if (editingIndex === index) {
@@ -347,6 +306,45 @@
         
         if (editingIndex === index) editingIndex = null;
     }
+
+    run(() => {
+        selectedParties = 0;
+        $majorityData.datasets.forEach((dataset, index) => {
+            if (!dataset.hidden) {
+                selectedParties += dataset.data[0];
+            }
+        });
+    });
+    run(() => {
+        mandates = calcMandates($data.datasets, mandateCount, apportionmentMethod, threshold);
+    });
+    run(() => {
+        if (calculationHistory.length > 0) {
+            // Find the quotient that won the very last mandate
+            lowestWinningQuotient = calculationHistory[calculationHistory.length - 1].quotients[
+                calculationHistory[calculationHistory.length - 1].winnerIdx
+            ];
+
+            // Generate the grid (rows = divisors 1, 2, 3...)
+            // We show divisors up to the max seats any single party won + a few extra
+            const maxSeats = Math.max(...mandates) + 1;
+            const currentShares = eligibleIndices.map(idx => $data.datasets[idx].data[$data.datasets[idx].index]);
+            
+            divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
+                const d = apportionmentMethod === ApportionmentMethods.SAINTE_LAGUE ? (i + 0.5) : (i + 1);
+                return {
+                    divisor: d,
+                    values: currentShares.map(share => share / d)
+                };
+            });
+        }
+    });
+    run(() => {
+        $mandateData.datasets[0].data = mandates
+        for (let i in mandates) {
+            $majorityData.datasets[i].data = [mandates[i]]
+        }
+    });
 </script>
 <h1>Stimmenanteile</h1>
 <section class="vote_share_section">
@@ -356,11 +354,11 @@
             <tbody>
                 <tr>
                     <th><label for="input_mandate_count">Abgeordnete</label></th>
-                    <td><input id="input_mandate_count" type="number" bind:value={mandateCount} min=0 max=1000 on:input={validateMandateCount}></td>
+                    <td><input id="input_mandate_count" type="number" bind:value={mandateCount} min=0 max=1000 oninput={validateMandateCount}></td>
                 </tr>
                 <tr>
                     <th><label for="input_threshold">Sperrklausel</label></th>
-                    <td><span class="valuePadding"><input id="input_threshold" type="number" bind:value={threshold} min=0 max=100 on:input={validateThreshold}> %</span></td>
+                    <td><span class="valuePadding"><input id="input_threshold" type="number" bind:value={threshold} min=0 max=100 oninput={validateThreshold}> %</span></td>
                 </tr>
                 <tr>
                     <th><label for="input_apportionment_method">Sitzzuteilungsverfahren</label></th>
@@ -432,14 +430,14 @@
                                 value={party.backgroundColor}
                                 aria-label="Farbe ändern"
                                 title="Farbe ändern"
-                                on:input={(e) => updatePartyColor(i, e)}
+                                oninput={(e) => updatePartyColor(i, e)}
                             />
                             <input
                                 class="name-edit-input"
                                 type="text"
                                 value={party.label}
-                                on:input={(e) => handleNameInput(i, e)}
-                                on:keydown={handleKeydown}
+                                oninput={(e) => handleNameInput(i, e)}
+                                onkeydown={handleKeydown}
                                 autoFocus
                             />
                         </div>
@@ -452,7 +450,7 @@
 
                     <button
                         class="edit-icon-btn"
-                        on:click={() => toggleEdit(i)}
+                        onclick={() => toggleEdit(i)}
                         aria-label={editingIndex === i ? 'Änderungen speichern' : 'Partei bearbeiten'}
                         title={editingIndex === i ? 'Änderungen speichern' : 'Partei bearbeiten'}
                     >
@@ -468,13 +466,13 @@
                         bind:value={$data.datasets[i].data[party.index]}
                         min=0
                         max=100
-                        on:input={() => validatePartyShare(i, party.index)}
+                        oninput={() => validatePartyShare(i, party.index)}
                     > %
                 </span>
 
                 <button
                     class="remove-btn"
-                    on:click={() => removeParty(i)}
+                    onclick={() => removeParty(i)}
                     aria-label="Partei löschen"
                     title="Partei löschen"
                 >
@@ -483,7 +481,7 @@
             </div>
         {/each}
 
-        <button class="add-party-btn" on:click={addParty}>
+        <button class="add-party-btn" onclick={addParty}>
             + Partei hinzufügen
         </button>
 
@@ -570,7 +568,7 @@
 
 <section class="config_actions">
     <div>
-        <button class="action-btn export-btn" on:click={exportConfig}>
+        <button class="action-btn export-btn" onclick={exportConfig}>
             JSON exportieren
         </button>
 
@@ -579,7 +577,7 @@
             <input 
                 type="file" 
                 accept=".json" 
-                on:change={importConfig} 
+                onchange={importConfig} 
                 hidden 
             />
         </label>
@@ -590,10 +588,10 @@
 <section class="calculation_logic_section">
     {#if apportionmentMethod !== ApportionmentMethods.HARE_NIEMEYER}
         <div class="toggle-group">
-            <button class:active={tableView === 'rounds'} on:click={() => tableView = 'rounds'}>
+            <button class:active={tableView === 'rounds'} onclick={() => tableView = 'rounds'}>
                 Runden-Ansicht
             </button>
-            <button class:active={tableView === 'divisors'} on:click={() => tableView = 'divisors'}>
+            <button class:active={tableView === 'divisors'} onclick={() => tableView = 'divisors'}>
                 Divisor-Tabelle
             </button>
         </div>

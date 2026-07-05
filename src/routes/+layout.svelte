@@ -1,4 +1,6 @@
 <script>
+    import { run, stopPropagation } from 'svelte/legacy';
+
     import '../app.css';
 
     import logo from '../lib/assets/logo.svg';
@@ -6,17 +8,19 @@
     import { goto } from '$app/navigation';
     import { base } from '$app/paths';
     import { page } from '$app/stores';
+    /** @type {{children?: import('svelte').Snippet}} */
+    let { children } = $props();
 
     const version = __APP_VERSION__;
 
-    let isOpen = false;
-    let path = "";
-    $: {
+    let isOpen = $state(false);
+    let path = $state("");
+    run(() => {
         path = base + $page.url.pathname;
-    }
+    });
 
-    $: slug = $page.url.pathname.split('/').filter(Boolean).pop();
-    $: isElectionPage = slug && slug !== 'mandatsrechner' && slug !== '';
+    let slug = $derived($page.url.pathname.split('/').filter(Boolean).pop());
+    let isElectionPage = $derived(slug && slug !== 'mandatsrechner' && slug !== '');
 
     const modules = import.meta.glob('$lib/elections/*.js', { eager: true });
     const elections = Object.entries(modules)
@@ -47,7 +51,7 @@
     }
 </script>
 
-<svelte:window on:click={closeClickOutside}/>
+<svelte:window onclick={closeClickOutside}/>
 
 <header>
     <a href="{base}/">
@@ -58,7 +62,7 @@
     <div class="custom-select">
         <button
             class="select-trigger"
-            on:click|stopPropagation={() => isOpen = !isOpen}
+            onclick={stopPropagation(() => isOpen = !isOpen)}
             class:has-flag={isElectionPage}
         >
             {#if isElectionPage}
@@ -74,14 +78,14 @@
         {#if isOpen}
             <ul class="options-list">
                 <li>
-                    <button on:click={() => { isOpen = false; goto(`${base}/`); }}>
+                    <button onclick={() => { isOpen = false; goto(`${base}/`); }}>
                         Wahl auswählen
                     </button>
                 </li>
                 {#each elections as election}
                     <li>
                         <button
-                            on:click={() => handleSelect(election.id)}
+                            onclick={() => handleSelect(election.id)}
                             class:active={path.endsWith(election.id)}
                         >
                             <img src="{base}/flags/{election.id}.jpg" alt="" class="flag-img">
@@ -95,7 +99,7 @@
 </header>
 
 <main>
-    <slot></slot>
+    {@render children?.()}
 </main>
 
 <footer class="version-display">

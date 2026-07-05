@@ -10,21 +10,21 @@
     import { data, mandateData, majorityData, date, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
 	import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import { goto } from '$app/navigation';
 	import { writable } from 'svelte/store';
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
-    let district = '1';
+    let district = $state('1');
 
     if (browser) {
-        district = $page.url.searchParams.get('bezirk') || '1';
+        district = page.url.searchParams.get('bezirk') || '1';
         let districtInt = parseInt(district);
 
         if (isNaN(districtInt) || districtInt < 1 || districtInt > 23) {
             districtInt = 1;
-            goto(`${$page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
+            goto(`${page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
         }
     }
 
@@ -80,7 +80,7 @@
     setContext('baseMandateRule', writable(false));
 </script>
 
-<select bind:value={district} on:change={() => gotoDistrict(district)} class="district_select">
+<select bind:value={district} onchange={() => gotoDistrict(district)} class="district_select">
     <option value="1">1., Innere Stadt</option>
     <option value="2">2., Leopoldstadt</option>
     <option value="3">3., Landstraße</option>

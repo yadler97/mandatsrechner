@@ -7,14 +7,17 @@
 </svelte:head>
 
 <script>
+    import { run } from 'svelte/legacy';
+
     import { page } from '$app/stores';
     import ElectionCharts from '../../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { writable } from 'svelte/store';
 
-    export let data;
-    $: electionId = $page.params.election; 
-    $: imageUrl = `https://yadler97.github.io/mandatsrechner/previews/${electionId}.png`;
+    /** @type {{data: any}} */
+    let { data } = $props();
+    let electionId = $derived($page.params.election); 
+    let imageUrl = $derived(`https://yadler97.github.io/mandatsrechner/previews/${electionId}.png`);
 
     const nameStore = writable(data.name);
     const dataStore = writable(data.data);
@@ -40,7 +43,7 @@
     setContext('baseMandateRule', baseMandateStore);
     setContext('note', noteStore);
 
-    $: {
+    run(() => {
         nameStore.set(data.name);
         dataStore.set(data.data);
         mandateDataStore.set(data.mandateData);
@@ -52,7 +55,7 @@
         countryCodeStore.set(data.countryCode);
         baseMandateStore.set(data.baseMandateRule || false);
         noteStore.set(data.note || '');
-    }
+    });
 </script>
 
 <ElectionCharts />

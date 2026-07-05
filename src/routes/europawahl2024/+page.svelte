@@ -10,22 +10,22 @@
     import { data, mandateData, majorityData, date, name } from '../../lib/elections/europawahl2024';
 	import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte'
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import { goto } from '$app/navigation';
 	import { writable } from 'svelte/store';
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
-    let country = 'at'
+    let country = $state('at')
 
     if (browser) {
-        country = $page.url.searchParams.get('country') || 'at';
+        country = page.url.searchParams.get('country') || 'at';
 
         const countries = ["at", "de"];
 
         if (!countries.includes(country)) {
             country = 'at';
-            goto(`${$page.url.pathname}?country=${country}`, { replaceState: true });
+            goto(`${page.url.pathname}?country=${country}`, { replaceState: true });
         }
     }
 
@@ -83,7 +83,7 @@
     setContext('baseMandateRule', writable(false));
 </script>
 
-<select bind:value={country} on:change={() => gotoCountry(country)} class="district_select">
+<select bind:value={country} onchange={() => gotoCountry(country)} class="district_select">
     <option value="at">Österreich</option>
     <option value="de">Deutschland</option>
 </select>
