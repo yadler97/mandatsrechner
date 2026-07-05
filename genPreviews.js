@@ -3,12 +3,16 @@ import fs from 'fs';
 import path from 'path';
 
 async function generatePreviews() {
-    const ids = ["bundestagswahl2025"];
+    const FLAGS_DIR = 'static/flags';
     const OUTPUT_DIR = 'static/previews';
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
-    for (const id of ids) {
-        const flagPath = path.resolve(`static/flags/${id}.jpg`);
+    const files = fs.readdirSync(FLAGS_DIR);
+    const flagFiles = files.filter(file => /\.(jpg|jpeg|png)$/i.test(file));
+
+    for (const file of flagFiles) {
+        const id = path.parse(file).name;
+        const flagPath = path.join(FLAGS_DIR, file);
         const logoPath = path.resolve('src/lib/assets/logo.svg');
         const outputPath = path.join(OUTPUT_DIR, `${id}.png`);
 
@@ -18,24 +22,24 @@ async function generatePreviews() {
                 .toBuffer();
 
             const logoBox = await sharp({
-                create: { width: 120, height: 120, channels: 4, background: 'white' }
+                create: { width: 124, height: 124, channels: 4, background: 'transparent' }
             })
             .composite([
-                { input: logoBuffer, gravity: 'center' },
-                { 
-                    input: Buffer.from('<svg><rect x="0" y="0" width="120" height="120" rx="20" ry="20"/></svg>'), 
-                    blend: 'dest-in' 
-                }
+                {
+                    input: Buffer.from(`
+                        <svg width="124" height="124">
+                            <rect x="2" y="2" width="120" height="120" rx="20" ry="20" 
+                                fill="white" stroke="#333333" stroke-width="4"/>
+                        </svg>`),
+                },
+                { input: logoBuffer, gravity: 'center' }
             ])
             .png()
             .toBuffer();
 
             const margin = 40;
             await sharp(flagPath)
-                .resize(1200, 720, { 
-                    fit: 'cover', 
-                    position: 'center'
-                })
+                .resize(1200, 720, { fit: 'cover', position: 'center' })
                 .composite([{ 
                     input: logoBox, 
                     left: 1200 - 120 - margin, 
@@ -45,7 +49,7 @@ async function generatePreviews() {
             
             console.log(`Successfully generated: ${outputPath}`);
         } catch (err) {
-            console.error(`Error processing ${id}:`, err.message);
+            console.error(`Error processing ${file}:`, err.message);
         }
     }
 }
