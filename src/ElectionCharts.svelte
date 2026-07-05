@@ -385,15 +385,19 @@
         }
     }} />
     </div>
-    
+
     <div class="input_fields_vote">
-        {#each $data.datasets as party, i}
-            {#if $data.datasets[i].order != 2 && !party.reservedSeats}
+        {#each [...$data.datasets].map((p, i) => ({ ...p, originalIndex: i }))
+            .sort((a, b) => {
+                const indexDiff = a.index - b.index;
+                return indexDiff !== 0 ? indexDiff : a.label.localeCompare(b.label);
+            }) as party (party.originalIndex)}
+            {#if $data.datasets[party.originalIndex].order != 2 && !party.reservedSeats}
                 <div class="input_field_vote_party">
                     <div class="display-group">
                         <span class="color-preview" style="background-color: {party.backgroundColor}"></span>
                         <div class="label-stack">
-                            <label for="input_party_{i}">{party.label}</label>
+                            <label for="input_party_{party.originalIndex}">{party.label}</label>
                             <span 
                                 class="eu-group-tag" 
                                 style="
@@ -406,12 +410,12 @@
                             </span>
                         </div>
                     </div>
-                    <span class="valuePadding"><input id="input_party_{i}" type="number" step="any" bind:value={$data.datasets[i].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(i, party.index)}> %</span>
+                    <span class="valuePadding"><input id="input_party_{party.originalIndex}" type="number" step="any" bind:value={$data.datasets[party.originalIndex].data[party.index]} min=0 max=100 on:input={() => validatePartyShare(party.originalIndex, party.index)}> %</span>
                 </div>
-                {#if $data.datasets[i].data[party.index] < $threshold && $baseMandateRule}
+                {#if $data.datasets[party.originalIndex].data[party.index] < $threshold && $baseMandateRule}
                     <div class="base_mandate_checkbox">
-                        <label for="checkbox_party_{i}">{$baseMandateRule} Grundmandat(e)?</label>
-                        <input id="checkbox_party_{i}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
+                        <label for="checkbox_party_{party.originalIndex}">{$baseMandateRule} Grundmandat(e)?</label>
+                        <input id="checkbox_party_{party.originalIndex}" type="checkbox" on:change={() => calcMandates($data.datasets)}>
                     </div>
                 {/if}
             {/if}
@@ -466,7 +470,7 @@
                     return false;
                 }
             }
-            }}} />
+        }}} />
     </div>
 
     <div class="stack_container">
