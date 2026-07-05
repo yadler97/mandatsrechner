@@ -2,14 +2,19 @@
     <title>Mandatsrechner - {data.name}</title>
     <meta property="og:title" content="Mandatsrechner - {data.name}">
     <meta name="twitter:title" content="Mandatsrechner - {data.name}">
+    <meta property="og:image" content={imageUrl}>
+    <meta name="twitter:image" content={imageUrl}>
 </svelte:head>
 
 <script>
+    import { page } from '$app/stores';
     import ElectionCharts from '../../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { writable } from 'svelte/store';
 
     export let data;
+    $: electionId = $page.params.election; 
+    $: imageUrl = `https://yadler97.github.io/mandatsrechner/previews/${electionId}.png`;
 
     const nameStore = writable(data.name);
     const dataStore = writable(data.data);
