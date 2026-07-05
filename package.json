@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev": "vite dev",
 		"dev:host": "vite dev --host",
-		"build": "vite build",
+		"gen:previews": "node ./genPreviews.js",
+		"build": "npm run gen:previews && vite build",
 		"preview": "vite preview",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
