@@ -62,6 +62,16 @@ export const EUGroups = {
     'SD': 'S&D',
     'NSi': 'EPP',
     'Levica': 'Left'
+  },
+  'SE': {
+    'S': 'S&D',
+    'SD': 'ECR',
+    'M': 'EPP',
+    'V': 'Left',
+    'C': 'RE',
+    'KD': 'EPP',
+    'MP': 'G/EFA',
+    'L': 'RE'
   }
 };
 

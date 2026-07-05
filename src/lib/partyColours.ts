@@ -74,6 +74,16 @@ export const PartyColours = {
     "Grönland": { "normal": "rgb(128, 128, 128)", "trans": "rgba(128, 128, 128, 0.5)" },
     "Färöer": { "normal": "rgb(128, 128, 128)", "trans": "rgba(128, 128, 128, 0.5)" },
     "D": { "normal": "rgb(0, 40, 70)", "trans": "rgba(0, 40, 70, 0.5)" }
+  },
+  "SE": {
+    "S": { "normal": "rgb(237, 27, 52)", "trans": "rgba(237, 27, 52, 0.5)" },
+    "SD": { "normal": "rgb(254, 223, 9)", "trans": "rgba(254, 223, 9, 0.5)" },
+    "M": { "normal": "rgb(1, 156, 219)", "trans": "rgba(1, 156, 219, 0.5)" },
+    "V": { "normal": "rgb(176, 0, 0)", "trans": "rgba(176, 0, 0, 0.5)" },
+    "C": { "normal": "rgb(18, 72, 56)", "trans": "rgba(18, 72, 56, 0.5)" },
+    "KD": { "normal": "rgb(35, 25, 119)", "trans": "rgba(35, 25, 119, 0.5)" },
+    "MP": { "normal": "rgb(43, 145, 44)", "trans": "rgba(43, 145, 44, 0.5)" },
+    "L": { "normal": "rgb(0, 106, 179)", "trans": "rgba(0, 106, 179, 0.5)" },
   }
 };
 
