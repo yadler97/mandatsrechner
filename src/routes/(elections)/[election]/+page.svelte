@@ -16,19 +16,8 @@
     let electionId = $derived($page.params.election); 
     let imageUrl = $derived(`https://yadler97.github.io/mandatsrechner/previews/${electionId}.png`);
 
-    let electionState = $state({
-        name: data.name,
-        data: data.data,
-        mandateData: data.mandateData,
-        majorityData: data.majorityData,
-        mandateCount: data.mandateCount,
-        threshold: data.threshold,
-        apportionmentMethod: data.apportionmentMethod,
-        date: data.date,
-        countryCode: data.countryCode,
-        baseMandateRule: data.baseMandateRule || false,
-        note: data.note || ''
-    });
+    // svelte-ignore state_referenced_locally
+    let electionState = $state(data);
 
     // 2. Automatically sync state if the data prop changes
     $effect(() => {
