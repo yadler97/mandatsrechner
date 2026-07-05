@@ -2,6 +2,8 @@
     <title>Mandatsrechner</title>
     <meta property="og:title" content="Mandatsrechner">
     <meta name="twitter:title" content="Mandatsrechner">
+    <meta property="og:image" content="https://yadler97.github.io/mandatsrechner/logo.png">
+    <meta name="twitter:image" content="https://yadler97.github.io/mandatsrechner/logo.png">
 </svelte:head>
 
 <h1>Willkommen zum großen Mandatsrechner!</h1>
