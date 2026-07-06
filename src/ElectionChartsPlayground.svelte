@@ -262,6 +262,10 @@
     function removeParty(index) {
         if (electionState.data.datasets.length <= 1) return;
 
+        eligibleIndices = eligibleIndices
+            .filter(idx => idx !== index)
+            .map(idx => (idx > index ? idx - 1 : idx));
+
         // 1. update data
         electionState.data.labels.splice(index, 1);
         electionState.data.datasets.splice(index, 1);
