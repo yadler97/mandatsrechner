@@ -106,11 +106,13 @@ export const majorityData = {
       label: 'CDU',
       data: [52],
       backgroundColor: PartyColours[countryCode]['CDU'].normal,
+      hidden: false,
     },
     {
       label: 'SPD',
       data: [34],
       backgroundColor: PartyColours[countryCode]['SPD'].normal,
+      hidden: false,
     },
     {
       label: 'Grüne',

@@ -249,16 +249,6 @@
         return finalMandates;
     }
 
-    // Reads electionState.data.datasets (percentages) and writes to
-    // others/eligibleIndices/calculationHistory/mandates — never writes back
-    // into electionState.data, so no self-referencing loop risk.
-    // $effect(() => {
-    //     const totalVotes = electionState.data.datasets.reduce((sum, p) => sum + (p.data?.[p.index] || 0), 0);
-    //     console.log('about to calcMandates, totalVotes:', totalVotes, 'mandateCount:', electionState.mandateCount);
-    //     mandates = calcMandates(electionState.data.datasets);
-    //     console.log('calcMandates returned');
-    // });
-
     $effect(() => {
         if (calculationHistory.length === 0) return;
 
@@ -280,9 +270,6 @@
         });
     });
 
-    // Pushes computed mandates into the shared mandateData/majorityData
-    // structures. Writes into different objects than what this effect
-    // reads (mandates), so no loop.
     $effect(() => {
         electionState.mandateData.datasets[1].data = mandates;
         for (let i in mandates) {
@@ -419,7 +406,7 @@
     </div>
 
     <div class="bar_container">
-        <ChartCanvas type="bar" data={plainBarChartData} options={barChartOptions} />
+        <ChartCanvas type="bar" data={plainBarChartData} options={barChartOptions} name={electionState.name} />
     </div>
 
     <div class="input_fields_vote">
@@ -472,11 +459,11 @@
 {/if}
 <section class="mandate_section">
     <div class="pie_container">
-        <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} />
+        <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={electionState.name} />
     </div>
 
     <div class="stack_container">
-        <ChartCanvas type="bar" data={plainMajorityData} options={majorityChartOptions} />
+        <ChartCanvas type="bar" data={plainMajorityData} options={majorityChartOptions} name={electionState.name} />
         <p class="majorityText {selectedParties < majority ? 'red' : 'green'}">
             Mehrheit: {selectedParties}/{majority}
         </p>

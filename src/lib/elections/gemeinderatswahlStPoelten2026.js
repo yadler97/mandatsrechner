@@ -89,6 +89,7 @@ export const majorityData = {
       label: 'SPÖ',
       data: [25],
       backgroundColor: PartyColours[countryCode]['SPÖ'].normal,
+      hidden: false,
     },
     {
       label: 'ÖVP',
