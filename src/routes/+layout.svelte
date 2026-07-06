@@ -1,6 +1,4 @@
 <script>
-    import { run, stopPropagation } from 'svelte/legacy';
-
     import '../app.css';
 
     import logo from '../lib/assets/logo.svg';
@@ -8,17 +6,14 @@
     import { goto } from '$app/navigation';
     import { base } from '$app/paths';
     import { page } from '$app/stores';
-    /** @type {{children?: import('svelte').Snippet}} */
+
     let { children } = $props();
 
     const version = __APP_VERSION__;
 
     let isOpen = $state(false);
-    let path = $state("");
-    run(() => {
-        path = base + $page.url.pathname;
-    });
 
+    let path = $derived(base + $page.url.pathname);
     let slug = $derived($page.url.pathname.split('/').filter(Boolean).pop());
     let isElectionPage = $derived(slug && slug !== 'mandatsrechner' && slug !== '');
 
@@ -62,7 +57,10 @@
     <div class="custom-select">
         <button
             class="select-trigger"
-            onclick={stopPropagation(() => isOpen = !isOpen)}
+            onclick={(e) => {
+                e.stopPropagation();
+                isOpen = !isOpen;
+            }}
             class:has-flag={isElectionPage}
         >
             {#if isElectionPage}
@@ -99,7 +97,7 @@
 </header>
 
 <main>
-    {@render children?.()}
+    {@render children()}
 </main>
 
 <footer class="version-display">

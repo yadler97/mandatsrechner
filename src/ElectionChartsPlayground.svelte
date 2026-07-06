@@ -15,13 +15,24 @@
     let majority = $derived(getMajority(mandateCount));
     let twoThirdsMajority = $derived(getTwoThirdsMajority(mandateCount));
 
+    let mandates = $state([]);
     let others = $state();
     let calculationHistory = $state([]);
     let eligibleIndices = $state([]);
 
-    let mandates = $state([]);
-    // svelte-ignore state_referenced_locally
-    mandates = calcMandates(electionState.data.datasets, mandateCount, apportionmentMethod, threshold);
+    let calcResult = $derived(calcMandates(
+        electionState.data.datasets, 
+        mandateCount, 
+        apportionmentMethod, 
+        threshold
+    ));
+
+    $effect(() => {
+        mandates = calcResult.mandates;
+        others = calcResult.others;
+        eligibleIndices = calcResult.eligibleIndices;
+        calculationHistory = calcResult.history;
+    });
 
     function calcMandates(dataset, mandateCount, apportionmentMethod, threshold) {
         const filteredParties = dataset.filter(party => party.order !== 2);
@@ -30,7 +41,7 @@
             return sum + (party.data[party.index] || 0);
         }, 0);
 
-        others = 100 - totalVotesInDataset;
+        const others = 100 - totalVotesInDataset;
 
         const currentIndices = filteredParties
             .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
@@ -46,14 +57,13 @@
                 return value >= threshold || isChecked;
             });
 
-        eligibleIndices = currentIndices;
-
         const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);
         const totalReservedSeats = reservedParties.reduce((sum, p) => sum + p.reservedSeats, 0);
         const nonReservedMandateCount = mandateCount - totalReservedSeats;
 
-        let eligibleShares = eligibleIndices.map(idx => dataset[idx].data[dataset[idx].index]);
+        let eligibleShares = currentIndices.map(idx => dataset[idx].data[dataset[idx].index]);
         let finalMandates = new Array(filteredParties.length).fill(0);
+        let history = [];
 
         if (eligibleShares.length > 0 && nonReservedMandateCount > 0) {
             let result;
@@ -64,10 +74,8 @@
             } else {
                 result = hareniemeyer(eligibleShares, nonReservedMandateCount);
             }
-
-            calculationHistory = result.history || [];
-
-            eligibleIndices.forEach((origIdx, i) => {
+            history = result.history || [];
+            currentIndices.forEach((origIdx, i) => {
                 finalMandates[origIdx] = result.mandates[i];
             });
         }
@@ -76,7 +84,12 @@
             if (party.reservedSeats !== undefined) finalMandates[i] = party.reservedSeats;
         });
 
-        return finalMandates;
+        return {
+            mandates: finalMandates,
+            others: others,
+            eligibleIndices: currentIndices,
+            history: history
+        };
     }
 
     let tableView = $state('rounds'); // 'rounds' or 'divisors'
@@ -101,7 +114,6 @@
         if (electionState.data.datasets[index].data[partyIndex] > 100) {
             electionState.data.datasets[index].data[partyIndex] = 100;
         }
-        mandates = calcMandates(electionState.data.datasets, mandateCount, apportionmentMethod, threshold);
     }
 
     function exportConfig() {
@@ -237,7 +249,6 @@
         electionState.mandateData.labels = [...electionState.mandateData.labels, newLabel];
         electionState.mandateData.datasets[0].data = [...electionState.mandateData.datasets[0].data, 0];
         electionState.mandateData.datasets[0].backgroundColor = [...electionState.mandateData.datasets[0].backgroundColor, defaultColor];
-        mandates = calcMandates(electionState.data.datasets, mandateCount, apportionmentMethod, threshold);
 
         // 3. update majorityData
         electionState.majorityData.datasets = [...electionState.majorityData.datasets, {

@@ -18,13 +18,6 @@
         majorityData: majorityData
     });
 
-    // 2. Automatically sync state if the data prop changes
-    //$effect(() => {
-    //    electionState.data = data.data;
-    //    electionState.mandateData = data.mandateData;
-    //    electionState.majorityData = data.majorityData;
-    //});
-
     setContext('electionState', electionState);
 </script>
 

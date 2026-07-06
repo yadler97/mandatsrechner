@@ -14,11 +14,21 @@
     let twoThirdsMajority = $derived(getTwoThirdsMajority(electionState.mandateCount));
     let displayDate = $derived(formatDate(electionState.date));
 
+    let mandates = $state([]);
     let others = $state();
     let calculationHistory = $state([]);
     let eligibleIndices = $state([]);
 
-    let mandates = $state([]);
+    let calcResult = $derived(calcMandates(
+        electionState.data.datasets
+    ));
+
+    $effect(() => {
+        mandates = calcResult.mandates;
+        others = calcResult.others;
+        eligibleIndices = calcResult.eligibleIndices;
+        calculationHistory = calcResult.history;
+    });
 
     let filteredData = $derived.by(() => {
         const activeIndices = electionState.data.labels
@@ -68,8 +78,6 @@
         });
 
         currentElectionName = electionState.name;
-
-        mandates = calcMandates(electionState.data.datasets);
     });
 
     let barChartData = $derived({
@@ -81,7 +89,6 @@
         if (electionState.data.datasets[index].data[partyIndex] > 100) {
             electionState.data.datasets[index].data[partyIndex] = 100;
         }
-        mandates = calcMandates(electionState.data.datasets);
     }
 
     let tableView = $state('rounds'); // 'rounds' or 'divisors'
@@ -95,30 +102,25 @@
             return sum + (party.data[party.index] || 0);
         }, 0);
 
-        others = 100 - totalVotesInDataset;
+        const others = 100 - totalVotesInDataset;
 
         const currentIndices = filteredParties
             .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
             .filter(index => {
                 if (index === -1) return false;
-                const value = filteredParties[index].data[filteredParties[index].index];
+                const party = filteredParties[index];
+                const value = party.data[party.index];
 
-                let isChecked = false;
-                if (browser) {
-                    const checkbox = document.getElementById(`checkbox_party_${index}`);
-                    isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
-                }
-                return value >= electionState.threshold || isChecked;
+                return value >= electionState.threshold || party.isChecked;
             });
-
-        eligibleIndices = currentIndices;
 
         const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);
         const totalReservedSeats = reservedParties.reduce((sum, p) => sum + p.reservedSeats, 0);
         const nonReservedMandateCount = electionState.mandateCount - totalReservedSeats;
 
-        let eligibleShares = eligibleIndices.map(idx => dataset[idx].data[dataset[idx].index]);
+        let eligibleShares = currentIndices.map(idx => dataset[idx].data[dataset[idx].index]);
         let finalMandates = new Array(filteredParties.length).fill(0);
+        let history = [];
 
         if (eligibleShares.length > 0 && nonReservedMandateCount > 0) {
             let result;
@@ -129,10 +131,8 @@
             } else {
                 result = hareniemeyer(eligibleShares, nonReservedMandateCount);
             }
-
-            calculationHistory = result.history || [];
-
-            eligibleIndices.forEach((origIdx, i) => {
+            history = result.history || [];
+            currentIndices.forEach((origIdx, i) => {
                 finalMandates[origIdx] = result.mandates[i];
             });
         }
@@ -141,7 +141,12 @@
             if (party.reservedSeats !== undefined) finalMandates[i] = party.reservedSeats;
         });
 
-        return finalMandates;
+        return {
+            mandates: finalMandates,
+            others: others,
+            eligibleIndices: currentIndices,
+            history: history
+        };
     }
 
     $effect(() => {
@@ -437,7 +442,7 @@
                 {#if electionState.data.datasets[party.originalIndex].data[party.index] < electionState.threshold && electionState.baseMandateRule}
                     <div class="base_mandate_checkbox">
                         <label for="checkbox_party_{party.originalIndex}">{electionState.baseMandateRule} Grundmandat(e)?</label>
-                        <input id="checkbox_party_{party.originalIndex}" type="checkbox" onchange={() => mandates = calcMandates(electionState.data.datasets)}>
+                        <input id="checkbox_party_{party.originalIndex}" type="checkbox" bind:checked={electionState.data.datasets[party.originalIndex].isChecked}>
                     </div>
                 {/if}
             {/if}
