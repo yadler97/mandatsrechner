@@ -1,39 +1,13 @@
 <script>
-    import { run } from 'svelte/legacy';
+    import ChartCanvas from './ChartCanvas.svelte';
+    import { getContext } from 'svelte';
 
-    import { Bar, Doughnut } from 'svelte-chartjs';
-    import ChartDataLabels from 'chartjs-plugin-datalabels';
-    import annotationPlugin from 'chartjs-plugin-annotation';
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
     import { getMajority, getTwoThirdsMajority } from '$lib/helper';
-
-    import { getContext } from 'svelte'
     import { browser } from '$app/environment';
 
-    import {
-        Chart,
-        Title,
-        Tooltip,
-        Legend,
-        BarElement,
-        CategoryScale,
-        LinearScale,
-    } from 'chart.js/auto';
+    let electionState = getContext('electionState');
 
-    Chart.register(
-        Title,
-        Tooltip,
-        Legend,
-        BarElement,
-        CategoryScale,
-        LinearScale,
-        ChartDataLabels,
-        annotationPlugin
-    );
-
-    let data = getContext('data');
-    let mandateData = getContext('mandateData');
-    let majorityData = getContext('majorityData');
     let mandateCount = $state(10);
     let threshold = $state(4);
     let apportionmentMethod = $state('D\'Hondt');
@@ -41,15 +15,13 @@
     let majority = $derived(getMajority(mandateCount));
     let twoThirdsMajority = $derived(getTwoThirdsMajority(mandateCount));
 
-    let mandates = $state([]);
-
     let others = $state();
-
-    let selectedParties = $state(0);
-
-
     let calculationHistory = $state([]);
     let eligibleIndices = $state([]);
+
+    let mandates = $state([]);
+    // svelte-ignore state_referenced_locally
+    mandates = calcMandates(electionState.data.datasets, mandateCount, apportionmentMethod, threshold);
 
     function calcMandates(dataset, mandateCount, apportionmentMethod, threshold) {
         const filteredParties = dataset.filter(party => party.order !== 2);
@@ -126,20 +98,21 @@
     }
 
     function validatePartyShare(index, partyIndex) {
-        if ($data.datasets[index].data[partyIndex] > 100) {
-            $data.datasets[index].data[partyIndex] = 100;
+        if (electionState.data.datasets[index].data[partyIndex] > 100) {
+            electionState.data.datasets[index].data[partyIndex] = 100;
         }
+        mandates = calcMandates(electionState.data.datasets, mandateCount, apportionmentMethod, threshold);
     }
 
     function exportConfig() {
         const config = {
-            data: $data,
-            mandateData: $mandateData,
-            majorityData: $majorityData,
+            data: electionState.data,
+            mandateData: electionState.mandateData,
+            majorityData: electionState.majorityData,
             settings: {
-                mandateCount,
-                threshold,
-                apportionmentMethod
+                mandateCount: mandateCount,
+                threshold: threshold,
+                apportionmentMethod: apportionmentMethod
             }
         };
         
@@ -172,9 +145,9 @@
                 apportionmentMethod = config.settings.apportionmentMethod;
 
                 // update svelte stores
-                $data = config.data;
-                $mandateData = config.mandateData;
-                $majorityData = config.majorityData;
+                electionState.data = config.data;
+                electionState.mandateData = config.mandateData;
+                electionState.majorityData = config.majorityData;
 
                 // reset file input so same file can be uploaded twice if needed
                 target.value = '';
@@ -188,15 +161,15 @@
     }
 
     function updatePartyName(index, newName) {
-        $data.labels[index] = newName;
-        $data.datasets[index].label = newName;
-        $mandateData.labels[index] = newName;
-        $majorityData.datasets[index].label = newName;
+        electionState.data.labels[index] = newName;
+        electionState.data.datasets[index].label = newName;
+        electionState.mandateData.labels[index] = newName;
+        electionState.majorityData.datasets[index].label = newName;
         
         // trigger reactivity
-        $data = $data;
-        $mandateData = $mandateData;
-        $majorityData = $majorityData;
+        electionState.data = electionState.data;
+        electionState.mandateData = electionState.mandateData;
+        electionState.majorityData = electionState.majorityData;
     }
 
     let editingIndex = $state(null); // tracks which party is in "edit mode"
@@ -222,18 +195,18 @@
     function updatePartyColor(index, event) {
         const newColor = event.target.value;
 
-        $data.datasets[index].backgroundColor = newColor;
-        $mandateData.datasets[0].backgroundColor[index] = newColor;
-        $majorityData.datasets[index].backgroundColor = newColor;
+        electionState.data.datasets[index].backgroundColor = newColor;
+        electionState.mandateData.datasets[0].backgroundColor[index] = newColor;
+        electionState.majorityData.datasets[index].backgroundColor = newColor;
 
         // trigger reactivity
-        $data = $data;
-        $mandateData = $mandateData;
-        $majorityData = $majorityData;
+        electionState.data = electionState.data;
+        electionState.mandateData = electionState.mandateData;
+        electionState.majorityData = electionState.majorityData;
     }
 
     function addParty() {
-        const newIndex = $data.datasets.length;
+        const newIndex = electionState.data.datasets.length;
 
         if (newIndex >= 26) {
             alert("Maximale Anzahl von 26 Parteien erreicht.");
@@ -244,16 +217,16 @@
         const defaultColor = '#cccccc';
 
         // 1. update data
-        $data.labels = [...$data.labels, newLabel];
+        electionState.data.labels = [...electionState.data.labels, newLabel];
         
         // add a 0 to the data array of every EXISTING party
-        $data.datasets.forEach(ds => {
+        electionState.data.datasets.forEach(ds => {
             ds.data.push(0);
         });
 
         // add the NEW party's dataset
-        const newDataArray = new Array($data.labels.length).fill(0);
-        $data.datasets = [...$data.datasets, {
+        const newDataArray = new Array(electionState.data.labels.length).fill(0);
+        electionState.data.datasets = [...electionState.data.datasets, {
             label: newLabel,
             index: newIndex,
             data: newDataArray,
@@ -261,12 +234,13 @@
         }];
 
         // 2. update mandateData
-        $mandateData.labels = [...$mandateData.labels, newLabel];
-        $mandateData.datasets[0].data = [...$mandateData.datasets[0].data, 0];
-        $mandateData.datasets[0].backgroundColor = [...$mandateData.datasets[0].backgroundColor, defaultColor];
+        electionState.mandateData.labels = [...electionState.mandateData.labels, newLabel];
+        electionState.mandateData.datasets[0].data = [...electionState.mandateData.datasets[0].data, 0];
+        electionState.mandateData.datasets[0].backgroundColor = [...electionState.mandateData.datasets[0].backgroundColor, defaultColor];
+        mandates = calcMandates(electionState.data.datasets, mandateCount, apportionmentMethod, threshold);
 
         // 3. update majorityData
-        $majorityData.datasets = [...$majorityData.datasets, {
+        electionState.majorityData.datasets = [...electionState.majorityData.datasets, {
             label: newLabel,
             data: [0],
             backgroundColor: defaultColor,
@@ -275,77 +249,244 @@
     }
 
     function removeParty(index) {
-        if ($data.datasets.length <= 1) return;
+        if (electionState.data.datasets.length <= 1) return;
 
         // 1. update data
-        $data.labels.splice(index, 1);
-        $data.datasets.splice(index, 1);
+        electionState.data.labels.splice(index, 1);
+        electionState.data.datasets.splice(index, 1);
 
         // remove the specific index from the data array of ALL remaining parties
-        $data.datasets.forEach((ds) => {
+        electionState.data.datasets.forEach((ds) => {
             ds.data.splice(index, 1);
         });
 
         // re-sync the 'index' property so the inputs still point to the right array slot
-        $data.datasets.forEach((ds, i) => {
+        electionState.data.datasets.forEach((ds, i) => {
             ds.index = i;
         });
 
         // 2. update mandateData
-        $mandateData.labels.splice(index, 1);
-        $mandateData.datasets[0].data.splice(index, 1);
-        $mandateData.datasets[0].backgroundColor.splice(index, 1);
+        electionState.mandateData.labels.splice(index, 1);
+        electionState.mandateData.datasets[0].data.splice(index, 1);
+        electionState.mandateData.datasets[0].backgroundColor.splice(index, 1);
 
         // 3. update majorityData
-        $majorityData.datasets.splice(index, 1);
+        electionState.majorityData.datasets.splice(index, 1);
 
         // trigger reactivity
-        $data = $data;
-        $mandateData = $mandateData;
-        $majorityData = $majorityData;
+        electionState.data = electionState.data;
+        electionState.mandateData = electionState.mandateData;
+        electionState.majorityData = electionState.majorityData;
         
         if (editingIndex === index) editingIndex = null;
     }
 
-    run(() => {
-        selectedParties = 0;
-        $majorityData.datasets.forEach((dataset, index) => {
+    let selectedParties = $derived.by(() => {
+        let total = 0;
+        electionState.majorityData.datasets.forEach((dataset) => {
             if (!dataset.hidden) {
-                selectedParties += dataset.data[0];
+                total += dataset.data[0];
             }
         });
+        return total;
     });
-    run(() => {
-        mandates = calcMandates($data.datasets, mandateCount, apportionmentMethod, threshold);
-    });
-    run(() => {
-        if (calculationHistory.length > 0) {
-            // Find the quotient that won the very last mandate
-            lowestWinningQuotient = calculationHistory[calculationHistory.length - 1].quotients[
-                calculationHistory[calculationHistory.length - 1].winnerIdx
-            ];
 
-            // Generate the grid (rows = divisors 1, 2, 3...)
-            // We show divisors up to the max seats any single party won + a few extra
-            const maxSeats = Math.max(...mandates) + 1;
-            const currentShares = eligibleIndices.map(idx => $data.datasets[idx].data[$data.datasets[idx].index]);
-            
-            divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
-                const d = apportionmentMethod === ApportionmentMethods.SAINTE_LAGUE ? (i + 0.5) : (i + 1);
-                return {
-                    divisor: d,
-                    values: currentShares.map(share => share / d)
-                };
-            });
+    $effect(() => {
+        if (calculationHistory.length === 0) return;
+
+        lowestWinningQuotient = calculationHistory[calculationHistory.length - 1].quotients[
+            calculationHistory[calculationHistory.length - 1].winnerIdx
+        ];
+
+        const maxSeats = Math.max(...mandates) + 1;
+        const currentShares = eligibleIndices.map(idx =>
+            electionState.data.datasets[idx].data[electionState.data.datasets[idx].index]
+        );
+
+        divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
+            const d = apportionmentMethod === ApportionmentMethods.SAINTE_LAGUE ? (i + 0.5) : (i + 1);
+            return {
+                divisor: d,
+                values: currentShares.map(share => share / d)
+            };
+        });
+    });
+
+    $effect(() => {
+        electionState.mandateData.datasets[0].data = mandates;
+        for (let i in mandates) {
+            electionState.majorityData.datasets[i].data = [mandates[i]];
         }
     });
-    run(() => {
-        $mandateData.datasets[0].data = mandates
-        for (let i in mandates) {
-            $majorityData.datasets[i].data = [mandates[i]]
+
+    let plainBarChartData = $derived(structuredClone($state.snapshot(electionState.data)));
+    let plainMandateData = $derived(structuredClone($state.snapshot(electionState.mandateData)));
+    let plainMajorityData = $derived(structuredClone($state.snapshot(electionState.majorityData)));
+
+    let barChartOptions = $derived({
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                color: 'black',
+                font: { weight: 'bold' },
+                formatter: (value, context) => {
+                    const { chart, dataIndex, datasetIndex } = context;
+
+                    const currentDataset = chart.data.datasets[datasetIndex];
+                    if (currentDataset['reservedSeats']) return null;
+
+                    const lastDatasetIndex = chart.data.datasets.length - 1;
+                    if (datasetIndex !== lastDatasetIndex) return '';
+
+                    const totalCurrent = chart.data.datasets.reduce((sum, dataset) => {
+                        const val = dataset.data[dataIndex];
+                        return typeof val === 'number' && dataset.order != 2 ? sum + val : sum;
+                    }, 0);
+
+                    const totalPrevious = chart.data.datasets.reduce((sum, dataset) => {
+                        const val = dataset.data[dataIndex];
+                        return typeof val === 'number' && dataset.order != 1 ? sum + val : sum;
+                    }, 0);
+
+                    const diff = totalCurrent - totalPrevious;
+                    let diffString;
+                    if (diff > 0) {
+                        diffString = "+" + diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    } else if (diff == 0) {
+                        diffString = "±" + diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    } else {
+                        diffString = diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    }
+
+                    return [totalCurrent.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), diffString];
+                },
+                labels: {
+                    0: { color: 'black' },
+                    1: {
+                        color: (context) => {
+                            const { chart, dataIndex } = context;
+                            const totalCurrent = chart.data.datasets.reduce((sum, dataset) => {
+                                const val = dataset.data[dataIndex];
+                                return typeof val === 'number' && dataset.order != 2 ? sum + val : sum;
+                            }, 0);
+                            const totalPrevious = chart.data.datasets.reduce((sum, dataset) => {
+                                const val = dataset.data[dataIndex];
+                                return typeof val === 'number' && dataset.order != 1 ? sum + val : sum;
+                            }, 0);
+                            const diff = totalCurrent - totalPrevious;
+                            if (diff > 0) return 'green';
+                            if (diff == 0) return 'black';
+                            return 'red';
+                        }
+                    }
+                }
+            },
+            annotation: {
+                annotations: threshold > 0 ? {
+                    majorityLine: {
+                        type: 'line',
+                        yMin: threshold,
+                        yMax: threshold,
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 2,
+                    }
+                } : {}
+            },
+            legend: {
+                display: true,
+                labels: {
+                    filter: (legendItem, chartData) => {
+                        const visibleLabels = chartData.datasets
+                            .filter(item => item.order != 2)
+                            .map(item => item.label);
+                        return visibleLabels.includes(legendItem.text);
+                    },
+                },
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                grid: { display: false }
+            },
+            y: {
+                stacked: true,
+                suggestedMax: Math.max(...electionState.data.labels.map((_, index) => 
+                    electionState.data.datasets.reduce((sum, party) => sum + (party.data[index] || 0), 0)
+                )) + 5
+            },
+        }
+    });
+
+    let mandateChartOptions = $derived({
+        responsive: true,
+        cutout: '40%',
+        circumference: 180,
+        rotation: -90,
+        plugins: {
+            datalabels: {
+                anchor: 'end',
+                align: 'start',
+                color: 'white',
+                formatter: function(value) {
+                    return value > 0 ? value : ''
+                },
+                font: { weight: 'bold', size: 20 }
+            }
+        }
+    });
+
+    let majorityChartOptions = $derived({
+        responsive: true,
+        indexAxis: 'y',
+        scales: {
+            y: { stacked: true },
+            x: { stacked: true, max: electionState.mandateCount }
+        },
+        plugins: {
+            annotation: {
+                annotations: {
+                    majorityLine: {
+                        type: 'line',
+                        xMin: majority,
+                        xMax: majority,
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 3,
+                    },
+                    twoThirdsMajorityLine: {
+                        type: 'line',
+                        xMin: twoThirdsMajority,
+                        xMax: twoThirdsMajority,
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 1,
+                    }
+                }
+            },
+            datalabels: {
+                anchor: 'center',
+                align: 'center',
+                color: 'white',
+                formatter: function(value) {
+                    return value > 0 ? value : ''
+                },
+                font: { weight: 'bold', size: 20 }
+            },
+            legend: {
+                onClick: function(event, legendItem) {
+                    if (legendItem.datasetIndex !== undefined) {
+                        const datasetIndex = legendItem.datasetIndex;
+                        const isVisible = electionState.majorityData.datasets[datasetIndex].hidden;
+                        electionState.majorityData.datasets[datasetIndex].hidden = !isVisible;
+                    }
+                }
+            }
         }
     });
 </script>
+
 <h1>Stimmenanteile</h1>
 <section class="vote_share_section">
     <div class="info_container">
@@ -368,58 +509,11 @@
         </table>
     </div>
     <div class="bar_container">
-        <Bar data={$data} options={{ responsive: true, maintainAspectRatio: false, plugins: {
-            datalabels: {
-                anchor: 'end',  // Positions the labels above the bars
-                align: 'top',
-                color: 'black',
-                font: {
-                    weight: 'bold',
-                },
-                formatter: (value, context) => {
-                    const { chart, dataIndex, datasetIndex } = context;
-
-                    // Only place label on the last dataset in the stack
-                    const lastDatasetIndex = chart.data.datasets.length - 1;
-                    if (datasetIndex !== lastDatasetIndex) return ''; // Hide for other stacks
-
-                    // Sum all values in this category (column)
-                    const total = chart.data.datasets.reduce((sum, dataset) => {
-                    const val = dataset.data[dataIndex];
-                    return typeof val === 'number' ? sum + val : sum;
-                    }, 0);
-
-                    return total.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // Display total value once per stack
-                },
-            },
-            annotation: {
-                annotations: threshold > 0 ? {
-                    majorityLine: {
-                        type: 'line',
-                        yMin: threshold,
-                        yMax: threshold,
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 2,
-                    }
-                } : {} // Empty object if threshold is 0 or less
-            },
-        },
-        scales: {
-            x: {
-                stacked: true,
-            },
-            y: {
-                stacked: true,
-                suggestedMax: Math.max(...$data.labels.map((_, index) => 
-                    $data.datasets.reduce((sum, party) => sum + (party.data[index] || 0), 0)
-                )) + 5
-            },
-        }
-    }} />
+        <ChartCanvas type="bar" data={plainBarChartData} options={barChartOptions} name={"Spielwiese"} />
     </div>
     
     <div class="input_fields_vote">
-        {#each $data.datasets as party, i}
+        {#each electionState.data.datasets as party, i}
             <div class="input_field_vote_party">
                 <div class="name-container">
                     {#if editingIndex === i}
@@ -463,7 +557,7 @@
                         id="input_party_{i}"
                         type="number"
                         step="any"
-                        bind:value={$data.datasets[i].data[party.index]}
+                        bind:value={electionState.data.datasets[i].data[party.index]}
                         min=0
                         max=100
                         oninput={() => validatePartyShare(i, party.index)}
@@ -498,65 +592,11 @@
 <h1>Mandatsverteilung</h1>
 <section class="mandate_section">
     <div class="pie_container">
-        <Doughnut id="mandatesChart" data={$mandateData} options={{ responsive: true, cutout: '40%', circumference: 180, rotation: -90, plugins: {
-            datalabels: {
-                anchor: 'end',
-                align: 'start',
-                color: 'white',
-                formatter: function(value) {
-                    return value > 0 ? value : ''
-                },
-                font: {
-                    weight: 'bold',
-                    size: 20,
-                }
-            }}}} />
+        <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={"Spielwiese"} />
     </div>
 
     <div class="stack_container">
-        <Bar data={$majorityData} options={{ responsive: true, indexAxis: 'y', scales: {y: {stacked: true}, x: {stacked: true, max: mandateCount}}, plugins: {
-            annotation: {
-                annotations: {
-                    majorityLine: {
-                        type: 'line',
-                        xMin: majority,
-                        xMax: majority,
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 3,
-                    },
-                    twoThirdsMajorityLine: {
-                        type: 'line',
-                        xMin: twoThirdsMajority,
-                        xMax: twoThirdsMajority,
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 1,
-                    }
-                }
-            },
-            datalabels: {
-                anchor: 'center',
-                align: 'center',
-                color: 'white',
-                formatter: function(value) {
-                    return value > 0 ? value : ''
-                },
-                font: {
-                    weight: 'bold',
-                    size: 20,
-                }
-            },
-            legend: {
-                onClick: function(event, legendItem) {
-                    if (legendItem.datasetIndex !== undefined) {
-                        const datasetIndex = legendItem.datasetIndex;
-                        const isVisible = $majorityData.datasets[datasetIndex].hidden;
-
-                        // Toggle the visibility of selected party
-                        $majorityData.datasets[datasetIndex].hidden = !isVisible;
-                    }
-                }
-            }
-        }}} />
+        <ChartCanvas type="bar" data={plainMajorityData} options={majorityChartOptions} name={"Spielwiese"} />
         <p class="majorityText {selectedParties < majority ? 'red' : 'green'}">
             Mehrheit: {selectedParties}/{majority}
         </p>
@@ -611,8 +651,8 @@
                     {#each eligibleIndices as idx}
                         <th>
                             <div class="party-header">
-                                <span class="color-bar" style="background-color: {$data.datasets[idx].backgroundColor}"></span>
-                                <span class="party-label">{ $data.datasets[idx].label }</span>
+                                <span class="color-bar" style="background-color: {electionState.data.datasets[idx].backgroundColor}"></span>
+                                <span class="party-label">{ electionState.data.datasets[idx].label }</span>
                             </div>
                         </th>
                     {/each}

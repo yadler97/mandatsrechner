@@ -14,7 +14,12 @@
     let twoThirdsMajority = $derived(getTwoThirdsMajority(electionState.mandateCount));
     let displayDate = $derived(formatDate(electionState.date));
 
-    // ---- vote-share bar chart (unchanged) ----
+    let others = $state();
+    let calculationHistory = $state([]);
+    let eligibleIndices = $state([]);
+
+    let mandates = $state([]);
+
     let filteredData = $derived.by(() => {
         const activeIndices = electionState.data.labels
             .map((_, i) => i)
@@ -72,7 +77,114 @@
         datasets: [...previousDatasets, ...filteredData.datasets]
     });
 
+    function validatePartyShare(index, partyIndex) {
+        if (electionState.data.datasets[index].data[partyIndex] > 100) {
+            electionState.data.datasets[index].data[partyIndex] = 100;
+        }
+        mandates = calcMandates(electionState.data.datasets);
+    }
+
+    let tableView = $state('rounds'); // 'rounds' or 'divisors'
+    let divisorGrid = $state([]);
+    let lowestWinningQuotient = $state(0);
+
+    function calcMandates(dataset) {
+        const filteredParties = dataset.filter(party => party.order !== 2);
+
+        const totalVotesInDataset = filteredParties.reduce((sum, party) => {
+            return sum + (party.data[party.index] || 0);
+        }, 0);
+
+        others = 100 - totalVotesInDataset;
+
+        const currentIndices = filteredParties
+            .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
+            .filter(index => {
+                if (index === -1) return false;
+                const value = filteredParties[index].data[filteredParties[index].index];
+
+                let isChecked = false;
+                if (browser) {
+                    const checkbox = document.getElementById(`checkbox_party_${index}`);
+                    isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
+                }
+                return value >= electionState.threshold || isChecked;
+            });
+
+        eligibleIndices = currentIndices;
+
+        const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);
+        const totalReservedSeats = reservedParties.reduce((sum, p) => sum + p.reservedSeats, 0);
+        const nonReservedMandateCount = electionState.mandateCount - totalReservedSeats;
+
+        let eligibleShares = eligibleIndices.map(idx => dataset[idx].data[dataset[idx].index]);
+        let finalMandates = new Array(filteredParties.length).fill(0);
+
+        if (eligibleShares.length > 0 && nonReservedMandateCount > 0) {
+            let result;
+            if (electionState.apportionmentMethod == ApportionmentMethods.DHONDT) {
+                result = dhondt(eligibleShares, nonReservedMandateCount);
+            } else if (electionState.apportionmentMethod == ApportionmentMethods.SAINTE_LAGUE) {
+                result = saintelague(eligibleShares, nonReservedMandateCount);
+            } else {
+                result = hareniemeyer(eligibleShares, nonReservedMandateCount);
+            }
+
+            calculationHistory = result.history || [];
+
+            eligibleIndices.forEach((origIdx, i) => {
+                finalMandates[origIdx] = result.mandates[i];
+            });
+        }
+
+        dataset.forEach((party, i) => {
+            if (party.reservedSeats !== undefined) finalMandates[i] = party.reservedSeats;
+        });
+
+        return finalMandates;
+    }
+
+    $effect(() => {
+        if (calculationHistory.length === 0) return;
+
+        lowestWinningQuotient = calculationHistory[calculationHistory.length - 1].quotients[
+            calculationHistory[calculationHistory.length - 1].winnerIdx
+        ];
+
+        const maxSeats = Math.max(...mandates) + 1;
+        const currentShares = eligibleIndices.map(idx =>
+            electionState.data.datasets[idx].data[electionState.data.datasets[idx].index]
+        );
+
+        divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
+            const d = electionState.apportionmentMethod === ApportionmentMethods.SAINTE_LAGUE ? (i + 0.5) : (i + 1);
+            return {
+                divisor: d,
+                values: currentShares.map(share => share / d)
+            };
+        });
+    });
+
+    $effect(() => {
+        electionState.mandateData.datasets[1].data = mandates;
+        for (let i in mandates) {
+            electionState.majorityData.datasets[i].data = [mandates[i]];
+        }
+    });
+
+    let selectedParties = $derived.by(() => {
+        let total = 0;
+        electionState.majorityData.datasets.forEach((dataset) => {
+            if (!dataset.hidden) {
+                total += dataset.data[0];
+            }
+        });
+        return total;
+    });
+
     let plainBarChartData = $derived(structuredClone($state.snapshot(barChartData)));
+    let plainMandateData = $derived(structuredClone($state.snapshot(electionState.mandateData)));
+    let plainMajorityData = $derived(structuredClone($state.snapshot(electionState.majorityData)));
 
     let barChartOptions = $derived({
         responsive: true,
@@ -176,119 +288,6 @@
             },
         }
     });
-
-    function validatePartyShare(index, partyIndex) {
-        if (electionState.data.datasets[index].data[partyIndex] > 100) {
-            electionState.data.datasets[index].data[partyIndex] = 100;
-        }
-        mandates = calcMandates(electionState.data.datasets);
-    }
-
-    // ---- mandate apportionment ----
-    let others = $state();
-    let mandates = $state([]);
-    let eligibleIndices = $state([]);
-    let calculationHistory = $state([]);
-    let tableView = $state('rounds'); // 'rounds' or 'divisors'
-    let divisorGrid = $state([]);
-    let lowestWinningQuotient = $state(0);
-
-    function calcMandates(dataset) {
-        const filteredParties = dataset.filter(party => party.order !== 2);
-
-        const totalVotesInDataset = filteredParties.reduce((sum, party) => {
-            return sum + (party.data[party.index] || 0);
-        }, 0);
-
-        others = 100 - totalVotesInDataset;
-
-        const currentIndices = filteredParties
-            .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
-            .filter(index => {
-                if (index === -1) return false;
-                const value = filteredParties[index].data[filteredParties[index].index];
-
-                let isChecked = false;
-                if (browser) {
-                    const checkbox = document.getElementById(`checkbox_party_${index}`);
-                    isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
-                }
-                return value >= electionState.threshold || isChecked;
-            });
-
-        eligibleIndices = currentIndices;
-
-        const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);
-        const totalReservedSeats = reservedParties.reduce((sum, p) => sum + p.reservedSeats, 0);
-        const nonReservedMandateCount = electionState.mandateCount - totalReservedSeats;
-
-        let eligibleShares = eligibleIndices.map(idx => dataset[idx].data[dataset[idx].index]);
-        let finalMandates = new Array(filteredParties.length).fill(0);
-
-        if (eligibleShares.length > 0 && nonReservedMandateCount > 0) {
-            let result;
-            if (electionState.apportionmentMethod == ApportionmentMethods.DHONDT) {
-                result = dhondt(eligibleShares, nonReservedMandateCount);
-            } else if (electionState.apportionmentMethod == ApportionmentMethods.SAINTE_LAGUE) {
-                result = saintelague(eligibleShares, nonReservedMandateCount);
-            } else {
-                result = hareniemeyer(eligibleShares, nonReservedMandateCount);
-            }
-
-            calculationHistory = result.history || [];
-
-            eligibleIndices.forEach((origIdx, i) => {
-                finalMandates[origIdx] = result.mandates[i];
-            });
-        }
-
-        dataset.forEach((party, i) => {
-            if (party.reservedSeats !== undefined) finalMandates[i] = party.reservedSeats;
-        });
-
-        return finalMandates;
-    }
-
-    $effect(() => {
-        if (calculationHistory.length === 0) return;
-
-        lowestWinningQuotient = calculationHistory[calculationHistory.length - 1].quotients[
-            calculationHistory[calculationHistory.length - 1].winnerIdx
-        ];
-
-        const maxSeats = Math.max(...mandates) + 1;
-        const currentShares = eligibleIndices.map(idx =>
-            electionState.data.datasets[idx].data[electionState.data.datasets[idx].index]
-        );
-
-        divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
-            const d = electionState.apportionmentMethod === ApportionmentMethods.SAINTE_LAGUE ? (i + 0.5) : (i + 1);
-            return {
-                divisor: d,
-                values: currentShares.map(share => share / d)
-            };
-        });
-    });
-
-    $effect(() => {
-        electionState.mandateData.datasets[1].data = mandates;
-        for (let i in mandates) {
-            electionState.majorityData.datasets[i].data = [mandates[i]];
-        }
-    });
-
-    let selectedParties = $derived.by(() => {
-        let total = 0;
-        electionState.majorityData.datasets.forEach((dataset) => {
-            if (!dataset.hidden) {
-                total += dataset.data[0];
-            }
-        });
-        return total;
-    });
-
-    let plainMandateData = $derived(structuredClone($state.snapshot(electionState.mandateData)));
-    let plainMajorityData = $derived(structuredClone($state.snapshot(electionState.majorityData)));
 
     let mandateChartOptions = $derived({
         responsive: true,

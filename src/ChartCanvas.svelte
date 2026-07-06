@@ -9,7 +9,8 @@
 
     let canvas;
     let chart;
-    let currentName;
+    // svelte-ignore state_referenced_locally
+    let currentName = name;
 
     $effect(() => {
         if (!canvas) return;

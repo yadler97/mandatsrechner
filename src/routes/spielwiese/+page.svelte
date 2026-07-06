@@ -7,14 +7,25 @@
 </svelte:head>
 
 <script>
+    import ElectionChartsPlayground from '../../ElectionChartsPlayground.svelte';
     import { data, mandateData, majorityData } from './data';
     import { setContext } from 'svelte';
-	import ElectionChartsPlayground from '../../ElectionChartsPlayground.svelte';
-    import { writable } from 'svelte/store';
 
-    setContext('data', writable(data))
-    setContext('mandateData', writable(mandateData))
-    setContext('majorityData', writable(majorityData))
+    // svelte-ignore state_referenced_locally
+    let electionState = $state({
+        data: data,
+        mandateData: mandateData,
+        majorityData: majorityData
+    });
+
+    // 2. Automatically sync state if the data prop changes
+    //$effect(() => {
+    //    electionState.data = data.data;
+    //    electionState.mandateData = data.mandateData;
+    //    electionState.majorityData = data.majorityData;
+    //});
+
+    setContext('electionState', electionState);
 </script>
 
 <ElectionChartsPlayground />
