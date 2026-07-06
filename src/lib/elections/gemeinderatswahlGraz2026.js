@@ -97,6 +97,7 @@ export const majorityData = {
       label: 'KPÖ',
       data: [15],
       backgroundColor: PartyColours[countryCode]['KPÖ'].normal,
+      hidden: false,
     },
     {
       label: 'ÖVP',
@@ -108,6 +109,7 @@ export const majorityData = {
       label: 'Grüne',
       data: [9],
       backgroundColor: PartyColours[countryCode]['Grüne'].normal,
+      hidden: false,
     },
     {
       label: 'FPÖ',
@@ -119,6 +121,7 @@ export const majorityData = {
       label: 'SPÖ',
       data: [4],
       backgroundColor: PartyColours[countryCode]['SPÖ'].normal,
+      hidden: false,
     },
     {
       label: 'NEOS',

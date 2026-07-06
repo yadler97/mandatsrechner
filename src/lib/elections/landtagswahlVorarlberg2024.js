@@ -82,11 +82,13 @@ export const majorityData = {
       label: 'ÖVP',
       data: [17],
       backgroundColor: PartyColours[countryCode]['ÖVP'].normal,
+      hidden: false,
     },
     {
       label: 'Grüne',
       data: [7],
       backgroundColor: PartyColours[countryCode]['Grüne'].normal,
+      hidden: false,
     },
     {
       label: 'FPÖ',

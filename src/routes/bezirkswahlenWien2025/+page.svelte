@@ -1,71 +1,74 @@
 <svelte:head>
-    <title>Mandatsrechner - {name}</title>
-    <meta property="og:title" content="Mandatsrechner - {name}">
-    <meta name="twitter:title" content="Mandatsrechner - {name}">
+    <title>Mandatsrechner - {electionState.name}</title>
+    <meta property="og:title" content="Mandatsrechner - {electionState.name}">
+    <meta name="twitter:title" content="Mandatsrechner - {electionState.name}">
     <meta property="og:image" content="https://yadler97.github.io/mandatsrechner/previews/bezirkswahlenWien2025.png">
     <meta name="twitter:image" content="https://yadler97.github.io/mandatsrechner/previews/bezirkswahlenWien2025.png">
 </svelte:head>
 
 <script>
     import { data, mandateData, majorityData, date, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
-	import ElectionCharts from './../../ElectionCharts.svelte';
-    import { setContext } from 'svelte'
-    import { page } from '$app/stores';
+    import ElectionCharts from './../../ElectionCharts.svelte';
+    import { setContext } from 'svelte';
+    import { page } from '$app/state';
     import { goto } from '$app/navigation';
-	import { writable } from 'svelte/store';
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
-    let district = '1';
+    let district = $state('1');
 
     if (browser) {
-        district = $page.url.searchParams.get('bezirk') || '1';
+        district = page.url.searchParams.get('bezirk') || '1';
+        // svelte-ignore state_referenced_locally
         let districtInt = parseInt(district);
 
         if (isNaN(districtInt) || districtInt < 1 || districtInt > 23) {
             districtInt = 1;
-            goto(`${$page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
+            goto(`${page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
         }
     }
 
-    let nameStore = writable();
-    let mandateCount = writable(0);
-    let dataObj = writable();
-    let mandateDataObj = writable();
-    let majorityDataObj = writable();
-
-    setContext('name', nameStore);
-    setContext('mandateCount', mandateCount);
-    setContext('data', dataObj);
-    setContext('mandateData', mandateDataObj);
-    setContext('majorityData', majorityDataObj);
+    let electionState = $state({
+        name: '',
+        mandateCount: 0,
+        threshold: 0,
+        apportionmentMethod: ApportionmentMethods.DHONDT,
+        data: data[0],
+        mandateData: mandateData[0],
+        majorityData: majorityData[0],
+        countryCode: countryCode,
+        date: date,
+        baseMandateRule: false,
+        note: ''
+    });
 
     const updateDistrict = (selectedDistrict) => {
         district = selectedDistrict;
-
-        // Update context based on the selected district
         const districtInt = parseInt(district);
-        $dataObj = data[districtInt - 1];
-        $mandateDataObj = mandateData[districtInt - 1];
-        $majorityDataObj =  majorityData[districtInt - 1];
-        $nameStore = `${name} (${district}.)`;
 
-        // Set the mandate count based on the district
-        if (districtInt == 1 || districtInt == 4 || districtInt == 5 || districtInt == 6 || districtInt == 7 || districtInt == 8 || districtInt == 9 || districtInt == 13 || districtInt == 18) {
-            $mandateCount = 40;
-        } else if (districtInt == 17) {
-            $mandateCount = 42;
-        } else if (districtInt == 19) {
-            $mandateCount = 50;
-        } else if (districtInt == 15) {
-            $mandateCount = 52;
-        } else if (districtInt == 20) {
-            $mandateCount = 56;
-        } else if (districtInt == 2 || districtInt == 3 || districtInt == 10 || districtInt == 11 || districtInt == 12 || districtInt == 14 || districtInt == 16 || districtInt == 21 || districtInt == 22 || districtInt == 23) {
-            $mandateCount = 60;
+        electionState.name = `${name} (${district}.)`;
+        electionState.data = data[districtInt - 1];
+        electionState.mandateData = mandateData[districtInt - 1];
+        electionState.majorityData = majorityData[1]; // Assuming index mapping
+        electionState.majorityData = majorityData[districtInt - 1];
+
+        // Mandate count logic
+        if ([1, 4, 5, 6, 7, 8, 9, 13, 18].includes(districtInt)) {
+            electionState.mandateCount = 40;
+        } else if (districtInt === 17) {
+            electionState.mandateCount = 42;
+        } else if (districtInt === 19) {
+            electionState.mandateCount = 50;
+        } else if (districtInt === 15) {
+            electionState.mandateCount = 52;
+        } else if (districtInt === 20) {
+            electionState.mandateCount = 56;
+        } else if ([2, 3, 10, 11, 12, 14, 16, 21, 22, 23].includes(districtInt)) {
+            electionState.mandateCount = 60;
         }
     };
 
+    // svelte-ignore state_referenced_locally
     updateDistrict(district);
 
     const gotoDistrict = (selectedDistrict) => {
@@ -73,14 +76,10 @@
         updateDistrict(selectedDistrict);
     }
 
-    setContext('threshold', writable(0));
-    setContext('apportionmentMethod', writable(ApportionmentMethods.DHONDT));
-    setContext('electionDate', writable(date));
-    setContext('countryCode', writable(countryCode));
-    setContext('baseMandateRule', writable(false));
+    setContext('electionState', electionState);
 </script>
 
-<select bind:value={district} on:change={() => gotoDistrict(district)} class="district_select">
+<select bind:value={district} onchange={() => gotoDistrict(district)} class="district_select">
     <option value="1">1., Innere Stadt</option>
     <option value="2">2., Leopoldstadt</option>
     <option value="3">3., Landstraße</option>

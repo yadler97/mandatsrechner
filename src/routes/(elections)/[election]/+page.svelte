@@ -10,49 +10,31 @@
     import { page } from '$app/stores';
     import ElectionCharts from '../../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
-    import { writable } from 'svelte/store';
 
-    export let data;
-    $: electionId = $page.params.election; 
-    $: imageUrl = `https://yadler97.github.io/mandatsrechner/previews/${electionId}.png`;
+    /** @type {{data: any}} */
+    let { data } = $props();
+    let electionId = $derived($page.params.election); 
+    let imageUrl = $derived(`https://yadler97.github.io/mandatsrechner/previews/${electionId}.png`);
 
-    const nameStore = writable(data.name);
-    const dataStore = writable(data.data);
-    const mandateDataStore = writable(data.mandateData);
-    const majorityDataStore = writable(data.majorityData);
-    const mandateCountStore = writable(data.mandateCount);
-    const thresholdStore = writable(data.threshold);
-    const methodStore = writable(data.apportionmentMethod);
-    const dateStore = writable(data.date);
-    const countryCodeStore = writable(data.countryCode);
-    const baseMandateStore = writable(data.baseMandateRule || false);
-    const noteStore = writable(data.note || '');
+    // svelte-ignore state_referenced_locally
+    let electionState = $state(data);
 
-    setContext('name', nameStore);
-    setContext('data', dataStore);
-    setContext('mandateData', mandateDataStore);
-    setContext('majorityData', majorityDataStore);
-    setContext('mandateCount', mandateCountStore);
-    setContext('threshold', thresholdStore);
-    setContext('apportionmentMethod', methodStore);
-    setContext('electionDate', dateStore);
-    setContext('countryCode', countryCodeStore);
-    setContext('baseMandateRule', baseMandateStore);
-    setContext('note', noteStore);
+    // 2. Automatically sync state if the data prop changes
+    $effect(() => {
+        electionState.name = data.name;
+        electionState.data = data.data;
+        electionState.mandateData = data.mandateData;
+        electionState.majorityData = data.majorityData;
+        electionState.mandateCount = data.mandateCount;
+        electionState.threshold = data.threshold;
+        electionState.apportionmentMethod = data.apportionmentMethod;
+        electionState.date = data.date;
+        electionState.countryCode = data.countryCode;
+        electionState.baseMandateRule = data.baseMandateRule || false;
+        electionState.note = data.note || '';
+    });
 
-    $: {
-        nameStore.set(data.name);
-        dataStore.set(data.data);
-        mandateDataStore.set(data.mandateData);
-        majorityDataStore.set(data.majorityData);
-        mandateCountStore.set(data.mandateCount);
-        thresholdStore.set(data.threshold);
-        methodStore.set(data.apportionmentMethod);
-        dateStore.set(data.date);
-        countryCodeStore.set(data.countryCode);
-        baseMandateStore.set(data.baseMandateRule || false);
-        noteStore.set(data.note || '');
-    }
+    setContext('electionState', electionState);
 </script>
 
 <ElectionCharts />
