@@ -7,14 +7,18 @@
 </svelte:head>
 
 <script>
+    import ElectionChartsPlayground from '../../ElectionChartsPlayground.svelte';
     import { data, mandateData, majorityData } from './data';
     import { setContext } from 'svelte';
-	import ElectionChartsPlayground from '../../ElectionChartsPlayground.svelte';
-    import { writable } from 'svelte/store';
 
-    setContext('data', writable(data))
-    setContext('mandateData', writable(mandateData))
-    setContext('majorityData', writable(majorityData))
+    // svelte-ignore state_referenced_locally
+    let electionState = $state({
+        data: data,
+        mandateData: mandateData,
+        majorityData: majorityData
+    });
+
+    setContext('electionState', electionState);
 </script>
 
 <ElectionChartsPlayground />

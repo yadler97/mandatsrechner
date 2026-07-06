@@ -173,11 +173,13 @@ export const majorityData = {
       label: "VVD",
       data: [24],
       backgroundColor: PartyColours[countryCode]['VVD'].normal,
+      hidden: false,
     },
     {
       label: "NSC",
       data: [20],
       backgroundColor: PartyColours[countryCode]['NSC'].normal,
+      hidden: false,
     },
     {
       label: "D66",
@@ -189,6 +191,7 @@ export const majorityData = {
       label: "BBB",
       data: [7],
       backgroundColor: PartyColours[countryCode]['BBB'].normal,
+      hidden: false,
     },
     {
       label: "CDA",

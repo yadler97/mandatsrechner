@@ -129,16 +129,19 @@ export const majorityData = {
       label: 'L',
       data: [16],
       backgroundColor: PartyColours[countryCode]['L'].normal,
+      hidden: false,
     },
     {
       label: 'M',
       data: [68],
       backgroundColor: PartyColours[countryCode]['M'].normal,
+      hidden: false,
     },
     {
       label: 'KD',
       data: [19],
       backgroundColor: PartyColours[countryCode]['KD'].normal,
+      hidden: false,
     },
     {
       label: 'SD',

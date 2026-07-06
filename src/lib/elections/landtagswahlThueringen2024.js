@@ -98,6 +98,7 @@ export const majorityData = {
       label: 'Linke',
       data: [29],
       backgroundColor: PartyColours[countryCode]['Linke'].normal,
+      hidden: false,
     },
     {
       label: 'AfD',
@@ -115,11 +116,13 @@ export const majorityData = {
       label: 'SPD',
       data: [8],
       backgroundColor: PartyColours[countryCode]['SPD'].normal,
+      hidden: false,
     },
     {
       label: 'Grüne',
       data: [5],
       backgroundColor: PartyColours[countryCode]['Grüne'].normal,
+      hidden: false,
     },
     {
       label: 'FDP',
