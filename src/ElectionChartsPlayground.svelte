@@ -4,7 +4,6 @@
 
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
     import { getMajority, getTwoThirdsMajority } from '$lib/helper';
-    import { browser } from '$app/environment';
 
     let electionState = getContext('electionState');
 
@@ -47,14 +46,10 @@
             .map((party, index) => (party.order != 2 && party.reservedSeats === undefined) ? index : -1)
             .filter(index => {
                 if (index === -1) return false;
-                const value = filteredParties[index].data[filteredParties[index].index];
+                const party = filteredParties[index];
+                const value = party.data[party.index];
 
-                let isChecked = false;
-                if (browser) {
-                    const checkbox = document.getElementById(`checkbox_party_${index}`);
-                    isChecked = (checkbox instanceof HTMLInputElement) ? checkbox.checked : false;
-                }
-                return value >= threshold || isChecked;
+                return value >= threshold || party.isChecked;
             });
 
         const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);

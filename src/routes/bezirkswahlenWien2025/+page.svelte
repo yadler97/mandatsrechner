@@ -42,9 +42,15 @@
         note: ''
     });
 
+    let previousData = $state(structuredClone(data[0]));
+
     const updateDistrict = (selectedDistrict) => {
         district = selectedDistrict;
         const districtInt = parseInt(district);
+
+        const fresh = structuredClone(data[districtInt - 1]);
+        previousData.labels = fresh.labels;
+        previousData.datasets = fresh.datasets;
 
         electionState.name = `${name} (${district}.)`;
         electionState.data = data[districtInt - 1];
@@ -68,6 +74,19 @@
         }
     };
 
+    $effect(() => {
+        const v = page.url.searchParams.get('v');
+        if (v) {
+            const voteArray = v.split(',').map(Number);
+            voteArray.forEach((votes, i) => {
+                if (electionState.data.datasets[i]) {
+                    const idx = electionState.data.datasets[i].index;
+                    electionState.data.datasets[i].data[idx] = votes;
+                }
+            });
+        }
+    });
+
     // svelte-ignore state_referenced_locally
     updateDistrict(district);
 
@@ -77,6 +96,7 @@
     }
 
     setContext('electionState', electionState);
+    setContext('previousData', previousData);
 </script>
 
 <select bind:value={district} onchange={() => gotoDistrict(district)} class="district_select">
