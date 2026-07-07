@@ -43,10 +43,15 @@
         note: ''
     });
 
+    let previousData = $state(structuredClone(data[0]));
+
     const updateCountry = (selectedCountry) => {
         country = selectedCountry;
 
         if (country === 'at') {
+            const fresh = structuredClone(data[0]);
+            previousData.labels = fresh.labels;
+            previousData.datasets = fresh.datasets;
             electionState.name = `${name} (AT)`;
             electionState.mandateCount = 20;
             electionState.threshold = 4;
@@ -56,6 +61,9 @@
             electionState.majorityData = majorityData[0];
             electionState.countryCode = "AT";
         } else if (country === 'de') {
+            const fresh = structuredClone(data[1]);
+            previousData.labels = fresh.labels;
+            previousData.datasets = fresh.datasets;
             electionState.name = `${name} (DE)`;
             electionState.mandateCount = 96;
             electionState.threshold = 0;
@@ -70,12 +78,26 @@
     // svelte-ignore state_referenced_locally
     updateCountry(country);
 
+    $effect(() => {
+        const v = page.url.searchParams.get('v');
+        if (v) {
+            const voteArray = v.split(',').map(Number);
+            voteArray.forEach((votes, i) => {
+                if (electionState.data.datasets[i]) {
+                    const idx = electionState.data.datasets[i].index;
+                    electionState.data.datasets[i].data[idx] = votes;
+                }
+            });
+        }
+    });
+
     const gotoCountry = (selectedCountry) => {
         goto(`?country=${selectedCountry}`, { replaceState: true });
         updateCountry(selectedCountry);
     }
 
     setContext('electionState', electionState);
+    setContext('previousData', previousData);
 </script>
 
 <select bind:value={country} onchange={() => gotoCountry(country)} class="district_select">

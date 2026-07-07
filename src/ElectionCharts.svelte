@@ -1,14 +1,14 @@
 <script>
     import ChartCanvas from './ChartCanvas.svelte';
-    import { getContext, untrack } from 'svelte';
+    import { getContext } from 'svelte';
 
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
     import { formatDate, getMajority, getTwoThirdsMajority } from '$lib/helper';
     import { PartyColours, PartyColoursEU } from '$lib/partyColours';
     import { EUGroupNames, EUGroups } from '$lib/euGroups';
-    import { browser } from '$app/environment';
 
     let electionState = getContext('electionState');
+    let previousData = getContext('previousData');
 
     let majority = $derived(getMajority(electionState.mandateCount));
     let twoThirdsMajority = $derived(getTwoThirdsMajority(electionState.mandateCount));
@@ -61,9 +61,7 @@
         const isNewElection = electionState.name !== currentElectionName;
         if (!isNewElection) return;
 
-        const snapshot = untrack(() => filteredData);
-
-        previousDatasets = snapshot.datasets.map(ds => {
+        previousDatasets = previousData.datasets.map(ds => {
             const partyKey = ds.label;
             return {
                 ...ds,
@@ -186,6 +184,24 @@
         });
         return total;
     });
+
+    async function copyShareLink() {
+        const voteValues = electionState.data.datasets.map(ds => {
+            const idx = ds.index;
+            return ds.data[idx];
+        }).join(',');
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('v', voteValues);
+
+        try {
+            await navigator.clipboard.writeText(url.toString());
+            alert("Link wurde in die Zwischenablage kopiert!");
+        } catch (err) {
+            console.error("Fehler beim Kopieren des Links:", err);
+            alert("Kopieren fehlgeschlagen.");
+        }
+    }
 
     let plainBarChartData = $derived(structuredClone($state.snapshot(barChartData)));
     let plainMandateData = $derived(structuredClone($state.snapshot(electionState.mandateData)));
@@ -474,6 +490,14 @@
         <p class="majorityText {selectedParties < twoThirdsMajority ? 'red' : 'green'}">
             Zweidrittelmehrheit: {selectedParties}/{twoThirdsMajority}
         </p>
+    </div>
+</section>
+
+<section class="config_actions">
+    <div>
+        <button class="action-btn export-btn" onclick={copyShareLink}>
+            Link teilen
+        </button>
     </div>
 </section>
 
