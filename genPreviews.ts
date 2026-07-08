@@ -49,7 +49,7 @@ async function generatePreviews() {
             
             console.log(`Successfully generated: ${outputPath}`);
         } catch (err) {
-            console.error(`Error processing ${file}:`, err.message);
+            console.error(`Error processing ${file}:`, (err as Error).message);
         }
     }
 }

@@ -1,24 +1,37 @@
 # mandatsrechner
 
-A small program to calculate the amount of mandates based on the vote share per party for upcoming parliament elections in Austria.
+A small program to calculate the number of mandates based on the vote share per party for upcoming parliament elections in Austria, Germany, and select other countries.
 
-## Developing
+## Setup
 
-Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Prerequisites
+
+- **Node.js** (v22 or higher recommended)
+- **pnpm**
+
+### Local Development
+
+Once you've installed dependencies with `pnpm install`, start a development server:
 
 ```bash
-npm run dev
+pnpm run dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm run dev -- --open
 ```
 
-## Building
+### Building
 
 To create a production version of the app:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
-You can preview the production build with `npm run preview`.
+This command will also generate the preview images for each election.
+
+You can preview the production build with `pnpm run preview`.
+
+## Author
+
+- **Yannick Adler** - [GitHub Profile](https://github.com/yadler97)
