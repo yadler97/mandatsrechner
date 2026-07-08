@@ -85,6 +85,21 @@ main {
     color: var(--text-muted);
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--gray-muted);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-corner {
+    background-color: var(--header-bg);
+}
+
 header {
     display: flex;
     padding: 5px;
@@ -617,6 +632,7 @@ input[type="file"] {
         width: 10px;
         align-self: stretch;
         flex-shrink: 0;
+        border: 1px solid white;
     }
 
     .party-label {
@@ -639,7 +655,7 @@ input[type="file"] {
 
     .sticky-col {
         padding: 12px 10px;
-        width: 100px;
+        width: 200px;
         position: sticky;
         left: 0;
         background: var(--surface-color);

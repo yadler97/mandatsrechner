@@ -12,11 +12,11 @@
     import { base } from '$app/paths';
 	import { formatDate } from '$lib/helper';
 
-    const dataModules = import.meta.glob('/src/lib/elections/*.js', { eager: true });
+    const dataModules = import.meta.glob('/src/lib/elections/*.ts', { eager: true });
     const today = new Date().setHours(0, 0, 0, 0);
 
     const allElections = Object.entries(dataModules).map(([path, module]) => {
-        const fileName = path.split('/').pop()?.replace('.js', '') ?? 'unknown';
+        const fileName = path.split('/').pop()?.replace('.ts', '') ?? 'unknown';
         // @ts-ignore
         const name = module.name ?? "Unnamed Route";
         // @ts-ignore

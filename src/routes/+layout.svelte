@@ -17,7 +17,7 @@
     let slug = $derived($page.url.pathname.split('/').filter(Boolean).pop());
     let isElectionPage = $derived(slug && slug !== 'mandatsrechner' && slug !== '');
 
-    const modules = import.meta.glob('$lib/elections/*.js', { eager: true });
+    const modules = import.meta.glob('$lib/elections/*.ts', { eager: true });
     const elections = Object.entries(modules)
         .map(([path, module]) => {
             // @ts-ignore
@@ -27,7 +27,7 @@
             const filename = path.split('/').pop();
             
             return {
-                id: filename?.replace('.js', '') ?? '',
+                id: filename?.replace('.ts', '') ?? '',
                 label: name,
                 date: date ? new Date(date[0]) : new Date(0)
             };

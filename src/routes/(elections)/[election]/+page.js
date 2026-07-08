@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 
 export async function load({ params }) {
     try {
-        const module = await import(`../../../lib/elections/${params.election}.js`);
+        const module = await import(`../../../lib/elections/${params.election}.ts`);
         return {
             ...module,
             slug: params.election
@@ -13,11 +13,11 @@ export async function load({ params }) {
 }
 
 export function entries() {
-    const modules = import.meta.glob('/src/lib/elections/*.js');
+    const modules = import.meta.glob('/src/lib/elections/*.ts');
 
     return Object.keys(modules).map((path) => {
         return {
-            election: (path.split('/').pop() ?? '').replace('.js', '')
+            election: (path.split('/').pop() ?? '').replace('.ts', '')
         };
     });
 }
