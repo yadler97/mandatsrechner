@@ -6,6 +6,7 @@
     import { formatDate, getMajority, getTwoThirdsMajority } from '$lib/helper';
     import { PartyColours, PartyColoursEU } from '$lib/partyColours';
     import { EUGroupNames, EUGroups } from '$lib/euGroups';
+	import { createBarChartOptions, createMajorityChartOptions, createMandateChartOptions } from './chartOptions';
 
     let electionState = getContext('electionState');
     let previousData = getContext('previousData');
@@ -207,192 +208,58 @@
     let plainMandateData = $derived(structuredClone($state.snapshot(electionState.mandateData)));
     let plainMajorityData = $derived(structuredClone($state.snapshot(electionState.majorityData)));
 
-    let barChartOptions = $derived({
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            datalabels: {
-                anchor: 'end',
-                align: 'top',
-                color: 'black',
-                font: { weight: 'bold' },
-                formatter: (value, context) => {
-                    const { chart, dataIndex, datasetIndex } = context;
-
-                    const currentDataset = chart.data.datasets[datasetIndex];
-                    if (currentDataset['reservedSeats']) return null;
-
-                    const lastDatasetIndex = chart.data.datasets.length - 1;
-                    if (datasetIndex !== lastDatasetIndex) return '';
-
-                    const totalCurrent = chart.data.datasets.reduce((sum, dataset) => {
-                        const val = dataset.data[dataIndex];
-                        return typeof val === 'number' && dataset.order != 2 ? sum + val : sum;
-                    }, 0);
-
-                    const totalPrevious = chart.data.datasets.reduce((sum, dataset) => {
-                        const val = dataset.data[dataIndex];
-                        return typeof val === 'number' && dataset.order != 1 ? sum + val : sum;
-                    }, 0);
-
-                    const diff = totalCurrent - totalPrevious;
-                    let diffString;
-                    if (diff > 0) {
-                        diffString = "+" + diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    } else if (diff == 0) {
-                        diffString = "±" + diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    } else {
-                        diffString = diff.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    }
-
-                    return [totalCurrent.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), diffString];
-                },
-                labels: {
-                    0: { color: 'black' },
-                    1: {
-                        color: (context) => {
-                            const { chart, dataIndex } = context;
-                            const totalCurrent = chart.data.datasets.reduce((sum, dataset) => {
-                                const val = dataset.data[dataIndex];
-                                return typeof val === 'number' && dataset.order != 2 ? sum + val : sum;
-                            }, 0);
-                            const totalPrevious = chart.data.datasets.reduce((sum, dataset) => {
-                                const val = dataset.data[dataIndex];
-                                return typeof val === 'number' && dataset.order != 1 ? sum + val : sum;
-                            }, 0);
-                            const diff = totalCurrent - totalPrevious;
-                            if (diff > 0) return 'green';
-                            if (diff == 0) return 'black';
-                            return 'red';
-                        }
-                    }
-                }
-            },
-            annotation: {
-                annotations: electionState.threshold > 0 ? {
-                    majorityLine: {
-                        type: 'line',
-                        yMin: electionState.threshold,
-                        yMax: electionState.threshold,
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 2,
-                    }
-                } : {}
-            },
-            legend: {
-                display: true,
-                labels: {
-                    filter: (legendItem, chartData) => {
-                        const visibleLabels = chartData.datasets
-                            .filter(item => item.order != 2)
-                            .map(item => item.label);
-                        return visibleLabels.includes(legendItem.text);
-                    },
-                },
-            }
-        },
-        scales: {
-            x: {
-                stacked: true,
-                grid: { display: false }
-            },
-            y: {
-                stacked: true,
-                suggestedMax: (() => {
-                    if (!filteredData.labels || filteredData.datasets.length === 0) return 100;
-                    return Math.max(...filteredData.labels.map((_, index) =>
-                        filteredData.datasets.reduce((sum, party) =>
-                            sum + (party.order != 2 ? (party.data[index] || 0) : 0), 0
-                        )
-                    )) + 5;
-                })()
-            },
+    const isDarkMode = $derived.by(() => {
+        if (typeof window !== 'undefined') {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
         }
+        return false;
     });
 
-    let mandateChartOptions = $derived({
-        responsive: true,
-        cutout: '40%',
-        circumference: 180,
-        rotation: -90,
-        plugins: {
-            datalabels: {
-                anchor: 'end',
-                align: 'start',
-                color: 'white',
-                formatter: function(value) {
-                    return value > 0 ? value : ''
-                },
-                font: { weight: 'bold', size: 20 }
-            },
-            legend: {
-                display: true,
-                labels: {
-                    generateLabels: function(chart) {
-                        const dataset = chart.data.datasets[1];
-                        const labels = chart.data.labels || [];
-                        const backgroundColors = dataset.backgroundColor || [];
-
-                        return labels.map((label, i) => ({
-                            text: String(label),
-                            fillStyle: Array.isArray(backgroundColors) ? backgroundColors[i] || 'gray' : 'gray',
-                            strokeStyle: Array.isArray(backgroundColors) ? backgroundColors[i] || 'gray' : 'gray',
-                            lineWidth: 0,
-                            index: i
-                        }));
-                    }
-                },
-                onClick: () => false,
+    const chartColors = $derived.by(() => {
+        return isDarkMode
+            ? {
+                text: '#e0e0e0',
+                textMuted: '#b0b0b0',
+                grid: '#333',
+                border: '#555',
+                green: '#51cf66',
+                red: '#ff6b6b'
             }
-        }
+            : {
+                text: '#212529',
+                textMuted: '#666',
+                grid: '#e0e0e0',
+                border: '#ccc',
+                green: 'green',
+                red: 'red'
+            };
     });
 
-    let majorityChartOptions = $derived({
-        responsive: true,
-        indexAxis: 'y',
-        scales: {
-            y: { stacked: true },
-            x: { stacked: true, max: electionState.mandateCount }
-        },
-        plugins: {
-            annotation: {
-                annotations: {
-                    majorityLine: {
-                        type: 'line',
-                        xMin: majority,
-                        xMax: majority,
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 3,
-                    },
-                    twoThirdsMajorityLine: {
-                        type: 'line',
-                        xMin: twoThirdsMajority,
-                        xMax: twoThirdsMajority,
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 1,
-                    }
-                }
-            },
-            datalabels: {
-                anchor: 'center',
-                align: 'center',
-                color: 'white',
-                formatter: function(value) {
-                    return value > 0 ? value : ''
-                },
-                font: { weight: 'bold', size: 20 }
-            },
-            legend: {
-                onClick: function(event, legendItem) {
-                    if (legendItem.datasetIndex !== undefined) {
-                        const datasetIndex = legendItem.datasetIndex;
-                        const isVisible = electionState.majorityData.datasets[datasetIndex].hidden;
-                        electionState.majorityData.datasets[datasetIndex].hidden = !isVisible;
-                    }
-                }
-            }
-        }
-    });
+    let barChartOptions = $derived(
+        createBarChartOptions({
+            electionState,
+            filteredData,
+            threshold: electionState.threshold,
+            chartColors
+        })
+    );
+
+    let mandateChartOptions = $derived(
+        createMandateChartOptions({
+            dataIndex: 1,
+            chartColors
+        })
+    );
+
+    let majorityChartOptions = $derived(
+        createMajorityChartOptions({
+            electionState,
+            mandateCount: electionState.mandateCount,
+            majority,
+            twoThirdsMajority,
+            chartColors
+        })
+    );
 </script>
 
 <h1>Stimmenanteile</h1>

@@ -1,3 +1,61 @@
+:root {
+    --bg-color: #ffffff;
+    --surface-color: #f8f9fa;
+    --text-color: #212529;
+    --border-color: #ccc;
+    --border-color-light: #aaa;
+    --border-color-lighter: #ddd;
+    --border-color-lightest: #eee;
+    --text-secondary: #555;
+    --text-muted: #666;
+    --shadow-color: rgba(0, 0, 0, 0.06);
+    --shadow-color-medium: rgba(0, 0, 0, 0.1);
+    --success-color: #28a745;
+    --success-color-hover: #218838;
+    --gray-light: #f0f0f0;
+    --gray-lighter: #e0e0e0;
+    --gray-muted: #6c757d;
+    --gray-muted-hover: #5a6268;
+    --blue-light: #e7f5ff;
+    --blue-border: #007bff;
+    --red-accent: #ff4d4d;
+    --link-color: #495057;
+    --link-hover: rgba(0, 0, 0, 0.05);
+    --header-bg: white;
+    --red: red;
+    --green: green;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #121212;
+        --surface-color: #1e1e1e;
+        --text-color: #e0e0e0;
+        --border-color: #333;
+        --border-color-light: #555;
+        --border-color-lighter: #444;
+        --border-color-lightest: #2a2a2a;
+        --text-secondary: #b0b0b0;
+        --text-muted: #999;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+        --shadow-color-medium: rgba(0, 0, 0, 0.4);
+        --success-color: #2ea44f;
+        --success-color-hover: #2d8659;
+        --gray-light: #2a2a2a;
+        --gray-lighter: #3a3a3a;
+        --gray-muted: #5a5a5a;
+        --gray-muted-hover: #6a6a6a;
+        --blue-light: #1a3a4a;
+        --blue-border: #5ba3d0;
+        --red-accent: #ff6b6b;
+        --link-color: #b0b0b0;
+        --link-hover: rgba(255, 255, 255, 0.1);
+        --header-bg: #1e1e1e;
+        --red: #ff6b6b;
+        --green: #51cf66;
+    }
+}
+
 p, label, th, td, h1, h2, h3, span {
     font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
 }
@@ -14,6 +72,8 @@ body {
     height: calc(100% - 16px);
     display: flex;
     flex-direction: column;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 main {
@@ -22,22 +82,23 @@ main {
 
 .version-display {
     font-size: 0.8rem;
-    color: #666;
+    color: var(--text-muted);
 }
 
 header {
     display: flex;
     padding: 5px;
-    box-shadow: 0 0 15px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 0 15px 8px var(--shadow-color);
     border-radius: 10px;
     align-items: center;
     justify-content: space-between;
+    background-color: var(--header-bg);
 
     a {
         text-decoration: none;
         color: inherit;
         display: flex;
-        background-color: white;
+        background-color: var(--header-bg);
         padding: 5px;
         border-radius: 10px;
 
@@ -69,9 +130,11 @@ header {
 select {
     padding: 8px;
     border-radius: 10px;
-    border: 1px solid #aaa;
-    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color-light);
+    box-shadow: 0 0 15px 4px var(--shadow-color);
     font-size: 14px;
+    background-color: var(--surface-color);
+    color: var(--text-color);
 }
 
 .district_select {
@@ -130,9 +193,11 @@ td {
 input {
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #aaa;
-    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color-light);
+    box-shadow: 0 0 15px 4px var(--shadow-color);
     font-size: 16px;
+    background-color: var(--surface-color);
+    color: var(--text-color);
 }
 
 input[type=number] {
@@ -160,11 +225,11 @@ input[type=number] {
 }
 
 .red {
-    color: red;
+    color: var(--red);
 }
 
 .green {
-    color: green;
+    color: var(--green);
 }
 
 .scroll-container {
@@ -179,13 +244,14 @@ input[type=number] {
 .card {
     flex-shrink: 0;
     width: 250px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px var(--shadow-color-medium);
     text-align: center;
     transition: transform 0.3s ease;
     scroll-snap-align: start;
+    background-color: var(--surface-color);
 }
 
 .card:hover {
@@ -200,7 +266,8 @@ input[type=number] {
 
 .card-content {
     padding: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px var(--shadow-color-medium);
+    background-color: var(--surface-color);
 }
 
 .card h3 {
@@ -208,11 +275,12 @@ input[type=number] {
     margin-bottom: 10px;
     line-height: 1.4;
     height: 4.2em;
+    color: var(--text-color);
 }
 
 .card p {
     font-size: 1em;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .card-link {
@@ -223,10 +291,11 @@ input[type=number] {
 .valuePadding {
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #aaa;
-    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color-light);
+    box-shadow: 0 0 15px 4px var(--shadow-color);
     font-size: 16px;
     display: flex;
+    background-color: var(--surface-color);
 }
 .valuePadding input {
     box-shadow: none;
@@ -239,10 +308,11 @@ input[type=number] {
 .selectApportionmentMethod {
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #aaa;
-    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color-light);
+    box-shadow: 0 0 15px 4px var(--shadow-color);
     font-size: 16px;
     display: flex;
+    background-color: var(--surface-color);
 }
 
 section {
@@ -299,7 +369,7 @@ section {
     width: 15px;
     align-self: stretch;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
 }
 
 .name-container {
@@ -310,11 +380,13 @@ section {
 }
 
 .name-edit-input {
-    border: 1px solid #007bff;
+    border: 1px solid var(--blue-border);
     border-radius: 4px;
     padding: 4px;
     font-weight: bold;
     width: 80px;
+    background-color: var(--surface-color);
+    color: var(--text-color);
 }
 
 .edit-icon-btn {
@@ -334,7 +406,7 @@ section {
     gap: 10px;
     margin-top: 20px;
     padding: 15px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--border-color-lighter);
 }
 
 .action-btn {
@@ -348,23 +420,23 @@ section {
 }
 
 .export-btn {
-    background-color: #28a745;
+    background-color: var(--success-color);
     color: white;
     border: none;
 }
 
 .export-btn:hover {
-    background-color: #218838;
+    background-color: var(--success-color-hover);
 }
 
 .import-label {
-    background-color: #6c757d;
+    background-color: var(--gray-muted);
     color: white;
     display: inline-block;
 }
 
 .import-label:hover {
-    background-color: #5a6268;
+    background-color: var(--gray-muted-hover);
 }
 
 input[type="file"] {
@@ -374,7 +446,7 @@ input[type="file"] {
 .remove-btn {
     background: none;
     border: none;
-    color: #ff4d4d;
+    color: var(--red-accent);
     cursor: pointer;
     font-weight: bold;
     padding: 0 8px;
@@ -389,16 +461,17 @@ input[type="file"] {
 .add-party-btn {
     margin-top: 15px;
     padding: 8px;
-    background: #f0f0f0;
-    border: 1px dashed #ccc;
+    background: var(--gray-light);
+    border: 1px dashed var(--border-color);
     border-radius: 10px;
     cursor: pointer;
     width: 100%;
     font-weight: bold;
+    color: var(--text-color);
 }
 
 .add-party-btn:hover {
-    background: #e0e0e0;
+    background: var(--gray-lighter);
 }
 
 .label-stack {
@@ -428,12 +501,13 @@ input[type="file"] {
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    background: white;
-    border: 1px solid #ccc;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     cursor: pointer;
     font-size: 0.9rem;
     text-align: left;
+    color: var(--text-color);
 }
 
 .label-text {
@@ -449,8 +523,8 @@ input[type="file"] {
     top: 100%;
     right: 0;
     left: auto;
-    background: white;
-    border: 1px solid #ccc;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     list-style: none;
     padding: 0;
@@ -460,7 +534,7 @@ input[type="file"] {
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 9999;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px var(--shadow-color-medium);
 }
 
 .options-list li button {
@@ -474,10 +548,11 @@ input[type="file"] {
     text-align: left;
     cursor: pointer;
     font-size: 0.9rem;
+    color: var(--text-color);
 }
 
-.options-list li button:hover { background: #f1f3f5; }
-.options-list li button.active { background: #e7f5ff; font-weight: bold; }
+.options-list li button:hover { background: var(--link-hover); }
+.options-list li button.active { background: var(--blue-light); font-weight: bold; color: var(--text-color); }
 
 .flag-img {
     width: 60px;
@@ -485,11 +560,11 @@ input[type="file"] {
     border-radius: 4px;
     object-fit: cover;
     flex-shrink: 0;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px var(--shadow-color-medium);
 }
 
-.chevron { font-size: 0.7rem; color: #666; }
+.chevron { font-size: 0.7rem; color: var(--text-muted); }
 
 .info_container {
     table {
@@ -528,12 +603,14 @@ input[type="file"] {
     margin: auto;
     overflow-x: auto;
     max-height: 1000px;
+    background-color: var(--surface-color);
 
     .party-header {
         display: flex;
         align-items: center;
         height: 100%;
         min-height: 45px;
+        color: var(--text-color);
     }
 
     .color-bar {
@@ -550,6 +627,7 @@ input[type="file"] {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: var(--text-color);
     }
 
     table {
@@ -564,11 +642,12 @@ input[type="file"] {
         width: 100px;
         position: sticky;
         left: 0;
-        background: #f8f9fa;
+        background: var(--surface-color);
         z-index: 5;
-        border-right: 2px solid #ddd;
+        border-right: 2px solid var(--border-color-lighter);
         text-align: left;
         font-weight: bold;
+        color: var(--text-color);
     }
 
     th:not(.sticky-col), td:not(.sticky-col) {
@@ -578,9 +657,10 @@ input[type="file"] {
     thead th {
         position: sticky;
         top: 0;
-        background: #f8f9fa;
+        background: var(--surface-color);
         z-index: 4;
-        border-bottom: 2px solid #ccc;
+        border-bottom: 2px solid var(--border-color);
+        color: var(--text-color);
     }
 
     thead th.sticky-col {
@@ -589,32 +669,41 @@ input[type="file"] {
 
     th, td {
         padding: 12px 10px;
-        border-bottom: 1px solid #eee;
-        border-right: 1px solid #eee;
+        border-bottom: 1px solid var(--border-color-lightest);
+        border-right: 1px solid var(--border-color-lightest);
         white-space: nowrap;
         text-align: right;
-        box-sizing: border-box; 
+        box-sizing: border-box;
+        color: var(--text-color);
     }
 
     th {
         padding: 0;
         position: sticky;
         top: 0;
-        background: #f8f9fa;
+        background: var(--surface-color);
     }
 
     .winner {
-        background-color: #d4edda !important;
+        background-color: #4caf50 !important;
         font-weight: bold;
+        color: white !important;
+    }
+
+    @media (prefers-color-scheme: light) {
+        .winner {
+            background-color: #d4edda !important;
+            color: inherit !important;
+        }
     }
 }
 
 .toggle-group {
     display: inline-flex;
-    background-color: #f1f3f5; /* Light track background */
+    background-color: var(--gray-light);
     padding: 4px;
     border-radius: 8px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border-color-light);
     gap: 4px;
 }
 
@@ -628,7 +717,7 @@ input[type="file"] {
     padding: 6px 16px;
     font-size: 0.85rem;
     font-weight: 500;
-    color: #495057;
+    color: var(--link-color);
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -637,14 +726,14 @@ input[type="file"] {
 
 /* The "Active" state that makes it look like a toggle */
 .toggle-group button.active {
-    background-color: #e7f5ff;
-    color: #212529;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--blue-light);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow-color-medium);
 }
 
 .toggle-group button:hover:not(.active) {
-    background-color: rgba(0, 0, 0, 0.05);
-    color: #212529;
+    background-color: var(--link-hover);
+    color: var(--text-color);
 }
 
 @media screen and (max-width: 768px) {
