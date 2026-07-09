@@ -41,7 +41,7 @@ export const data = [
   },
   {
     labels: [
-      'CDU', 'CSU', 'Grüne', 'SPD', 'AfD', 'Linke', 'FDP',
+      'CDU/CSU', 'Grüne', 'SPD', 'AfD', 'Linke', 'FDP',
       'PARTEI', 'FW', 'Tierschutz', 'ÖDP', 'Familie',
       'Volt', 'PIRATEN', 'BSW', 'PDF'
     ],

@@ -127,6 +127,7 @@ export function createMandateChartOptions({ dataIndex, chartColors }) {
         cutout: '40%',
         circumference: 180,
         rotation: -90,
+        aspectRatio: 1.6,
         elements: {
             arc: {
                 borderWidth: 1,
