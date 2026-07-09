@@ -613,20 +613,12 @@ input[type="file"] {
     }
 }
 
-.table_wrapper {
-    width: 90%;
-    margin: auto;
-    overflow-x: auto;
-    max-height: 1000px;
-    background-color: var(--surface-color);
-
-    .party-header {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        min-height: 45px;
-        color: var(--text-color);
-    }
+.party-header {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 45px;
+    color: var(--text-color);
 
     .color-bar {
         width: 10px;
@@ -645,6 +637,15 @@ input[type="file"] {
         text-overflow: ellipsis;
         color: var(--text-color);
     }
+}
+
+.table_wrapper {
+    width: 90%;
+    margin: auto;
+    overflow-x: auto;
+    max-height: 1000px;
+    background-color: var(--surface-color);
+    border-radius: 8px;
 
     table {
         table-layout: fixed; 
@@ -667,7 +668,7 @@ input[type="file"] {
     }
 
     th:not(.sticky-col), td:not(.sticky-col) {
-        width: 150px; 
+        width: 100px; 
     }
 
     thead th {
@@ -712,6 +713,21 @@ input[type="file"] {
             color: inherit !important;
         }
     }
+}
+
+.mandate_info {
+    width: 100%;
+
+    .sticky-col {
+        width: 150px;
+    }
+}
+
+.text-green {
+    color: var(--green) !important;
+}
+.text-red {
+    color: var(--red) !important;
 }
 
 .toggle-group {
@@ -816,5 +832,9 @@ input[type="file"] {
     .table_wrapper {
         width: 100%;
         max-height: 600px;
+    }
+
+    .mandate_info {
+        margin-top: 20px;
     }
 }

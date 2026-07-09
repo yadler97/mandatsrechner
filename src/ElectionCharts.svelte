@@ -347,6 +347,42 @@
 <section class="mandate_section">
     <div class="pie_container">
         <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={electionState.name} />
+        <div class="table_wrapper mandate_info">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sticky-col">Partei</th>
+                        {#each electionState.mandateData.labels as party, idx}
+                            <th>
+                                <div class="party-header">
+                                    <span class="color-bar" style="background-color: {electionState.mandateData.datasets[1].backgroundColor[idx]}"></span>
+                                    <span class="party-label">{party}</span>
+                                </div>
+                            </th>
+                        {/each}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="sticky-col">Mandate</th>
+                        {#each electionState.mandateData.datasets[1].data as count}
+                            <td>{count}</td>
+                        {/each}
+                    </tr>
+                    <tr>
+                        <th class="sticky-col">Veränderung</th>
+                        {#each electionState.mandateData.datasets[1].data as count, i}
+                            {@const diff = count - electionState.mandateData.datasets[0].data[i]}
+                            {@const display = diff > 0 ? `+${diff}` : diff === 0 ? '±0' : diff}
+
+                            <td class={diff > 0 ? 'text-green' : diff < 0 ? 'text-red' : ''}>
+                                {display}
+                            </td>
+                        {/each}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="stack_container">

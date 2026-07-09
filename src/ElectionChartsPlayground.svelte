@@ -494,6 +494,31 @@
 <section class="mandate_section">
     <div class="pie_container">
         <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={"Spielwiese"} />
+        <div class="table_wrapper mandate_info">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sticky-col">Partei</th>
+                        {#each electionState.mandateData.labels as party, idx}
+                            <th>
+                                <div class="party-header">
+                                    <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
+                                    <span class="party-label">{party}</span>
+                                </div>
+                            </th>
+                        {/each}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="sticky-col">Mandate</th>
+                        {#each electionState.mandateData.datasets[0].data as count}
+                            <td>{count}</td>
+                        {/each}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="stack_container">

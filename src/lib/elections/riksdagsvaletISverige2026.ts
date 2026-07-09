@@ -64,7 +64,7 @@ export const data = {
 };
 
 export const mandateData = {
-  labels: ['S', 'SD', 'M', 'V', 'C', 'KD', 'MP', 'L'],
+  labels: ['V', 'S', 'MP', 'C', 'L', 'M', 'KD', 'SD'],
   datasets: [
     {
       label: 'Mandate (2022)',
