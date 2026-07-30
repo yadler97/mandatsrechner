@@ -18,6 +18,8 @@
 
     // svelte-ignore state_referenced_locally
     let previousData = $state(structuredClone(data.data));
+    // svelte-ignore state_referenced_locally
+    let previousMandateData = $state(structuredClone(data.mandateData));
 
     // svelte-ignore state_referenced_locally
     let electionState = $state(data);
@@ -41,6 +43,10 @@
         previousData.labels = fresh.labels;
         previousData.datasets = fresh.datasets;
 
+        const freshMandateData = structuredClone(data.mandateData);
+        previousMandateData.labels = freshMandateData.labels;
+        previousMandateData.datasets = freshMandateData.datasets;
+
         electionState.name = data.name;
         electionState.data = data.data;
         electionState.mandateData = data.mandateData;
@@ -49,6 +55,7 @@
         electionState.threshold = data.threshold;
         electionState.apportionmentMethod = data.apportionmentMethod;
         electionState.date = data.date;
+        electionState.lastDate = data.lastDate;
         electionState.countryCode = data.countryCode;
         electionState.baseMandateRule = data.baseMandateRule || false;
         electionState.note = data.note || '';
@@ -56,6 +63,7 @@
 
     setContext('electionState', electionState);
     setContext('previousData', previousData);
+    setContext('previousMandateData', previousMandateData);
 </script>
 
 <ElectionCharts />

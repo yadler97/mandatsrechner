@@ -7,7 +7,7 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
+    import { data, mandateData, majorityData, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
@@ -38,11 +38,13 @@
         majorityData: majorityData[0],
         countryCode: countryCode,
         date: date,
+        lastDate: lastDate,
         baseMandateRule: false,
         note: ''
     });
 
     let previousData = $state(structuredClone(data[0]));
+    let previousMandateData = $state(structuredClone(mandateData[0]));
 
     const updateDistrict = (selectedDistrict) => {
         district = selectedDistrict;
@@ -51,6 +53,10 @@
         const fresh = structuredClone(data[districtInt - 1]);
         previousData.labels = fresh.labels;
         previousData.datasets = fresh.datasets;
+
+        const freshMandates = structuredClone(mandateData[districtInt - 1]);
+        previousMandateData.labels = freshMandates.labels;
+        previousMandateData.datasets = freshMandates.datasets;
 
         electionState.name = `${name} (${district}.)`;
         electionState.data = data[districtInt - 1];
@@ -97,6 +103,7 @@
 
     setContext('electionState', electionState);
     setContext('previousData', previousData);
+    setContext('previousMandateData', previousMandateData);
 </script>
 
 <select bind:value={district} onchange={() => gotoDistrict(district)} class="district_select">

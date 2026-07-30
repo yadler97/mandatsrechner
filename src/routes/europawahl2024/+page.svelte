@@ -7,7 +7,7 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, name } from '../../lib/elections/europawahl2024';
+    import { data, mandateData, majorityData, date, lastDate, name } from '../../lib/elections/europawahl2024';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
@@ -39,19 +39,23 @@
         majorityData: majorityData[0],
         countryCode: 'AT',
         date: date,
+        lastDate: lastDate,
         baseMandateRule: false,
         note: ''
     });
 
     let previousData = $state(structuredClone(data[0]));
+    let previousMandateData = $state(structuredClone(mandateData[0]));
 
     const updateCountry = (selectedCountry) => {
         country = selectedCountry;
 
+        let fresh;
+        let freshMandates;
+
         if (country === 'at') {
-            const fresh = structuredClone(data[0]);
-            previousData.labels = fresh.labels;
-            previousData.datasets = fresh.datasets;
+            fresh = structuredClone(data[0]);
+            freshMandates = structuredClone(mandateData[0]);
             electionState.name = `${name} (AT)`;
             electionState.mandateCount = 20;
             electionState.threshold = 4;
@@ -61,9 +65,8 @@
             electionState.majorityData = majorityData[0];
             electionState.countryCode = "AT";
         } else if (country === 'de') {
-            const fresh = structuredClone(data[1]);
-            previousData.labels = fresh.labels;
-            previousData.datasets = fresh.datasets;
+            fresh = structuredClone(data[1]);
+            freshMandates = structuredClone(mandateData[1]);
             electionState.name = `${name} (DE)`;
             electionState.mandateCount = 96;
             electionState.threshold = 0;
@@ -73,6 +76,11 @@
             electionState.majorityData = majorityData[1];
             electionState.countryCode = "DE";
         }
+
+        previousData.labels = fresh?.labels ?? [];
+        previousData.datasets = fresh?.datasets ?? [];
+        previousMandateData.labels = freshMandates?.labels ?? [];
+        previousMandateData.datasets = freshMandates?.datasets ?? [];
     };
 
     // svelte-ignore state_referenced_locally
@@ -98,6 +106,7 @@
 
     setContext('electionState', electionState);
     setContext('previousData', previousData);
+    setContext('previousMandateData', previousMandateData);
 </script>
 
 <select bind:value={country} onchange={() => gotoCountry(country)} class="district_select">

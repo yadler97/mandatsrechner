@@ -3,6 +3,7 @@ import { PartyColours } from "$lib/partyColours";
 
 export const name = 'Gemeinderatswahl Graz 2026';
 export const date = ['2026-06-28'];
+export const lastDate = ['2021-09-26'];
 export const countryCode = 'AT';
 
 export const mandateCount = 48;
@@ -16,37 +17,37 @@ export const data = {
       label: 'KPÖ',
       index: 0,
       data: [28.84, 0, 0, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['KPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['KPÖ'],
     },
     {
       label: 'ÖVP',
       index: 1,
       data: [0, 25.91, 0, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['ÖVP'].normal,
+      backgroundColor: PartyColours[countryCode]['ÖVP'],
     },
     {
       label: 'Grüne',
       index: 2,
       data: [0, 0, 17.32, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['Grüne'].normal,
+      backgroundColor: PartyColours[countryCode]['Grüne'],
     },
     {
       label: 'FPÖ',
       index: 3,
       data: [0, 0, 0, 10.61, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['FPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['FPÖ'],
     },
     {
       label: 'SPÖ',
       index: 4,
       data: [0, 0, 0, 0, 9.53, 0, 0],
-      backgroundColor: PartyColours[countryCode]['SPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['SPÖ'],
     },
     {
       label: 'NEOS',
       index: 5,
       data: [0, 0, 0, 0, 0, 5.42, 0],
-      backgroundColor: PartyColours[countryCode]['NEOS'].normal,
+      backgroundColor: PartyColours[countryCode]['NEOS'],
     },
     {
       label: 'KFG',
@@ -61,30 +62,16 @@ export const mandateData = {
   labels: ['KPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'SPÖ', 'NEOS', 'KFG'],
   datasets: [
     {
-      label: 'Mandate (2021)',
-      data: [15, 13, 9, 5, 4, 2, 0],
-      backgroundColor: [
-        PartyColours[countryCode]['KPÖ'].trans,
-        PartyColours[countryCode]['ÖVP'].trans,
-        PartyColours[countryCode]['Grüne'].trans,
-        PartyColours[countryCode]['FPÖ'].trans,
-        PartyColours[countryCode]['SPÖ'].trans,
-        PartyColours[countryCode]['NEOS'].trans,
-        'rgba(85, 136, 153, 0.5)',
-      ],
-      weight: 0.4,
-    },
-    {
       label: 'Mandate',
       data: [15, 13, 9, 2, 4, 2, 3],
       backgroundColor: [
-        PartyColours[countryCode]['KPÖ'].normal,
-        PartyColours[countryCode]['ÖVP'].normal,
-        PartyColours[countryCode]['Grüne'].normal,
-        PartyColours[countryCode]['FPÖ'].normal,
-        PartyColours[countryCode]['SPÖ'].normal,
-        PartyColours[countryCode]['NEOS'].normal,
-        '#558899',
+        PartyColours[countryCode]['KPÖ'],
+        PartyColours[countryCode]['ÖVP'],
+        PartyColours[countryCode]['Grüne'],
+        PartyColours[countryCode]['FPÖ'],
+        PartyColours[countryCode]['SPÖ'],
+        PartyColours[countryCode]['NEOS'],
+        'rgb(85, 136, 153)',
       ],
     },
   ],
@@ -96,37 +83,37 @@ export const majorityData = {
     {
       label: 'KPÖ',
       data: [15],
-      backgroundColor: PartyColours[countryCode]['KPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['KPÖ'],
       hidden: false,
     },
     {
       label: 'ÖVP',
       data: [13],
-      backgroundColor: PartyColours[countryCode]['ÖVP'].normal,
+      backgroundColor: PartyColours[countryCode]['ÖVP'],
       hidden: true,
     },
     {
       label: 'Grüne',
       data: [9],
-      backgroundColor: PartyColours[countryCode]['Grüne'].normal,
+      backgroundColor: PartyColours[countryCode]['Grüne'],
       hidden: false,
     },
     {
       label: 'FPÖ',
       data: [2],
-      backgroundColor: PartyColours[countryCode]['FPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['FPÖ'],
       hidden: true,
     },
     {
       label: 'SPÖ',
       data: [4],
-      backgroundColor: PartyColours[countryCode]['SPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['SPÖ'],
       hidden: false,
     },
     {
       label: 'NEOS',
       data: [2],
-      backgroundColor: PartyColours[countryCode]['NEOS'].normal,
+      backgroundColor: PartyColours[countryCode]['NEOS'],
       hidden: true,
     },
     {
