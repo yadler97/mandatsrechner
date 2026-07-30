@@ -1,0 +1,1 @@
+function e(e){return e.length>0?e.map(e=>new Date(e).toLocaleDateString(`de-AT`,{day:`numeric`,month:`long`,year:`numeric`})).join(` - `):`Kein Datum`}function t(e){return e?new Date(e[0]).getFullYear():`Previous`}function n(e){return Math.floor(e/2+1)}function r(e){return Math.ceil(e/3*2)}export{t as i,n,r,e as t};
