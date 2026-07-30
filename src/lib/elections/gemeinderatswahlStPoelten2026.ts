@@ -3,6 +3,7 @@ import { PartyColours } from "$lib/partyColours";
 
 export const name = 'Gemeinderatswahl St. Pölten 2026';
 export const date = ['2026-01-25'];
+export const lastDate = ['2021-01-24'];
 export const countryCode = 'AT';
 
 export const mandateCount = 42;
@@ -16,37 +17,37 @@ export const data = {
       label: 'SPÖ',
       index: 0,
       data: [56.02, 0, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['SPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['SPÖ'],
     },
     {
       label: 'ÖVP',
       index: 1,
       data: [0, 22.74, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['ÖVP'].normal,
+      backgroundColor: PartyColours[countryCode]['ÖVP'],
     },
     {
       label: 'FPÖ',
       index: 2,
       data: [0, 0, 8.92, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['FPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['FPÖ'],
     },
     {
       label: 'Grüne',
       index: 3,
       data: [0, 0, 0, 8.01, 0, 0],
-      backgroundColor: PartyColours[countryCode]['Grüne'].normal,
+      backgroundColor: PartyColours[countryCode]['Grüne'],
     },
     {
       label: 'NEOS',
       index: 4,
       data: [0, 0, 0, 0, 3.19, 0],
-      backgroundColor: PartyColours[countryCode]['NEOS'].normal,
+      backgroundColor: PartyColours[countryCode]['NEOS'],
     },
     {
       label: 'KPÖ',
       index: 5,
       data: [0, 0, 0, 0, 0, 1.11],
-      backgroundColor: PartyColours[countryCode]['KPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['KPÖ'],
     },
   ],
 };
@@ -55,28 +56,15 @@ export const mandateData = {
   labels: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'NEOS', 'KPÖ'],
   datasets: [
     {
-      label: 'Mandate (2021)',
-      data: [25, 10, 3, 3, 1, 0],
-      backgroundColor: [
-        PartyColours[countryCode]['SPÖ'].trans,
-        PartyColours[countryCode]['ÖVP'].trans,
-        PartyColours[countryCode]['FPÖ'].trans,
-        PartyColours[countryCode]['Grüne'].trans,
-        PartyColours[countryCode]['NEOS'].trans,
-        PartyColours[countryCode]['KPÖ'].trans,
-      ],
-      weight: 0.4,
-    },
-    {
       label: 'Mandate',
       data: [25, 10, 3, 3, 1, 0],
       backgroundColor: [
-        PartyColours[countryCode]['SPÖ'].normal,
-        PartyColours[countryCode]['ÖVP'].normal,
-        PartyColours[countryCode]['FPÖ'].normal,
-        PartyColours[countryCode]['Grüne'].normal,
-        PartyColours[countryCode]['NEOS'].normal,
-        PartyColours[countryCode]['KPÖ'].normal,
+        PartyColours[countryCode]['SPÖ'],
+        PartyColours[countryCode]['ÖVP'],
+        PartyColours[countryCode]['FPÖ'],
+        PartyColours[countryCode]['Grüne'],
+        PartyColours[countryCode]['NEOS'],
+        PartyColours[countryCode]['KPÖ'],
       ],
     },
   ],
@@ -88,37 +76,37 @@ export const majorityData = {
     {
       label: 'SPÖ',
       data: [25],
-      backgroundColor: PartyColours[countryCode]['SPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['SPÖ'],
       hidden: false,
     },
     {
       label: 'ÖVP',
       data: [10],
-      backgroundColor: PartyColours[countryCode]['ÖVP'].normal,
+      backgroundColor: PartyColours[countryCode]['ÖVP'],
       hidden: true,
     },
     {
       label: 'FPÖ',
       data: [3],
-      backgroundColor: PartyColours[countryCode]['FPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['FPÖ'],
       hidden: true,
     },
     {
       label: 'Grüne',
       data: [3],
-      backgroundColor: PartyColours[countryCode]['Grüne'].normal,
+      backgroundColor: PartyColours[countryCode]['Grüne'],
       hidden: true,
     },
     {
       label: 'NEOS',
       data: [1],
-      backgroundColor: PartyColours[countryCode]['NEOS'].normal,
+      backgroundColor: PartyColours[countryCode]['NEOS'],
       hidden: true,
     },
     {
       label: 'KPÖ',
       data: [0],
-      backgroundColor: PartyColours[countryCode]['KPÖ'].normal,
+      backgroundColor: PartyColours[countryCode]['KPÖ'],
       hidden: true,
     },
   ],

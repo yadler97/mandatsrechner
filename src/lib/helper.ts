@@ -8,6 +8,11 @@ export function formatDate(rawDates: string[]) {
     return "Kein Datum";
 }
 
+export function getYear(rawDates: string[]) {
+    if (!rawDates) return 'Previous';
+    return new Date(rawDates[0]).getFullYear();
+}
+
 export function getMajority(mandateCount: number) {
     return Math.floor((mandateCount / 2) + 1);
 }

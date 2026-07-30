@@ -1,6 +1,6 @@
 {
 	"name": "mandatsrechner",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"private": true,
 	"description": "A small program to calculate the number of mandates based on the vote share per party for upcoming parliament elections in Austria, Germany, and select other countries.",
 	"repository": {

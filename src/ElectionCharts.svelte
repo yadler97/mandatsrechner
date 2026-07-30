@@ -3,13 +3,14 @@
     import { getContext } from 'svelte';
 
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
-    import { formatDate, getMajority, getTwoThirdsMajority } from '$lib/helper';
-    import { PartyColours, PartyColoursEU } from '$lib/partyColours';
+    import { formatDate, getMajority, getTwoThirdsMajority, getYear } from '$lib/helper';
+    import { getTransColour, PartyColours, PartyColoursEU } from '$lib/partyColours';
     import { EUGroupNames, EUGroups } from '$lib/euGroups';
 	import { createBarChartOptions, createMajorityChartOptions, createMandateChartOptions } from './chartOptions';
 
     let electionState = getContext('electionState');
     let previousData = getContext('previousData');
+    let previousMandateData = getContext('previousMandateData');
 
     let majority = $derived(getMajority(electionState.mandateCount));
     let twoThirdsMajority = $derived(getTwoThirdsMajority(electionState.mandateCount));
@@ -56,6 +57,7 @@
     });
 
     let previousDatasets = $state([]);
+    let previousMandateDatasets = $state([]);
     let currentElectionName = $state("");
 
     $effect(() => {
@@ -66,13 +68,26 @@
             const partyKey = ds.label;
             return {
                 ...ds,
-                label: `${ds.label} (Previous)`,
+                label: `${ds.label} (${getYear(electionState.lastDate)})`,
                 data: [...ds.data],
                 order: 2,
                 stack: 'previous',
-                backgroundColor: PartyColours[electionState.countryCode][partyKey]?.trans || ds.backgroundColor,
+                backgroundColor: getTransColour(ds.backgroundColor),
                 categoryPercentage: 0.8,
                 barPercentage: 0.9,
+            };
+        });
+
+        previousMandateDatasets = previousMandateData.datasets.map(ds => {
+            const resolvedBackground = ds.backgroundColor.map(color => {
+                return getTransColour(color);
+            });
+
+            return {
+                label: `${ds.label} (${getYear(electionState.lastDate)})`,
+                data: [...ds.data],
+                backgroundColor: resolvedBackground,
+                weight: 0.4,
             };
         });
 
@@ -82,6 +97,11 @@
     let barChartData = $derived({
         labels: filteredData.labels,
         datasets: [...previousDatasets, ...filteredData.datasets]
+    });
+
+    let mandateChartData = $derived({
+        labels: electionState.mandateData.labels,
+        datasets: [...previousMandateDatasets, ...electionState.mandateData.datasets]
     });
 
     function validatePartyShare(index, partyIndex) {
@@ -170,7 +190,7 @@
     });
 
     $effect(() => {
-        electionState.mandateData.datasets[1].data = mandates;
+        electionState.mandateData.datasets[0].data = mandates;
         for (let i in mandates) {
             electionState.majorityData.datasets[i].data = [mandates[i]];
         }
@@ -205,7 +225,7 @@
     }
 
     let plainBarChartData = $derived(structuredClone($state.snapshot(barChartData)));
-    let plainMandateData = $derived(structuredClone($state.snapshot(electionState.mandateData)));
+    let plainMandateData = $derived(structuredClone($state.snapshot(mandateChartData)));
     let plainMajorityData = $derived(structuredClone($state.snapshot(electionState.majorityData)));
 
     const isDarkMode = $derived.by(() => {
@@ -246,7 +266,7 @@
 
     let mandateChartOptions = $derived(
         createMandateChartOptions({
-            dataIndex: 1,
+            dataIndex: 0,
             chartColors
         })
     );
@@ -355,7 +375,7 @@
                         {#each electionState.mandateData.labels as party, idx}
                             <th>
                                 <div class="party-header">
-                                    <span class="color-bar" style="background-color: {electionState.mandateData.datasets[1].backgroundColor[idx]}"></span>
+                                    <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
                                     <span class="party-label">{party}</span>
                                 </div>
                             </th>
@@ -365,14 +385,14 @@
                 <tbody>
                     <tr>
                         <th class="sticky-col">Mandate</th>
-                        {#each electionState.mandateData.datasets[1].data as count}
+                        {#each electionState.mandateData.datasets[0].data as count}
                             <td>{count}</td>
                         {/each}
                     </tr>
                     <tr>
                         <th class="sticky-col">Veränderung</th>
-                        {#each electionState.mandateData.datasets[1].data as count, i}
-                            {@const diff = count - electionState.mandateData.datasets[0].data[i]}
+                        {#each electionState.mandateData.datasets[0].data as count, i}
+                            {@const diff = count - previousMandateData.datasets[0]?.data[i]}
                             {@const display = diff > 0 ? `+${diff}` : diff === 0 ? '±0' : diff}
 
                             <td class={diff > 0 ? 'text-green' : diff < 0 ? 'text-red' : ''}>
