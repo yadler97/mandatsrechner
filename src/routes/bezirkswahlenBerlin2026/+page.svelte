@@ -15,6 +15,21 @@
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
+    const districts = [
+        { id: '1', name: 'Mitte' },
+        { id: '2', name: 'Friedrichshain-Kreuzberg' },
+        { id: '3', name: 'Pankow' },
+        { id: '4', name: 'Charlottenburg-Wilmersdorf' },
+        { id: '5', name: 'Spandau' },
+        { id: '6', name: 'Steglitz-Zehlendorf' },
+        { id: '7', name: 'Tempelhof-Schöneberg' },
+        { id: '8', name: 'Neukölln' },
+        { id: '9', name: 'Treptow-Köpenick' },
+        { id: '10', name: 'Marzahn-Hellersdorf' },
+        { id: '11', name: 'Lichtenberg' },
+        { id: '12', name: 'Reinickendorf' }
+    ];
+
     let district = $state('1');
 
     if (browser) {
@@ -50,6 +65,9 @@
         district = selectedDistrict;
         const districtInt = parseInt(district);
 
+        const currentDistrictObj = districts.find(d => d.id === district);
+        const districtName = currentDistrictObj ? currentDistrictObj.name : '';
+
         const fresh = structuredClone(data[districtInt - 1]);
         previousData.labels = fresh.labels;
         previousData.datasets = fresh.datasets;
@@ -58,7 +76,7 @@
         previousMandateData.labels = freshMandates.labels;
         previousMandateData.datasets = freshMandates.datasets;
 
-        electionState.name = `${name} (${district}.)`;
+        electionState.name = `${name} (${district}., ${districtName})`;
         electionState.data = data[districtInt - 1];
         electionState.mandateData = mandateData[districtInt - 1];
         electionState.majorityData = majorityData[1]; // Assuming index mapping
@@ -93,18 +111,9 @@
 </script>
 
 <select bind:value={district} onchange={() => gotoDistrict(district)} class="district_select">
-    <option value="1">1., Mitte</option>
-    <option value="2">2., Friedrichshain-Kreuzberg</option>
-    <option value="3">3., Pankow</option>
-    <option value="4">4., Charlottenburg-Wilmersdorf</option>
-    <option value="5">5., Spandau</option>
-    <option value="6">6., Steglitz-Zehlendorf</option>
-    <option value="7">7., Tempelhof-Schöneberg</option>
-    <option value="8">8., Neukölln</option>
-    <option value="9">9., Treptow-Köpenick</option>
-    <option value="10">10., Marzahn-Hellersdorf</option>
-    <option value="11">11., Lichtenberg</option>
-    <option value="12">12., Reinickendorf</option>
+    {#each districts as d}
+        <option value={d.id}>{d.id}., {d.name}</option>
+    {/each}
 </select>
 
 <ElectionCharts />
