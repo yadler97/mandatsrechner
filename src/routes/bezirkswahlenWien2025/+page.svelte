@@ -15,6 +15,32 @@
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
+    const districts = [
+        { id: '1', name: 'Innere Stadt' },
+        { id: '2', name: 'Leopoldstadt' },
+        { id: '3', name: 'Landstraße' },
+        { id: '4', name: 'Wieden' },
+        { id: '5', name: 'Margareten' },
+        { id: '6', name: 'Mariahilf' },
+        { id: '7', name: 'Neubau' },
+        { id: '8', name: 'Josefstadt' },
+        { id: '9', name: 'Alsergrund' },
+        { id: '10', name: 'Favoriten' },
+        { id: '11', name: 'Simmering' },
+        { id: '12', name: 'Meidling' },
+        { id: '13', name: 'Hietzing' },
+        { id: '14', name: 'Penzing' },
+        { id: '15', name: 'Rudolfsheim-Fünfhaus' },
+        { id: '16', name: 'Ottakring' },
+        { id: '17', name: 'Hernals' },
+        { id: '18', name: 'Währing' },
+        { id: '19', name: 'Döbling' },
+        { id: '20', name: 'Brigittenau' },
+        { id: '21', name: 'Floridsdorf' },
+        { id: '22', name: 'Donaustadt' },
+        { id: '23', name: 'Liesing' }
+    ];
+
     let district = $state('1');
 
     if (browser) {
@@ -50,6 +76,9 @@
         district = selectedDistrict;
         const districtInt = parseInt(district);
 
+        const currentDistrictObj = districts.find(d => d.id === district);
+        const districtName = currentDistrictObj ? currentDistrictObj.name : '';
+
         const fresh = structuredClone(data[districtInt - 1]);
         previousData.labels = fresh.labels;
         previousData.datasets = fresh.datasets;
@@ -58,7 +87,7 @@
         previousMandateData.labels = freshMandates.labels;
         previousMandateData.datasets = freshMandates.datasets;
 
-        electionState.name = `${name} (${district}.)`;
+        electionState.name = `${name} (${district}., ${districtName})`;
         electionState.data = data[districtInt - 1];
         electionState.mandateData = mandateData[districtInt - 1];
         electionState.majorityData = majorityData[1]; // Assuming index mapping
@@ -107,29 +136,9 @@
 </script>
 
 <select bind:value={district} onchange={() => gotoDistrict(district)} class="district_select">
-    <option value="1">1., Innere Stadt</option>
-    <option value="2">2., Leopoldstadt</option>
-    <option value="3">3., Landstraße</option>
-    <option value="4">4., Wieden</option>
-    <option value="5">5., Margareten</option>
-    <option value="6">6., Mariahilf</option>
-    <option value="7">7., Neubau</option>
-    <option value="8">8., Josefstadt</option>
-    <option value="9">9., Alsergrund</option>
-    <option value="10">10., Favoriten</option>
-    <option value="11">11., Simmering</option>
-    <option value="12">12., Meidling</option>
-    <option value="13">13., Hietzing</option>
-    <option value="14">14., Penzing</option>
-    <option value="15">15., Rudolfsheim-Fünfhaus</option>
-    <option value="16">16., Ottakring</option>
-    <option value="17">17., Hernals</option>
-    <option value="18">18., Währing</option>
-    <option value="19">19., Döbling</option>
-    <option value="20">20., Brigittenau</option>
-    <option value="21">21., Floridsdorf</option>
-    <option value="22">22., Donaustadt</option>
-    <option value="23">23., Liesing</option>
+    {#each districts as d}
+        <option value={d.id}>{d.id}., {d.name}</option>
+    {/each}
 </select>
 
 <ElectionCharts />
