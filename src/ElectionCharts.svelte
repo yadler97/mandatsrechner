@@ -4,7 +4,7 @@
 
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
     import { formatDate, getMajority, getTwoThirdsMajority, getYear } from '$lib/helper';
-    import { getTransColour, PartyColours, PartyColoursEU } from '$lib/partyColours';
+    import { getTransColour, PartyColoursEU } from '$lib/partyColours';
     import { EUGroupNames, EUGroups } from '$lib/euGroups';
 	import { createBarChartOptions, createMajorityChartOptions, createMandateChartOptions } from './chartOptions';
 

@@ -291,6 +291,8 @@ input[type=number] {
     line-height: 1.4;
     height: 4.2em;
     color: var(--text-color);
+    word-break: auto-phrase;
+    hyphens: auto;
 }
 
 .card p {
