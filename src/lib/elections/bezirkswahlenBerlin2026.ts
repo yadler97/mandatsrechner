@@ -130,7 +130,7 @@ export const data = [
             },
             {
                 label: 'BSW',
-                index: 10,
+                index: 9,
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColours[countryCode]['BSW'],
             },
@@ -195,7 +195,7 @@ export const data = [
             },
             {
                 label: 'BSW',
-                index: 10,
+                index: 9,
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColours[countryCode]['BSW'],
             },
@@ -260,7 +260,7 @@ export const data = [
             },
             {
                 label: 'BSW',
-                index: 10,
+                index: 9,
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: PartyColours[countryCode]['BSW'],
             },
@@ -654,16 +654,16 @@ export const data = [
                 backgroundColor: PartyColours[countryCode]['SPD'],
             },
             {
-                label: 'Grüne',
+                label: 'AfD',
                 index: 3,
-                data: [0, 0, 0, 11.82, 0, 0, 0, 0, 0],
-                backgroundColor: PartyColours[countryCode]['Grüne'],
+                data: [0, 0, 0, 13.94, 0, 0, 0, 0, 0],
+                backgroundColor: PartyColours[countryCode]['AfD'],
             },
             {
-                label: 'AfD',
+                label: 'Grüne',
                 index: 4,
-                data: [0, 0, 0, 0, 13.94, 0, 0, 0, 0],
-                backgroundColor: PartyColours[countryCode]['AfD'],
+                data: [0, 0, 0, 0, 11.82, 0, 0, 0, 0],
+                backgroundColor: PartyColours[countryCode]['Grüne'],
             },
             {
                 label: 'Tierschutz',
@@ -775,7 +775,7 @@ export const mandateData = [
         ],
     },
     {
-        labels: ['Grüne', 'Linke', 'SPD', 'CDU', 'AfD', 'FDP', 'PARTEI', 'Tierschutz', 'Volt', 'BSW'],
+        labels: ['Grüne', 'Linke', 'SPD', 'CDU', 'AfD', 'PARTEI', 'FDP', 'Tierschutz', 'Volt', 'BSW'],
         datasets: [
             {
                 label: 'Mandate',
@@ -786,8 +786,8 @@ export const mandateData = [
                     PartyColours[countryCode]['SPD'],
                     PartyColours[countryCode]['CDU'],
                     PartyColours[countryCode]['AfD'],
-                    PartyColours[countryCode]['FDP'],
                     PartyColours[countryCode]['PARTEI'],
+                    PartyColours[countryCode]['FDP'],
                     PartyColours[countryCode]['Tierschutz'],
                     PartyColours[countryCode]['Volt'],
                     PartyColours[countryCode]['BSW'],
@@ -1008,32 +1008,32 @@ export const majorityData = [
         datasets: [
             {
                 label: 'Grüne',
-                data: [32.73],
+                data: [18],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'CDU',
-                data: [21.82],
+                data: [12],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'SPD',
-                data: [18.18],
+                data: [10],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'Linke',
-                data: [18.18],
+                data: [10],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'AfD',
-                data: [5.45],
+                data: [3],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
                 label: 'FDP',
-                data: [3.64],
+                data: [2],
                 backgroundColor: PartyColours[countryCode]['FDP']
             },
             {
@@ -1058,44 +1058,43 @@ export const majorityData = [
             },
         ],
     },
-
     {
         labels: ['Mandate'],
         datasets: [
             {
                 label: 'Grüne',
-                data: [38.18],
+                data: [21],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'Linke',
-                data: [21.82],
+                data: [12],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'SPD',
-                data: [14.55],
+                data: [8],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'CDU',
-                data: [14.55],
+                data: [8],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'AfD',
-                data: [3.64],
+                data: [2],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
-                label: 'FDP',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['FDP']
+                label: 'PARTEI',
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['PARTEI']
             },
             {
-                label: 'PARTEI',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['PARTEI']
+                label: 'FDP',
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['FDP']
             },
             {
                 label: 'Tierschutz',
@@ -1119,32 +1118,32 @@ export const majorityData = [
         datasets: [
             {
                 label: 'Grüne',
-                data: [27.27],
+                data: [15],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'CDU',
-                data: [21.82],
+                data: [12],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'Linke',
-                data: [20.00],
+                data: [11],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'SPD',
-                data: [16.36],
+                data: [9],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'AfD',
-                data: [10.91],
+                data: [6],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
                 label: 'FDP',
-                data: [3.64],
+                data: [2],
                 backgroundColor: PartyColours[countryCode]['FDP']
             },
             {
@@ -1174,138 +1173,33 @@ export const majorityData = [
         datasets: [
             {
                 label: 'CDU',
-                data: [32.73],
+                data: [18],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'Grüne',
-                data: [25.45],
+                data: [14],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'SPD',
-                data: [21.82],
+                data: [12],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'Linke',
-                data: [7.27],
+                data: [4],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'FDP',
-                data: [7.27],
+                data: [4],
                 backgroundColor: PartyColours[countryCode]['FDP']
             },
             {
                 label: 'AfD',
-                data: [5.45],
+                data: [3],
                 backgroundColor: PartyColours[countryCode]['AfD']
-            },
-            {
-                label: 'Tierschutz',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['Tierschutz']
-            },
-            {
-                label: 'Volt',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['Volt']
-            },
-            {
-                label: 'PARTEI',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['PARTEI']
-            },
-            {
-                label: 'BSW',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['BSW']
-            },
-        ],
-    },
-    {
-        labels: ['Mandate'],
-        datasets: [
-            {
-                label: 'CDU',
-                data: [41.82],
-                backgroundColor: PartyColours[countryCode]['CDU']
-            },
-            {
-                label: 'SPD',
-                data: [25.45],
-                backgroundColor: PartyColours[countryCode]['SPD']
-            },
-            {
-                label: 'AfD',
-                data: [10.91],
-                backgroundColor: PartyColours[countryCode]['AfD']
-            },
-            {
-                label: 'Grüne',
-                data: [10.91],
-                backgroundColor: PartyColours[countryCode]['Grüne']
-            },
-            {
-                label: 'Linke',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['Linke']
-            },
-            {
-                label: 'FDP',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['FDP']
-            },
-            {
-                label: 'Tierschutz',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['Tierschutz']
-            },
-            {
-                label: 'PARTEI',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['PARTEI']
-            },
-            {
-                label: 'BSW',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['BSW']
-            },
-        ],
-    },
-    {
-        labels: ['Mandate'],
-        datasets: [
-            {
-                label: 'CDU',
-                data: [40.00],
-                backgroundColor: PartyColours[countryCode]['CDU']
-            },
-            {
-                label: 'Grüne',
-                data: [23.64],
-                backgroundColor: PartyColours[countryCode]['Grüne']
-            },
-            {
-                label: 'SPD',
-                data: [20.00],
-                backgroundColor: PartyColours[countryCode]['SPD']
-            },
-            {
-                label: 'FDP',
-                data: [7.27],
-                backgroundColor: PartyColours[countryCode]['FDP']
-            },
-            {
-                label: 'AfD',
-                data: [5.45],
-                backgroundColor: PartyColours[countryCode]['AfD']
-            },
-            {
-                label: 'Linke',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'Tierschutz',
@@ -1334,38 +1228,143 @@ export const majorityData = [
         datasets: [
             {
                 label: 'CDU',
-                data: [34.55],
+                data: [23],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'SPD',
-                data: [21.82],
+                data: [14],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
+                label: 'AfD',
+                data: [6],
+                backgroundColor: PartyColours[countryCode]['AfD']
+            },
+            {
                 label: 'Grüne',
-                data: [20.00],
+                data: [6],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
+                label: 'Tierschutz',
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['Tierschutz']
+            },
+            {
                 label: 'Linke',
-                data: [9.09],
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['Linke']
+            },
+            {
+                label: 'FDP',
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['FDP']
+            },
+            {
+                label: 'PARTEI',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['PARTEI']
+            },
+            {
+                label: 'BSW',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['BSW']
+            },
+        ],
+    },
+    {
+        labels: ['Mandate'],
+        datasets: [
+            {
+                label: 'CDU',
+                data: [22],
+                backgroundColor: PartyColours[countryCode]['CDU']
+            },
+            {
+                label: 'Grüne',
+                data: [13],
+                backgroundColor: PartyColours[countryCode]['Grüne']
+            },
+            {
+                label: 'SPD',
+                data: [11],
+                backgroundColor: PartyColours[countryCode]['SPD']
+            },
+            {
+                label: 'FDP',
+                data: [4],
+                backgroundColor: PartyColours[countryCode]['FDP']
+            },
+            {
+                label: 'AfD',
+                data: [3],
+                backgroundColor: PartyColours[countryCode]['AfD']
+            },
+            {
+                label: 'Linke',
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['Linke']
+            },
+            {
+                label: 'Tierschutz',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['Tierschutz']
+            },
+            {
+                label: 'Volt',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['Volt']
+            },
+            {
+                label: 'PARTEI',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['PARTEI']
+            },
+            {
+                label: 'BSW',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['BSW']
+            },
+        ],
+    },
+    {
+        labels: ['Mandate'],
+        datasets: [
+            {
+                label: 'CDU',
+                data: [19],
+                backgroundColor: PartyColours[countryCode]['CDU']
+            },
+            {
+                label: 'Grüne',
+                data: [14],
+                backgroundColor: PartyColours[countryCode]['Grüne']
+            },
+            {
+                label: 'SPD',
+                data: [12],
+                backgroundColor: PartyColours[countryCode]['SPD']
+            },
+            {
+                label: 'Linke',
+                data: [5],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'AfD',
-                data: [5.45],
+                data: [3],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
-                label: 'Tierschutz',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['Tierschutz']
+                label: 'FDP',
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['FDP']
             },
             {
-                label: 'FDP',
-                data: [3.64],
-                backgroundColor: PartyColours[countryCode]['FDP']
+                label: 'Tierschutz',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['Tierschutz']
             },
             {
                 label: 'PARTEI',
@@ -1389,77 +1388,27 @@ export const majorityData = [
         datasets: [
             {
                 label: 'CDU',
-                data: [42.73],
+                data: [17],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'SPD',
-                data: [27.27],
-                backgroundColor: PartyColours[countryCode]['SPD']
-            },
-            {
-                label: 'Linke',
-                data: [16.36],
-                backgroundColor: PartyColours[countryCode]['Linke']
-            },
-            {
-                label: 'AfD',
-                data: [7.27],
-                backgroundColor: PartyColours[countryCode]['AfD']
-            },
-            {
-                label: 'Grüne',
-                data: [5.45],
-                backgroundColor: PartyColours[countryCode]['Grüne']
-            },
-            {
-                label: 'Tierschutz',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['Tierschutz']
-            },
-            {
-                label: 'FDP',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['FDP']
-            },
-            {
-                label: 'PARTEI',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['PARTEI']
-            },
-            {
-                label: 'BSW',
-                data: [0],
-                backgroundColor: PartyColours[countryCode]['BSW']
-            },
-        ],
-    },
-    {
-        labels: ['Mandate'],
-        datasets: [
-            {
-                label: 'CDU',
-                data: [25.45],
-                backgroundColor: PartyColours[countryCode]['CDU']
-            },
-            {
-                label: 'SPD',
-                data: [23.64],
+                data: [15],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'Grüne',
-                data: [18.18],
+                data: [10],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'Linke',
-                data: [16.36],
+                data: [9],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'AfD',
-                data: [7.27],
+                data: [4],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
@@ -1489,32 +1438,82 @@ export const majorityData = [
         datasets: [
             {
                 label: 'CDU',
-                data: [34.55],
+                data: [14],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'SPD',
-                data: [23.64],
+                data: [13],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'Linke',
-                data: [16.36],
+                data: [9],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'AfD',
-                data: [14.55],
+                data: [8],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
                 label: 'Grüne',
-                data: [5.45],
+                data: [7],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'Tierschutz',
-                data: [3.64],
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['Tierschutz']
+            },
+            {
+                label: 'FDP',
+                data: [2],
+                backgroundColor: PartyColours[countryCode]['FDP']
+            },
+            {
+                label: 'PARTEI',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['PARTEI']
+            },
+            {
+                label: 'BSW',
+                data: [0],
+                backgroundColor: PartyColours[countryCode]['BSW']
+            },
+        ],
+    },
+    {
+        labels: ['Mandate'],
+        datasets: [
+            {
+                label: 'CDU',
+                data: [19],
+                backgroundColor: PartyColours[countryCode]['CDU']
+            },
+            {
+                label: 'AfD',
+                data: [12],
+                backgroundColor: PartyColours[countryCode]['AfD']
+            },
+            {
+                label: 'SPD',
+                data: [10],
+                backgroundColor: PartyColours[countryCode]['SPD']
+            },
+            {
+                label: 'Linke',
+                data: [9],
+                backgroundColor: PartyColours[countryCode]['Linke']
+            },
+            {
+                label: 'Grüne',
+                data: [3],
+                backgroundColor: PartyColours[countryCode]['Grüne']
+            },
+            {
+                label: 'Tierschutz',
+                data: [2],
                 backgroundColor: PartyColours[countryCode]['Tierschutz']
             },
             {
@@ -1539,32 +1538,32 @@ export const majorityData = [
         datasets: [
             {
                 label: 'CDU',
-                data: [27.27],
+                data: [15],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'Linke',
-                data: [25.45],
+                data: [14],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
                 label: 'SPD',
-                data: [16.36],
+                data: [9],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'AfD',
-                data: [14.55],
+                data: [8],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
                 label: 'Grüne',
-                data: [12.73],
+                data: [7],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'Tierschutz',
-                data: [3.64],
+                data: [2],
                 backgroundColor: PartyColours[countryCode]['Tierschutz']
             },
             {
@@ -1589,32 +1588,32 @@ export const majorityData = [
         datasets: [
             {
                 label: 'CDU',
-                data: [45.45],
+                data: [25],
                 backgroundColor: PartyColours[countryCode]['CDU']
             },
             {
                 label: 'SPD',
-                data: [23.64],
+                data: [13],
                 backgroundColor: PartyColours[countryCode]['SPD']
             },
             {
                 label: 'Grüne',
-                data: [12.73],
+                data: [7],
                 backgroundColor: PartyColours[countryCode]['Grüne']
             },
             {
                 label: 'AfD',
-                data: [10.91],
+                data: [6],
                 backgroundColor: PartyColours[countryCode]['AfD']
             },
             {
                 label: 'FDP',
-                data: [3.64],
+                data: [2],
                 backgroundColor: PartyColours[countryCode]['FDP']
             },
             {
                 label: 'Linke',
-                data: [3.64],
+                data: [2],
                 backgroundColor: PartyColours[countryCode]['Linke']
             },
             {
