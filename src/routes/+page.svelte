@@ -48,7 +48,7 @@
 <h2>Anstehende Wahlen</h2>
 <div class="scroll-container">
     {#if upcomingRoutes.length > 0}
-        {#each upcomingRoutes as { route, name, electionDate, imagePath }}
+        {#each upcomingRoutes as { route, name, electionDate, imagePath } (route)}
             <a href="{base}/{route}" class="card-link">
                 <div class="card">
                     <img src={imagePath} alt="Flag" class="card-image" />
@@ -67,7 +67,7 @@
 <h2>Vergangene Wahlen</h2>
 <div class="scroll-container">
     {#if pastRoutes.length > 0}
-        {#each pastRoutes as { route, name, electionDate, imagePath }}
+        {#each pastRoutes as { route, name, electionDate, imagePath } (route)}
             <a href="{base}/{route}" class="card-link">
                 <div class="card">
                     <img src={imagePath} alt="Flag" class="card-image" />
