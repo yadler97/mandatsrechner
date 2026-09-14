@@ -9,11 +9,11 @@
 <h1>Willkommen zum großen Mandatsrechner!</h1>
 
 <script>
+    import { onMount } from 'svelte';
     import { base } from '$app/paths';
-	import { formatDate } from '$lib/helper';
+    import { formatDate } from '$lib/helper';
 
     const dataModules = import.meta.glob('/src/lib/elections/*.ts', { eager: true });
-    const today = new Date().setHours(0, 0, 0, 0);
 
     const allElections = Object.entries(dataModules).map(([path, module]) => {
         const fileName = path.split('/').pop()?.replace('.ts', '') ?? 'unknown';
@@ -22,63 +22,76 @@
         // @ts-ignore
         const date = module.date ?? "Unknown Date";
 
-        const finalDate = new Date(date.at(-1));
-        const comparisonDate = finalDate.setHours(0, 0, 0, 0);
-
-        const electionDate = formatDate(date);
+        const rawDate = Array.isArray(date) ? date.at(-1) : date;
+        const finalDate = new Date(rawDate);
+        finalDate.setHours(0, 0, 0, 0);
 
         return {
             route: fileName,
             name,
-            electionDate: electionDate,
-            date: comparisonDate,
+            electionDate: formatDate(date),
+            date: finalDate.getTime(),
             imagePath: `${base}/flags/${fileName}.jpg`
         };
-    }).filter(item => item.date !== 0);
+    }).filter(item => !isNaN(item.date) && item.date !== 0);
 
-    const upcomingRoutes = allElections
-        .filter(e => e.date >= today)
-        .sort((a, b) => a.date - b.date);
+    let upcomingRoutes = [];
+    let pastRoutes = [];
+    let isMounted = false;
 
-    const pastRoutes = allElections
-        .filter(e => e.date < today)
-        .sort((a, b) => b.date - a.date);
+    onMount(() => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayTime = today.getTime();
+
+        upcomingRoutes = allElections
+            .filter(e => e.date >= todayTime)
+            .sort((a, b) => a.date - b.date);
+
+        pastRoutes = allElections
+            .filter(e => e.date < todayTime)
+            .sort((a, b) => b.date - a.date);
+
+        isMounted = true;
+    });
 </script>
 
-<h2>Anstehende Wahlen</h2>
-<div class="scroll-container">
-    {#if upcomingRoutes.length > 0}
-        {#each upcomingRoutes as { route, name, electionDate, imagePath } (route)}
-            <a href="{base}/{route}" class="card-link">
-                <div class="card">
-                    <img src={imagePath} alt="Flag" class="card-image" />
-                    <div class="card-content">
-                        <h3>{name}</h3>
-                        <p>{electionDate}</p>
+{#if isMounted}
+    <h2>Anstehende Wahlen</h2>
+    <div class="scroll-container">
+        {#if upcomingRoutes.length > 0}
+            {#each upcomingRoutes as { route, name, electionDate, imagePath } (route)}
+                <a href="{base}/{route}" class="card-link">
+                    <div class="card">
+                        <img src={imagePath} alt="Flag" class="card-image" />
+                        <div class="card-content">
+                            <h3>{name}</h3>
+                            <p>{electionDate}</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        {/each}
-    {:else}
-        <p>keine</p>
-    {/if}
-</div>
+                </a>
+            {/each}
+        {:else}
+            <p>keine</p>
+        {/if}
+    </div>
 
-<h2>Vergangene Wahlen</h2>
-<div class="scroll-container">
-    {#if pastRoutes.length > 0}
-        {#each pastRoutes as { route, name, electionDate, imagePath } (route)}
-            <a href="{base}/{route}" class="card-link">
-                <div class="card">
-                    <img src={imagePath} alt="Flag" class="card-image" />
-                    <div class="card-content">
-                        <h3>{name}</h3>
-                        <p>{electionDate}</p>
+    <h2>Vergangene Wahlen</h2>
+    <div class="scroll-container">
+        {#if pastRoutes.length > 0}
+            {#each pastRoutes as { route, name, electionDate, imagePath } (route)}
+                <a href="{base}/{route}" class="card-link">
+                    <div class="card">
+                        <img src={imagePath} alt="Flag" class="card-image" />
+                        <div class="card-content">
+                            <h3>{name}</h3>
+                            <p>{electionDate}</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        {/each}
-    {:else}
-        <p>keine</p>
-    {/if}
-</div>
+                </a>
+            {/each}
+        {:else}
+            <p>keine</p>
+        {/if}
+    </div>
+{/if}
