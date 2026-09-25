@@ -21,7 +21,8 @@ export const EUGroups = {
     'ÖDP': 'EPP',
     'Familie': 'EPP',
     'Tierschutz': 'Left',
-    'PDF': 'RE'
+    'PDF': 'RE',
+    'SSW': 'G/EFA'
   },
   'DK': {
     'A': 'S&D',

@@ -130,7 +130,7 @@
                 const party = filteredParties[index];
                 const value = party.data[party.index];
 
-                return value >= electionState.threshold || party.isChecked;
+                return value >= electionState.threshold || party.isChecked || party.isExemptFromThreshold;
             });
 
         const reservedParties = dataset.filter(p => p.reservedSeats !== undefined && p.order != 2);

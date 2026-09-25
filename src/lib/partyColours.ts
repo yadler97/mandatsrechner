@@ -27,7 +27,8 @@ export const PartyColours = {
     "ÖDP": "rgb(255, 100, 0)",
     "Familie": "rgb(255, 102, 0)",
     "PIRATEN": "rgb(255, 130, 10)",
-    "PDF": "rgb(245, 166, 18)"
+    "PDF": "rgb(245, 166, 18)",
+    "SSW": "rgb(0, 60, 143)"
   },
   "NL": {
     "PVV": "rgb(0, 0, 138)",
