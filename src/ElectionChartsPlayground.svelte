@@ -388,9 +388,9 @@
     );
 </script>
 
-<h1>Stimmenanteile</h1>
+<h2>Stimmenanteile</h2>
 <section class="vote_share_section">
-    <div class="info_container">
+    <div class="info_container element_card">
         <p>Allgemeine Informationen</p>
         <table>
             <tbody>
@@ -409,11 +409,12 @@
             </tbody>
         </table>
     </div>
-    <div class="bar_container">
+
+    <div class="bar_container element_card">
         <ChartCanvas type="bar" data={plainBarChartData} options={barChartOptions} name={"Spielwiese"} />
     </div>
     
-    <div class="input_fields_vote">
+    <div class="input_fields_vote element_card">
         {#each electionState.data.datasets as party, i}
             <div class="input_field_vote_party">
                 <div class="name-container">
@@ -490,10 +491,13 @@
     </div>
 </section>
 
-<h1>Mandatsverteilung</h1>
+<h2>Mandatsverteilung</h2>
 <section class="mandate_section">
     <div class="pie_container">
-        <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={"Spielwiese"} />
+        <div class="element_card">
+            <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={"Spielwiese"} />
+        </div>
+
         <div class="table_wrapper mandate_info">
             <table>
                 <thead>
@@ -521,7 +525,7 @@
         </div>
     </div>
 
-    <div class="stack_container">
+    <div class="stack_container element_card">
         <ChartCanvas type="bar" data={plainMajorityData} options={majorityChartOptions} name={"Spielwiese"} />
         <p class="majorityText {selectedParties < majority ? 'red' : 'green'}">
             Mehrheit: {selectedParties}/{majority}
@@ -550,7 +554,7 @@
     </div>
 </section>
 
-<h1>Berechnungsschritte</h1>
+<h2>Berechnungsschritte</h2>
 <section class="calculation_logic_section">
     {#if apportionmentMethod !== ApportionmentMethods.HARE_NIEMEYER}
         <div class="toggle-group">

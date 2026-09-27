@@ -10,67 +10,75 @@ export const mandateCount = 630;
 export const threshold = 5;
 export const apportionmentMethod = ApportionmentMethods.SAINTE_LAGUE;
 export const baseMandateRule = 3;
+export const note = 'Der SSW ist als Partei der dänischen Minderheit von der 5%-Hürde ausgenommen.';
 
 export const data = {
-  labels: ['SPD', 'CDU/CSU', 'Grüne', 'FDP', 'AfD', 'Linke', 'BSW'],
+  labels: ['SPD', 'CDU/CSU', 'Grüne', 'FDP', 'AfD', 'Linke', 'BSW', 'SSW'],
   datasets: [
     {
       label: 'SPD',
       index: 0,
-      data: [25.74, 0, 0, 0, 0, 0, 0],
+      data: [25.74, 0, 0, 0, 0, 0, 0, 0],
       backgroundColor: PartyColours[countryCode]['SPD'],
     },
     {
       label: 'CDU',
       index: 1,
-      data: [0, 18.90, 0, 0, 0, 0, 0],
+      data: [0, 18.90, 0, 0, 0, 0, 0, 0],
       backgroundColor: PartyColours[countryCode]['CDU'],
     },
     {
       label: 'CSU',
       index: 1,
-      data: [0, 5.17, 0, 0, 0, 0, 0],
+      data: [0, 5.17, 0, 0, 0, 0, 0, 0],
       backgroundColor: PartyColours[countryCode]['CSU'],
     },
     {
       label: 'Grüne',
       index: 2,
-      data: [0, 0, 14.75, 0, 0, 0, 0],
+      data: [0, 0, 14.75, 0, 0, 0, 0, 0],
       backgroundColor: PartyColours[countryCode]['Grüne'],
     },
     {
       label: 'FDP',
       index: 3,
-      data: [0, 0, 0, 11.46, 0, 0, 0],
+      data: [0, 0, 0, 11.46, 0, 0, 0, 0],
       backgroundColor: PartyColours[countryCode]['FDP'],
     },
     {
       label: 'AfD',
       index: 4,
-      data: [0, 0, 0, 0, 10.34, 0, 0],
+      data: [0, 0, 0, 0, 10.34, 0, 0, 0],
       backgroundColor: PartyColours[countryCode]['AfD'],
     },
     {
       label: 'Linke',
       index: 5,
-      data: [0, 0, 0, 0, 0, 4.89, 0],
+      data: [0, 0, 0, 0, 0, 4.89, 0, 0],
       backgroundColor: PartyColours[countryCode]['Linke'],
     },
     {
       label: 'BSW',
       index: 6,
-      data: [0, 0, 0, 0, 0, 0, 0.00],
+      data: [0, 0, 0, 0, 0, 0, 0, 0],
       backgroundColor: PartyColours[countryCode]['BSW'],
+    },
+    {
+      label: 'SSW',
+      index: 7,
+      data: [0, 0, 0, 0, 0, 0, 0, 0.12],
+      backgroundColor: PartyColours[countryCode]['SSW'],
+      isExemptFromThreshold: true,
     },
   ],
 };
 
 export const mandateData = {
-  labels: ['SPD', 'CDU', 'CSU', 'Grüne', 'FDP', 'AfD', 'Linke', 'BSW'],
+  labels: ['SPD', 'CDU', 'CSU', 'Grüne', 'FDP', 'AfD', 'Linke', 'BSW', 'SSW'],
   datasets: [
     {
       label: 'Mandate',
-      data: [206, 152, 45, 118, 91, 83, 39, 0.00],
+      data: [206, 152, 45, 118, 91, 83, 39, 0, 1],
       backgroundColor: [
         PartyColours[countryCode]['SPD'],
         PartyColours[countryCode]['CDU'],
@@ -80,6 +88,7 @@ export const mandateData = {
         PartyColours[countryCode]['AfD'],
         PartyColours[countryCode]['Linke'],
         PartyColours[countryCode]['BSW'],
+        PartyColours[countryCode]['SSW'],
       ],
     },
   ],
@@ -134,6 +143,12 @@ export const majorityData = {
       label: 'BSW',
       data: [0],
       backgroundColor: PartyColours[countryCode]['BSW'],
+      hidden: true,
+    },
+    {
+      label: 'SSW',
+      data: [1],
+      backgroundColor: PartyColours[countryCode]['SSW'],
       hidden: true,
     },
   ],

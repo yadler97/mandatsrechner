@@ -142,6 +142,20 @@ header {
     }
 }
 
+.election_name {
+    display: none;
+}
+
+.element_card {
+    height: stretch;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px var(--shadow-color-medium);
+    background-color: var(--surface-color);
+}
+
 select {
     padding: 8px;
     border-radius: 10px;
@@ -161,6 +175,7 @@ select {
 }
 
 .info_container {
+    flex: 1;
     width: 25%;
     margin: auto;
     max-width: 400px;
@@ -176,18 +191,32 @@ td {
 }
 
 .bar_container {
+    flex: 2;
+    width: 100%;
+    min-width: 500px;
     margin: auto;
-    width: 50%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     canvas {
-        min-height: 400px;
+        min-height: 600px;
+        max-height: 600px;
     }
 }
 
 .input_fields_vote {
+    flex: 1;
     margin: auto;
     width: 20%;
     max-width: 400px;
+
+    .valuePadding {
+        width: 100%;
+        margin-left: 20px;
+    }
 }
 
 .input_field_vote_party {
@@ -222,17 +251,32 @@ input[type=number] {
 }
 
 .mandate_section {
-    display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
 }
 
-.pie_container {
-    width: 40%;
-    margin: auto;
+.pie_container,
+.stack_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  min-width: 0;
+}
+
+.pie_container > .element_card {
+  min-height: 300px;
+  height: 100%;
+  flex: 1 1 auto;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .stack_container {
-    width: 40%;
-    margin: auto;
+    justify-content: center;
 }
 
 .majorityText {
@@ -338,28 +382,6 @@ section {
     align-items: flex-start;
     gap: 20px;
     flex-wrap: wrap;
-}
-
-.info_container {
-    flex: 1;
-    max-width: 400px;
-}
-
-.bar_container {
-    flex: 2;
-    min-width: 500px;
-    max-width: 1000px;
-}
-
-.input_fields_vote {
-    flex: 1;
-    max-width: 300px;
-
-    .valuePadding {
-        width: 100%;
-        max-width: 100px;
-        margin-left: 20px;
-    }
 }
 
 .edit-group, .display-group {
@@ -646,8 +668,10 @@ input[type="file"] {
     margin: auto;
     overflow-x: auto;
     max-height: 1000px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px var(--shadow-color-medium);
     background-color: var(--surface-color);
-    border-radius: 8px;
 
     table {
         table-layout: fixed; 
@@ -785,12 +809,18 @@ input[type="file"] {
         }
     }
 
+    .election_name {
+        display: block;
+        text-align: center;
+    }
+
     .vote_share_section {
         flex-flow: column;
     }
 
     .info_container {
-        width: auto;
+        width: 100%;
+        max-width: 100%;
         margin-bottom: 20px;
     }
 
@@ -807,7 +837,7 @@ input[type="file"] {
     .input_fields_vote {
         margin: auto auto;
         padding: 20px;
-        width: 90%;
+        width: 100%;
         max-width: 100%;
 
         .valuePadding {
@@ -816,15 +846,7 @@ input[type="file"] {
     }
 
     .mandate_section {
-        flex-flow: column;
-    }
-
-    .pie_container {
-        width: 100%;
-    }
-
-    .stack_container {
-        width: 100%;
+        grid-template-columns: 1fr;
     }
 
     .remove-btn {
