@@ -1,12 +1,24 @@
 <script>
     import ChartCanvas from './ChartCanvas.svelte';
     import { getContext } from 'svelte';
+    import { onMount } from 'svelte';
 
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
     import { formatDate, getMajority, getTwoThirdsMajority, getYear } from '$lib/helper';
     import { getTransColour, PartyColoursEU } from '$lib/partyColours';
     import { EUGroupNames, EUGroups } from '$lib/euGroups';
 	import { createBarChartOptions, createMajorityChartOptions, createMandateChartOptions } from './chartOptions';
+
+    let isMobile = $state(false);
+
+    onMount(() => {
+        const media = window.matchMedia('(max-width: 768px)');
+        isMobile = media.matches;
+
+        const listener = (e) => (isMobile = e.matches);
+        media.addEventListener('change', listener);
+        return () => media.removeEventListener('change', listener);
+    });
 
     let electionState = getContext('electionState');
     let previousData = getContext('previousData');
@@ -280,6 +292,24 @@
             chartColors
         })
     );
+
+    function formatDefault(node, value) {
+        function setFormattedValue(val) {
+            if (document.activeElement === node) return;
+
+            if (val !== undefined && val !== null && !isNaN(val)) {
+                node.value = Number(val).toFixed(2);
+            }
+        }
+
+        setFormattedValue(value);
+
+        return {
+            update(newValue) {
+                setFormattedValue(newValue);
+            }
+        };
+    }
 </script>
 
 <h1 class="election_name">{electionState.name}</h1>
@@ -342,7 +372,19 @@
                             </span>
                         </div>
                     </div>
-                    <span class="valuePadding"><input id="input_party_{party.originalIndex}" type="number" step="any" bind:value={electionState.data.datasets[party.originalIndex].data[party.index]} min=0 max=100 oninput={() => validatePartyShare(party.originalIndex, party.index)}> %</span>
+                    <span class="valuePadding">
+                        <input
+                            id="input_party_{party.originalIndex}"
+                            type="number"
+                            step="any"
+                            use:formatDefault={electionState.data.datasets[party.originalIndex].data[party.index]}
+                            bind:value={electionState.data.datasets[party.originalIndex].data[party.index]}
+                            min=0
+                            max=100
+                            oninput={() => validatePartyShare(party.originalIndex, party.index)}
+                        >
+                         %
+                    </span>
                 </div>
                 {#if electionState.data.datasets[party.originalIndex].data[party.index] < electionState.threshold && electionState.baseMandateRule && !party.isExemptFromThreshold}
                     <div class="base_mandate_checkbox">
@@ -374,38 +416,66 @@
 
         <div class="table_wrapper mandate_info">
             <table>
-                <thead>
-                    <tr>
-                        <th class="sticky-col">Partei</th>
+                {#if isMobile}
+                    <thead>
+                        <tr>
+                            <th>Partei</th>
+                            <th>Mandate</th>
+                            <th>Veränderung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {#each electionState.mandateData.labels as party, idx}
-                            <th>
-                                <div class="party-header">
-                                    <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
-                                    <span class="party-label">{party}</span>
-                                </div>
-                            </th>
-                        {/each}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th class="sticky-col">Mandate</th>
-                        {#each electionState.mandateData.datasets[0].data as count}
-                            <td>{count}</td>
-                        {/each}
-                    </tr>
-                    <tr>
-                        <th class="sticky-col">Veränderung</th>
-                        {#each electionState.mandateData.datasets[0].data as count, i}
-                            {@const diff = count - previousMandateData.datasets[0]?.data[i]}
+                            {@const count = electionState.mandateData.datasets[0].data[idx]}
+                            {@const diff = count - previousMandateData.datasets[0]?.data[idx]}
                             {@const display = diff > 0 ? `+${diff}` : diff === 0 ? '±0' : diff}
 
-                            <td class={diff > 0 ? 'text-green' : diff < 0 ? 'text-red' : ''}>
-                                {display}
-                            </td>
+                            <tr>
+                                <td>
+                                    <div class="party-header">
+                                        <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
+                                        <span class="party-label">{party}</span>
+                                    </div>
+                                </td>
+                                <td>{count}</td>
+                                <td class={diff > 0 ? 'text-green' : diff < 0 ? 'text-red' : ''}>{display}</td>
+                            </tr>
                         {/each}
-                    </tr>
-                </tbody>
+                    </tbody>
+                {:else}
+                    <thead>
+                        <tr>
+                            <th class="sticky-col">Partei</th>
+                            {#each electionState.mandateData.labels as party, idx}
+                                <th>
+                                    <div class="party-header">
+                                        <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
+                                        <span class="party-label">{party}</span>
+                                    </div>
+                                </th>
+                            {/each}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="sticky-col">Mandate</th>
+                            {#each electionState.mandateData.datasets[0].data as count}
+                                <td>{count}</td>
+                            {/each}
+                        </tr>
+                        <tr>
+                            <th class="sticky-col">Veränderung</th>
+                            {#each electionState.mandateData.datasets[0].data as count, i}
+                                {@const diff = count - previousMandateData.datasets[0]?.data[i]}
+                                {@const display = diff > 0 ? `+${diff}` : diff === 0 ? '±0' : diff}
+
+                                <td class={diff > 0 ? 'text-green' : diff < 0 ? 'text-red' : ''}>
+                                    {display}
+                                </td>
+                            {/each}
+                        </tr>
+                    </tbody>
+                {/if}
             </table>
         </div>
     </div>
