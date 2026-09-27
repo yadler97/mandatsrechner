@@ -1,10 +1,22 @@
 <script>
     import ChartCanvas from './ChartCanvas.svelte';
     import { getContext } from 'svelte';
+    import { onMount } from 'svelte';
 
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
     import { getMajority, getTwoThirdsMajority } from '$lib/helper';
 	import { createBarChartOptions, createMajorityChartOptions, createMandateChartOptions } from './chartOptions';
+
+    let isMobile = $state(false);
+
+    onMount(() => {
+        const media = window.matchMedia('(max-width: 768px)');
+        isMobile = media.matches;
+
+        const listener = (e) => (isMobile = e.matches);
+        media.addEventListener('change', listener);
+        return () => media.removeEventListener('change', listener);
+    });
 
     let electionState = getContext('electionState');
 
@@ -386,6 +398,24 @@
             chartColors
         })
     );
+
+    function formatDefault(node, value) {
+        function setFormattedValue(val) {
+            if (document.activeElement === node) return;
+
+            if (val !== undefined && val !== null && !isNaN(val)) {
+                node.value = Number(val).toFixed(2);
+            }
+        }
+
+        setFormattedValue(value);
+
+        return {
+            update(newValue) {
+                setFormattedValue(newValue);
+            }
+        };
+    }
 </script>
 
 <h2>Stimmenanteile</h2>
@@ -459,11 +489,13 @@
                         id="input_party_{i}"
                         type="number"
                         step="any"
+                        use:formatDefault={electionState.data.datasets[i].data[party.index]}
                         bind:value={electionState.data.datasets[i].data[party.index]}
                         min=0
                         max=100
                         oninput={() => validatePartyShare(i, party.index)}
-                    > %
+                    >
+                     %
                 </span>
 
                 <button
@@ -500,27 +532,49 @@
 
         <div class="table_wrapper mandate_info">
             <table>
-                <thead>
-                    <tr>
-                        <th class="sticky-col">Partei</th>
+                {#if isMobile}
+                    <thead>
+                        <tr>
+                            <th>Partei</th>
+                            <th>Mandate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {#each electionState.mandateData.labels as party, idx}
-                            <th>
-                                <div class="party-header">
-                                    <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
-                                    <span class="party-label">{party}</span>
-                                </div>
-                            </th>
+                            <tr>
+                                <td>
+                                    <div class="party-header">
+                                        <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
+                                        <span class="party-label">{party}</span>
+                                    </div>
+                                </td>
+                                <td>{electionState.mandateData.datasets[0].data[idx]}</td>
+                            </tr>
                         {/each}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th class="sticky-col">Mandate</th>
-                        {#each electionState.mandateData.datasets[0].data as count}
-                            <td>{count}</td>
-                        {/each}
-                    </tr>
-                </tbody>
+                    </tbody>
+                {:else}
+                    <thead>
+                        <tr>
+                            <th class="sticky-col">Partei</th>
+                            {#each electionState.mandateData.labels as party, idx}
+                                <th>
+                                    <div class="party-header">
+                                        <span class="color-bar" style="background-color: {electionState.mandateData.datasets[0].backgroundColor[idx]}"></span>
+                                        <span class="party-label">{party}</span>
+                                    </div>
+                                </th>
+                            {/each}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="sticky-col">Mandate</th>
+                            {#each electionState.mandateData.datasets[0].data as count}
+                                <td>{count}</td>
+                            {/each}
+                        </tr>
+                    </tbody>
+                {/if}
             </table>
         </div>
     </div>
