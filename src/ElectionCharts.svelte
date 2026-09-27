@@ -282,9 +282,11 @@
     );
 </script>
 
-<h1>Stimmenanteile</h1>
+<h1 class="election_name">{electionState.name}</h1>
+
+<h2>Stimmenanteile</h2>
 <section class="vote_share_section">
-    <div class="info_container">
+    <div class="info_container element_card">
         <p>Allgemeine Informationen</p>
         <table>
             <tbody>
@@ -312,11 +314,11 @@
         </table>
     </div>
 
-    <div class="bar_container">
+    <div class="bar_container element_card">
         <ChartCanvas type="bar" data={plainBarChartData} options={barChartOptions} name={electionState.name} />
     </div>
 
-    <div class="input_fields_vote">
+    <div class="input_fields_vote element_card">
         {#each [...electionState.data.datasets].map((p, i) => ({ ...p, originalIndex: i }))
             .sort((a, b) => {
                 const indexDiff = a.index - b.index;
@@ -342,7 +344,7 @@
                     </div>
                     <span class="valuePadding"><input id="input_party_{party.originalIndex}" type="number" step="any" bind:value={electionState.data.datasets[party.originalIndex].data[party.index]} min=0 max=100 oninput={() => validatePartyShare(party.originalIndex, party.index)}> %</span>
                 </div>
-                {#if electionState.data.datasets[party.originalIndex].data[party.index] < electionState.threshold && electionState.baseMandateRule}
+                {#if electionState.data.datasets[party.originalIndex].data[party.index] < electionState.threshold && electionState.baseMandateRule && !party.isExemptFromThreshold}
                     <div class="base_mandate_checkbox">
                         <label for="checkbox_party_{party.originalIndex}">{electionState.baseMandateRule} Grundmandat(e)?</label>
                         <input id="checkbox_party_{party.originalIndex}" type="checkbox" bind:checked={electionState.data.datasets[party.originalIndex].isChecked}>
@@ -360,13 +362,16 @@
     </div>
 </section>
 
-<h1>Mandatsverteilung</h1>
+<h2>Mandatsverteilung</h2>
 {#if electionState.note}
     <p>Achtung: {electionState.note}</p>
 {/if}
 <section class="mandate_section">
     <div class="pie_container">
-        <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={electionState.name} />
+        <div class="element_card">
+            <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={electionState.name} />
+        </div>
+
         <div class="table_wrapper mandate_info">
             <table>
                 <thead>
@@ -405,7 +410,7 @@
         </div>
     </div>
 
-    <div class="stack_container">
+    <div class="stack_container element_card">
         <ChartCanvas type="bar" data={plainMajorityData} options={majorityChartOptions} name={electionState.name} />
         <p class="majorityText {selectedParties < majority ? 'red' : 'green'}">
             Mehrheit: {selectedParties}/{majority}
@@ -424,7 +429,7 @@
     </div>
 </section>
 
-<h1>Berechnungsschritte</h1>
+<h2>Berechnungsschritte</h2>
 <section class="calculation_logic_section">
     {#if electionState.apportionmentMethod !== ApportionmentMethods.HARE_NIEMEYER}
         <div class="toggle-group">

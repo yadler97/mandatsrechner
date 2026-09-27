@@ -108,6 +108,9 @@ export function createBarChartOptions({ electionState, filteredData, threshold, 
                     drawBorder: true,
                     borderColor: chartColors.border
                 },
+                border: {
+                    display: false
+                },
                 suggestedMax: (() => {
                     if (!filteredData?.labels || filteredData.datasets.length === 0) return 100;
                     return Math.max(...filteredData.labels.map((_, index) =>
@@ -124,6 +127,7 @@ export function createBarChartOptions({ electionState, filteredData, threshold, 
 export function createMandateChartOptions({ dataIndex, chartColors }) {
     return {
         responsive: true,
+        maintainAspectRatio: false,
         cutout: '40%',
         circumference: 180,
         rotation: -90,
@@ -182,12 +186,23 @@ export function createMajorityChartOptions({ electionState, mandateCount, majori
         scales: {
             y: {
                 stacked: true,
-                ticks: { color: chartColors.textMuted }
+                ticks: { color: chartColors.textMuted },
+                grid: {
+                    display: false
+                }
             },
             x: {
                 stacked: true,
                 max: mandateCount,
-                ticks: { color: chartColors.textMuted }
+                ticks: { color: chartColors.textMuted },
+                border: {
+                    color: chartColors.grid
+                },
+                grid: {
+                    color: chartColors.grid,
+                    drawBorder: true,
+                    borderColor: chartColors.border
+                }
             }
         },
         plugins: {
