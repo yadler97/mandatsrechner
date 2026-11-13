@@ -1,6 +1,6 @@
 {
 	"name": "mandatsrechner",
-	"version": "0.0.11",
+	"version": "1.0.0",
 	"private": true,
 	"description": "A small program to calculate the number of mandates based on the vote share per party for upcoming parliament elections in Austria, Germany, and select other countries.",
 	"repository": {
@@ -23,26 +23,26 @@
 		"test:unit": "vitest"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.64.1",
-		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.70.3",
+		"@playwright/test": "^1.65.0",
+		"@sveltejs/adapter-static": "^3.0.11",
+		"@sveltejs/kit": "^2.70.4",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@types/eslint": "^9.6.1",
 		"@types/node": "^26.6.6",
-		"@typescript-eslint/eslint-plugin": "^8.72.1",
-		"@typescript-eslint/parser": "^8.72.1",
+		"@typescript-eslint/eslint-plugin": "^8.72.2",
+		"@typescript-eslint/parser": "^8.72.2",
 		"@typescript/typescript6": "^6.0.2",
 		"eslint": "^10.14.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-svelte": "^3.23.1",
-		"prettier": "^3.9.10",
+		"eslint-plugin-svelte": "^3.24.1",
+		"prettier": "^3.10.1",
 		"prettier-plugin-svelte": "^4.1.1",
 		"sharp": "^0.35.5",
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.8",
 		"tslib": "^2.9.1",
 		"typescript": "^7.0.2",
-		"vite": "^8.3.5",
+		"vite": "^8.3.8",
 		"vitest": "^5.1.0"
 	},
 	"type": "module",
@@ -52,5 +52,6 @@
 		"chartjs-plugin-datalabels": "^2.2.0",
 		"esm-env": "^1.2.2",
 		"svelte-chartjs": "^4.0.1"
-	}
+	},
+	"packageManager": "pnpm@12.18.0+sha512.9d7882d5dc82147ecfc4e062aa34834e0ad0296710a1837a1115ae012127d36b7109e321ac1598a1dd0a65597681b1e99917e12ed0d749eae91187943363beb3"
 }

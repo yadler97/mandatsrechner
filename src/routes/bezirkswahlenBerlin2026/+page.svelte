@@ -7,28 +7,25 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenBerlin2026';
+    import { data as districtInputs, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenBerlin2026';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
     import { goto } from '$app/navigation';
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
+	import { generateElectionStructs } from '$lib/helper';
 
-    const districts = [
-        { id: '1', name: 'Mitte' },
-        { id: '2', name: 'Friedrichshain-Kreuzberg' },
-        { id: '3', name: 'Pankow' },
-        { id: '4', name: 'Charlottenburg-Wilmersdorf' },
-        { id: '5', name: 'Spandau' },
-        { id: '6', name: 'Steglitz-Zehlendorf' },
-        { id: '7', name: 'Tempelhof-Schöneberg' },
-        { id: '8', name: 'Neukölln' },
-        { id: '9', name: 'Treptow-Köpenick' },
-        { id: '10', name: 'Marzahn-Hellersdorf' },
-        { id: '11', name: 'Lichtenberg' },
-        { id: '12', name: 'Reinickendorf' }
-    ];
+    // Generate all structs dynamically from the district inputs array
+    const allStructs = districtInputs.map(districtInput => generateElectionStructs(districtInput, countryCode));
+    const voteData = allStructs.map(s => s.voteData);
+    const mandateData = allStructs.map(s => s.mandateData);
+    const majorityData = allStructs.map(s => s.majorityData);
+
+    const districts = districtInputs.map((districtInput, index) => ({
+        id: String(index + 1),
+        name: districtInput.name
+    }));
 
     let district = $state('1');
 
@@ -37,7 +34,7 @@
         // svelte-ignore state_referenced_locally
         let districtInt = parseInt(district);
 
-        if (isNaN(districtInt) || districtInt < 1 || districtInt > 12) {
+        if (isNaN(districtInt) || districtInt < 1 || districtInt > districtInputs.length) {
             districtInt = 1;
             goto(`${page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
         }
@@ -48,7 +45,7 @@
         mandateCount: 0,
         threshold: 3,
         apportionmentMethod: ApportionmentMethods.DHONDT,
-        data: data[0],
+        voteData: voteData[0],
         mandateData: mandateData[0],
         majorityData: majorityData[0],
         countryCode: countryCode,
@@ -58,7 +55,7 @@
         note: ''
     });
 
-    let previousData = $state(structuredClone(data[0]));
+    let previousData = $state(structuredClone(voteData[0]));
     let previousMandateData = $state(structuredClone(mandateData[0]));
 
     const updateDistrict = (selectedDistrict) => {
@@ -68,7 +65,7 @@
         const currentDistrictObj = districts.find(d => d.id === district);
         const districtName = currentDistrictObj ? currentDistrictObj.name : '';
 
-        const fresh = structuredClone(data[districtInt - 1]);
+        const fresh = structuredClone(voteData[districtInt - 1]);
         previousData.labels = fresh.labels;
         previousData.datasets = fresh.datasets;
 
@@ -77,7 +74,7 @@
         previousMandateData.datasets = freshMandates.datasets;
 
         electionState.name = `${name} (${district}., ${districtName})`;
-        electionState.data = data[districtInt - 1];
+        electionState.voteData = voteData[districtInt - 1];
         electionState.mandateData = mandateData[districtInt - 1];
         electionState.majorityData = majorityData[1]; // Assuming index mapping
         electionState.majorityData = majorityData[districtInt - 1];
@@ -89,9 +86,9 @@
         if (v) {
             const voteArray = v.split(',').map(Number);
             voteArray.forEach((votes, i) => {
-                if (electionState.data.datasets[i]) {
-                    const idx = electionState.data.datasets[i].index;
-                    electionState.data.datasets[i].data[idx] = votes;
+                if (electionState.voteData.datasets[i]) {
+                    const idx = electionState.voteData.datasets[i].index;
+                    electionState.voteData.datasets[i].data[idx] = votes;
                 }
             });
         }

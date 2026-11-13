@@ -7,24 +7,30 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, lastDate, name } from '../../lib/elections/europawahl2024';
+    import { data as countryInputs, date, lastDate, name } from '../../lib/elections/europawahl2024';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
     import { goto } from '$app/navigation';
     import { browser } from '$app/environment';
-    import { ApportionmentMethods } from '$lib/apportionmentMethods';
+	import { generateElectionStructs } from '$lib/helper';
 
-    let country = $state('');
+    // Generate all structs dynamically from the district inputs array
+    const allStructs = countryInputs.map(countryInput => generateElectionStructs(countryInput, countryInput.countryCode));
+    const voteData = allStructs.map(s => s.voteData);
+    const mandateData = allStructs.map(s => s.mandateData);
+    const majorityData = allStructs.map(s => s.majorityData);
+
+    let country = $state(countryInputs[0].countryCode.toLowerCase());
 
     if (browser) {
-        country = page.url.searchParams.get('country') || 'at';
+        country = page.url.searchParams.get('country') || countryInputs[0].countryCode.toLowerCase();
 
-        const countries = ["at", "de"];
+        const countries = countryInputs.map(countryInput => countryInput.countryCode.toLowerCase());
 
         // svelte-ignore state_referenced_locally
         if (!countries.includes(country)) {
-            country = 'at';
+            country = countries[0];
             goto(`${page.url.pathname}?country=${country}`, { replaceState: true });
         }
     }
@@ -33,49 +39,40 @@
         name: '',
         mandateCount: 0,
         threshold: 0,
-        apportionmentMethod: ApportionmentMethods.DHONDT,
-        data: data[0],
+        apportionmentMethod: countryInputs[0].apportionmentMethod,
+        voteData: voteData[0],
         mandateData: mandateData[0],
         majorityData: majorityData[0],
-        countryCode: 'AT',
+        countryCode: countryInputs[0].countryCode,
         date: date,
         lastDate: lastDate,
         baseMandateRule: false,
         note: ''
     });
 
-    let previousData = $state(structuredClone(data[0]));
+    let previousData = $state(structuredClone(voteData[0]));
     let previousMandateData = $state(structuredClone(mandateData[0]));
 
     const updateCountry = (selectedCountry) => {
         country = selectedCountry;
 
-        let fresh;
-        let freshMandates;
+        const countryIndex = countryInputs.findIndex(
+            countryInput => countryInput.countryCode.toLowerCase() === country
+        );
+        if (countryIndex === -1) return;
 
-        if (country === 'at') {
-            fresh = structuredClone(data[0]);
-            freshMandates = structuredClone(mandateData[0]);
-            electionState.name = `${name} (AT)`;
-            electionState.mandateCount = 20;
-            electionState.threshold = 4;
-            electionState.apportionmentMethod = ApportionmentMethods.DHONDT;
-            electionState.data = data[0];
-            electionState.mandateData = mandateData[0];
-            electionState.majorityData = majorityData[0];
-            electionState.countryCode = "AT";
-        } else if (country === 'de') {
-            fresh = structuredClone(data[1]);
-            freshMandates = structuredClone(mandateData[1]);
-            electionState.name = `${name} (DE)`;
-            electionState.mandateCount = 96;
-            electionState.threshold = 0;
-            electionState.apportionmentMethod = ApportionmentMethods.SAINTE_LAGUE;
-            electionState.data = data[1];
-            electionState.mandateData = mandateData[1];
-            electionState.majorityData = majorityData[1];
-            electionState.countryCode = "DE";
-        }
+        const countryInput = countryInputs[countryIndex];
+        const fresh = structuredClone(voteData[countryIndex]);
+        const freshMandates = structuredClone(mandateData[countryIndex]);
+
+        electionState.name = `${name} (${countryInput.countryCode})`;
+        electionState.mandateCount = countryInput.mandateCount;
+        electionState.threshold = countryInput.threshold;
+        electionState.apportionmentMethod = countryInput.apportionmentMethod;
+        electionState.voteData = voteData[countryIndex];
+        electionState.mandateData = mandateData[countryIndex];
+        electionState.majorityData = majorityData[countryIndex];
+        electionState.countryCode = countryInput.countryCode;
 
         previousData.labels = fresh?.labels ?? [];
         previousData.datasets = fresh?.datasets ?? [];
@@ -91,9 +88,9 @@
         if (v) {
             const voteArray = v.split(',').map(Number);
             voteArray.forEach((votes, i) => {
-                if (electionState.data.datasets[i]) {
-                    const idx = electionState.data.datasets[i].index;
-                    electionState.data.datasets[i].data[idx] = votes;
+                if (electionState.voteData.datasets[i]) {
+                    const idx = electionState.voteData.datasets[i].index;
+                    electionState.voteData.datasets[i].data[idx] = votes;
                 }
             });
         }
@@ -110,8 +107,9 @@
 </script>
 
 <select bind:value={country} onchange={() => gotoCountry(country)} class="district_select">
-    <option value="at">Österreich</option>
-    <option value="de">Deutschland</option>
+    {#each countryInputs as countryInput}
+        <option value={countryInput.countryCode.toLowerCase()}>{countryInput.countryName}</option>
+    {/each}
 </select>
 
 <ElectionCharts />

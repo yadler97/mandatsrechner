@@ -34,7 +34,7 @@
     let eligibleIndices = $state([]);
 
     let calcResult = $derived(calcMandates(
-        electionState.data.datasets
+        electionState.voteData.datasets
     ));
 
     $effect(() => {
@@ -45,12 +45,12 @@
     });
 
     let filteredData = $derived.by(() => {
-        const activeIndices = electionState.data.labels
+        const activeIndices = electionState.voteData.labels
             .map((_, i) => i)
-            .filter(i => electionState.data.datasets.some(ds => ds.index === i && ds.reservedSeats === undefined));
+            .filter(i => electionState.voteData.datasets.some(ds => ds.index === i && ds.reservedSeats === undefined));
 
-        const labels = activeIndices.map(i => electionState.data.labels[i]);
-        const sourceDatasets = electionState.data.datasets.filter(ds => ds.reservedSeats === undefined);
+        const labels = activeIndices.map(i => electionState.voteData.labels[i]);
+        const sourceDatasets = electionState.voteData.datasets.filter(ds => ds.reservedSeats === undefined);
 
         const datasets = sourceDatasets.map(ds => {
             const newData = activeIndices.map(idx => ds.data[idx] || 0);
@@ -91,8 +91,8 @@
         });
 
         previousMandateDatasets = previousMandateData.datasets.map(ds => {
-            const resolvedBackground = ds.backgroundColor.map(color => {
-                return getTransColour(color);
+            const resolvedBackground = ds.backgroundColor.map(colour => {
+                return getTransColour(colour);
             });
 
             return {
@@ -117,8 +117,8 @@
     });
 
     function validatePartyShare(index, partyIndex) {
-        if (electionState.data.datasets[index].data[partyIndex] > 100) {
-            electionState.data.datasets[index].data[partyIndex] = 100;
+        if (electionState.voteData.datasets[index].data[partyIndex] > 100) {
+            electionState.voteData.datasets[index].data[partyIndex] = 100;
         }
     }
 
@@ -189,7 +189,7 @@
 
         const maxSeats = Math.max(...mandates) + 1;
         const currentShares = eligibleIndices.map(idx =>
-            electionState.data.datasets[idx].data[electionState.data.datasets[idx].index]
+            electionState.voteData.datasets[idx].data[electionState.voteData.datasets[idx].index]
         );
 
         divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
@@ -219,7 +219,7 @@
     });
 
     async function copyShareLink() {
-        const voteValues = electionState.data.datasets.map(ds => {
+        const voteValues = electionState.voteData.datasets.map(ds => {
             const idx = ds.index;
             return ds.data[idx];
         }).join(',');
@@ -349,12 +349,12 @@
     </div>
 
     <div class="input_fields_vote element_card">
-        {#each [...electionState.data.datasets].map((p, i) => ({ ...p, originalIndex: i }))
+        {#each [...electionState.voteData.datasets].map((p, i) => ({ ...p, originalIndex: i }))
             .sort((a, b) => {
                 const indexDiff = a.index - b.index;
                 return indexDiff !== 0 ? indexDiff : a.label.localeCompare(b.label);
             }) as party (party.originalIndex)}
-            {#if electionState.data.datasets[party.originalIndex].order != 2 && !party.reservedSeats}
+            {#if electionState.voteData.datasets[party.originalIndex].order != 2 && !party.reservedSeats}
                 <div class="input_field_vote_party">
                     <div class="display-group">
                         <span class="color-preview" style="background-color: {party.backgroundColor}"></span>
@@ -377,8 +377,8 @@
                             id="input_party_{party.originalIndex}"
                             type="number"
                             step="any"
-                            use:formatDefault={electionState.data.datasets[party.originalIndex].data[party.index]}
-                            bind:value={electionState.data.datasets[party.originalIndex].data[party.index]}
+                            use:formatDefault={electionState.voteData.datasets[party.originalIndex].data[party.index]}
+                            bind:value={electionState.voteData.datasets[party.originalIndex].data[party.index]}
                             min=0
                             max=100
                             oninput={() => validatePartyShare(party.originalIndex, party.index)}
@@ -386,10 +386,10 @@
                          %
                     </span>
                 </div>
-                {#if electionState.data.datasets[party.originalIndex].data[party.index] < electionState.threshold && electionState.baseMandateRule && !party.isExemptFromThreshold}
+                {#if electionState.voteData.datasets[party.originalIndex].data[party.index] < electionState.threshold && electionState.baseMandateRule && !party.isExemptFromThreshold}
                     <div class="base_mandate_checkbox">
                         <label for="checkbox_party_{party.originalIndex}">{electionState.baseMandateRule} Grundmandat(e)?</label>
-                        <input id="checkbox_party_{party.originalIndex}" type="checkbox" bind:checked={electionState.data.datasets[party.originalIndex].isChecked}>
+                        <input id="checkbox_party_{party.originalIndex}" type="checkbox" bind:checked={electionState.voteData.datasets[party.originalIndex].isChecked}>
                     </div>
                 {/if}
             {/if}
@@ -523,11 +523,11 @@
                             {tableView === 'rounds' ? 'Mandat' : 'Divisor'}
                         {/if}
                     </th>
-                    {#each eligibleIndices.filter(idx => electionState.data.datasets[idx]) as idx}
+                    {#each eligibleIndices.filter(idx => electionState.voteData.datasets[idx]) as idx}
                         <th>
                             <div class="party-header">
-                                <span class="color-bar" style="background-color: {electionState.data.datasets[idx].backgroundColor}"></span>
-                                <span class="party-label">{ electionState.data.datasets[idx].label }</span>
+                                <span class="color-bar" style="background-color: {electionState.voteData.datasets[idx].backgroundColor}"></span>
+                                <span class="party-label">{ electionState.voteData.datasets[idx].label }</span>
                             </div>
                         </th>
                     {/each}
