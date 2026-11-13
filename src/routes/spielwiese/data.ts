@@ -1,97 +1,12 @@
-const colors = [
-  '#e6194B', // Red
-  '#3cb44b', // Green
-  '#ffe119', // Yellow
-  '#4363d8', // Blue
-  '#f58231', // Orange
-  '#911eb4'  // Purple
-];
-
 export const data = {
-  labels: ['A', 'B', 'C', 'D', 'E', 'F'],
-  datasets: [
-    {
-      label: 'A',
-      index: 0,
-      data: [40, 0, 0, 0, 0, 0],
-      backgroundColor: colors[0],
-    },
-    {
-      label: 'B',
-      index: 1,
-      data: [0, 30, 0, 0, 0, 0],
-      backgroundColor: colors[1],
-    },
-    {
-      label: 'C',
-      index: 2,
-      data: [0, 0, 15, 0, 0, 0],
-      backgroundColor: colors[2],
-    },
-    {
-      label: 'D',
-      index: 3,
-      data: [0, 0, 0, 10, 0, 0],
-      backgroundColor: colors[3],
-    },
-    {
-      label: 'E',
-      index: 4,
-      data: [0, 0, 0, 0, 3, 0],
-      backgroundColor: colors[4],
-    },
-    {
-      label: 'F',
-      index: 5,
-      data: [0, 0, 0, 0, 0, 2],
-      backgroundColor: colors[5],
-    },
-  ],
-};
-
-export const mandateData = {
-  labels: ['A', 'B', 'C', 'D', 'E', 'F'],
-  datasets: [
-    {
-      label: 'Mandate',
-      data: [40, 30, 15, 10, 3, 2],
-      backgroundColor: colors,
-    },
-  ],
-};
-
-export const majorityData = {
-  labels: ['Mandate'],
-  datasets: [
-    {
-      label: 'A',
-      data: [0],
-      backgroundColor: colors[0],
-    },
-    {
-      label: 'B',
-      data: [0],
-      backgroundColor: colors[1],
-    },
-    {
-      label: 'C',
-      data: [0],
-      backgroundColor: colors[2],
-    },
-    {
-      label: 'D',
-      data: [0],
-      backgroundColor: colors[3],
-    },
-    {
-      label: 'E',
-      data: [0],
-      backgroundColor: colors[4],
-    },
-    {
-      label: 'F',
-      data: [0],
-      backgroundColor: colors[5],
-    },
-  ],
+  partyOrder: ['A', 'B', 'C', 'D', 'E', 'F'],
+  mandateOrder: ['A', 'B', 'C', 'D', 'E', 'F'],
+  parties: {
+    A: { votes: 40, mandates: 40, inGovernment: true, colourKey: '#e6194B' },
+    B: { votes: 30, mandates: 30, inGovernment: true, colourKey: '#3cb44b' },
+    C: { votes: 15, mandates: 15, inGovernment: true, colourKey: '#ffe119' },
+    D: { votes: 10, mandates: 10, inGovernment: true, colourKey: '#4363d8' },
+    E: { votes: 3, mandates: 3, inGovernment: true, colourKey: '#f58231' },
+    F: { votes: 2, mandates: 2, inGovernment: true, colourKey: '#911eb4' },
+  },
 };

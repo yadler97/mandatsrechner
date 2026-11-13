@@ -45,7 +45,8 @@ export const PartyColours = {
     "SGP": "rgb(233, 93, 14)",
     "CU": "rgb(0, 166, 235)",
     "Volt": "rgb(86, 39, 130)",
-    "JA21": "rgb(35, 43, 87)"
+    "JA21": "rgb(35, 43, 87)",
+    "50PLUS": "rgb(139, 0, 139)"
   },
   "SI": {
     "GS": "rgb(0, 84, 165)",

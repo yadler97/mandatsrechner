@@ -7,7 +7,8 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
+    import { data as districtInputs, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
+    import { generateElectionStructs } from '$lib/helper';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
@@ -15,31 +16,16 @@
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
 
-    const districts = [
-        { id: '1', name: 'Innere Stadt' },
-        { id: '2', name: 'Leopoldstadt' },
-        { id: '3', name: 'Landstraße' },
-        { id: '4', name: 'Wieden' },
-        { id: '5', name: 'Margareten' },
-        { id: '6', name: 'Mariahilf' },
-        { id: '7', name: 'Neubau' },
-        { id: '8', name: 'Josefstadt' },
-        { id: '9', name: 'Alsergrund' },
-        { id: '10', name: 'Favoriten' },
-        { id: '11', name: 'Simmering' },
-        { id: '12', name: 'Meidling' },
-        { id: '13', name: 'Hietzing' },
-        { id: '14', name: 'Penzing' },
-        { id: '15', name: 'Rudolfsheim-Fünfhaus' },
-        { id: '16', name: 'Ottakring' },
-        { id: '17', name: 'Hernals' },
-        { id: '18', name: 'Währing' },
-        { id: '19', name: 'Döbling' },
-        { id: '20', name: 'Brigittenau' },
-        { id: '21', name: 'Floridsdorf' },
-        { id: '22', name: 'Donaustadt' },
-        { id: '23', name: 'Liesing' }
-    ];
+    // Generate all structs dynamically from the district inputs array
+    const allStructs = districtInputs.map(districtInput => generateElectionStructs(districtInput, countryCode));
+    const voteData = allStructs.map(s => s.voteData);
+    const mandateData = allStructs.map(s => s.mandateData);
+    const majorityData = allStructs.map(s => s.majorityData);
+
+    const districts = districtInputs.map((districtInput, index) => ({
+        id: String(index + 1),
+        name: districtInput.name
+    }));
 
     let district = $state('1');
 
@@ -48,7 +34,7 @@
         // svelte-ignore state_referenced_locally
         let districtInt = parseInt(district);
 
-        if (isNaN(districtInt) || districtInt < 1 || districtInt > 23) {
+        if (isNaN(districtInt) || districtInt < 1 || districtInt > districtInputs.length) {
             districtInt = 1;
             goto(`${page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
         }
@@ -59,7 +45,7 @@
         mandateCount: 0,
         threshold: 0,
         apportionmentMethod: ApportionmentMethods.DHONDT,
-        data: data[0],
+        voteData: voteData[0],
         mandateData: mandateData[0],
         majorityData: majorityData[0],
         countryCode: countryCode,
@@ -69,7 +55,7 @@
         note: ''
     });
 
-    let previousData = $state(structuredClone(data[0]));
+    let previousData = $state(structuredClone(voteData[0]));
     let previousMandateData = $state(structuredClone(mandateData[0]));
 
     const updateDistrict = (selectedDistrict) => {
@@ -79,7 +65,7 @@
         const currentDistrictObj = districts.find(d => d.id === district);
         const districtName = currentDistrictObj ? currentDistrictObj.name : '';
 
-        const fresh = structuredClone(data[districtInt - 1]);
+        const fresh = structuredClone(voteData[districtInt - 1]);
         previousData.labels = fresh.labels;
         previousData.datasets = fresh.datasets;
 
@@ -88,25 +74,11 @@
         previousMandateData.datasets = freshMandates.datasets;
 
         electionState.name = `${name} (${district}., ${districtName})`;
-        electionState.data = data[districtInt - 1];
+        electionState.voteData = voteData[districtInt - 1];
         electionState.mandateData = mandateData[districtInt - 1];
-        electionState.majorityData = majorityData[1]; // Assuming index mapping
         electionState.majorityData = majorityData[districtInt - 1];
 
-        // Mandate count logic
-        if ([1, 4, 5, 6, 7, 8, 9, 13, 18].includes(districtInt)) {
-            electionState.mandateCount = 40;
-        } else if (districtInt === 17) {
-            electionState.mandateCount = 42;
-        } else if (districtInt === 19) {
-            electionState.mandateCount = 50;
-        } else if (districtInt === 15) {
-            electionState.mandateCount = 52;
-        } else if (districtInt === 20) {
-            electionState.mandateCount = 56;
-        } else if ([2, 3, 10, 11, 12, 14, 16, 21, 22, 23].includes(districtInt)) {
-            electionState.mandateCount = 60;
-        }
+        electionState.mandateCount = districtInputs[districtInt - 1].mandateCount;
     };
 
     $effect(() => {
@@ -114,9 +86,9 @@
         if (v) {
             const voteArray = v.split(',').map(Number);
             voteArray.forEach((votes, i) => {
-                if (electionState.data.datasets[i]) {
-                    const idx = electionState.data.datasets[i].index;
-                    electionState.data.datasets[i].data[idx] = votes;
+                if (electionState.voteData.datasets[i]) {
+                    const idx = electionState.voteData.datasets[i].index;
+                    electionState.voteData.datasets[i].data[idx] = votes;
                 }
             });
         }
