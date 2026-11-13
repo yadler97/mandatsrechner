@@ -13,7 +13,7 @@ export const note = 'Der SSW ist als Partei der dänischen Minderheit von der 5%
 
 export const data = {
 	partyOrder: ['SPD', 'CDU/CSU', 'Grüne', 'FDP', 'AfD', 'Linke', 'BSW', 'SSW'],
-	mandateOrder: ['SPD', 'CDU', 'CSU', 'Grüne', 'FDP', 'AfD', 'Linke', 'BSW', 'SSW'],
+	mandateOrder: ['BSW', 'Linke', 'SPD', 'Grüne', 'SSW', 'FDP', 'CDU', 'CSU', 'AfD'],
 	parties: {
 		SPD:   { votes: 25.74, mandates: 206, inGovernment: true },
 		CDU:   { votes: 18.90, mandates: 152, inGovernment: false, label: 'CDU/CSU' },
