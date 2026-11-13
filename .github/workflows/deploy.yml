@@ -3,6 +3,8 @@ name: Deploy
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   test:
@@ -19,7 +21,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
+          version: 12
           run_install: false
 
       - name: Install dependencies
@@ -29,6 +31,7 @@ jobs:
         run: pnpm run test:unit
 
   deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -45,7 +48,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
+          version: 12
           run_install: false
 
       - name: Install and Build
