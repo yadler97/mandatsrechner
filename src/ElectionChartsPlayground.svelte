@@ -4,7 +4,7 @@
     import { onMount } from 'svelte';
 
     import { ApportionmentMethods, dhondt, saintelague, hareniemeyer } from '$lib/apportionmentMethods';
-    import { getMajority, getTwoThirdsMajority } from '$lib/helper';
+    import { generateElectionStructs, getMajority, getTwoThirdsMajority } from '$lib/helper';
 	import { createBarChartOptions, createMajorityChartOptions, createMandateChartOptions } from './chartOptions';
 
     let isMobile = $state(false);
@@ -125,10 +125,26 @@
     }
 
     function exportConfig() {
+        const partyOrder = electionState.voteData.labels;
+        const mandateOrder = electionState.mandateData.labels;
+        if (new Set(mandateOrder).size !== mandateOrder.length) {
+            alert('Parteinamen müssen einzigartig sein für den Export.');
+            return;
+        }
+
+        const parties = Object.fromEntries(mandateOrder.map((partyName, index) => {
+            const voteParty = electionState.voteData.datasets.find(party => party.label === partyName);
+            const majorityParty = electionState.majorityData.datasets.find(party => party.label === partyName);
+
+            return [partyName, {
+                votes: voteParty?.data[voteParty.index] ?? 0,
+                mandates: electionState.mandateData.datasets[0].data[index] ?? 0,
+                inGovernment: !majorityParty?.hidden,
+                colourKey: voteParty?.backgroundColor
+            }];
+        }));
         const config = {
-            data: electionState.voteData,
-            mandateData: electionState.mandateData,
-            majorityData: electionState.majorityData,
+            data: { partyOrder, mandateOrder, parties },
             settings: {
                 mandateCount: mandateCount,
                 threshold: threshold,
@@ -158,16 +174,24 @@
 
             try {
                 const config = JSON.parse(e.target.result);
+                const { voteData, mandateData, majorityData } = generateElectionStructs(config.data);
                 
+                mandates = [];
+                others = 0;
+                calculationHistory = [];
+                eligibleIndices = [];
+                divisorGrid = [];
+                lowestWinningQuotient = 0;
+
                 // update settings
                 mandateCount = config.settings.mandateCount;
                 threshold = config.settings.threshold;
                 apportionmentMethod = config.settings.apportionmentMethod;
 
                 // update svelte stores
-                electionState.voteData = config.data;
-                electionState.mandateData = config.mandateData;
-                electionState.majorityData = config.majorityData;
+                electionState.voteData = voteData;
+                electionState.mandateData = mandateData;
+                electionState.majorityData = majorityData;
 
                 // reset file input so same file can be uploaded twice if needed
                 target.value = '';
@@ -337,9 +361,9 @@
 
     $effect(() => {
         electionState.mandateData.datasets[0].data = mandates;
-        for (let i in mandates) {
-            electionState.majorityData.datasets[i].data = [mandates[i]];
-        }
+        electionState.majorityData.datasets.forEach((dataset, index) => {
+            dataset.data = [mandates[index] ?? 0];
+        });
     });
 
     let plainBarChartData = $derived(structuredClone($state.snapshot(electionState.voteData)));
@@ -441,7 +465,7 @@
     </div>
 
     <div class="bar_container element_card">
-        <ChartCanvas type="bar" data={plainBarChartData} options={barChartOptions} name={"Spielwiese"} />
+        <ChartCanvas type="bar" data={plainBarChartData} options={barChartOptions} name="Spielwiese" />
     </div>
     
     <div class="input_fields_vote element_card">
@@ -527,7 +551,7 @@
 <section class="mandate_section">
     <div class="pie_container">
         <div class="element_card">
-            <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name={"Spielwiese"} />
+            <ChartCanvas type="doughnut" id="mandatesChart" data={plainMandateData} options={mandateChartOptions} name="Spielwiese" />
         </div>
 
         <div class="table_wrapper mandate_info">
@@ -580,7 +604,7 @@
     </div>
 
     <div class="stack_container element_card">
-        <ChartCanvas type="bar" data={plainMajorityData} options={majorityChartOptions} name={"Spielwiese"} />
+        <ChartCanvas type="bar" data={plainMajorityData} options={majorityChartOptions} name="Spielwiese" />
         <p class="majorityText {selectedParties < majority ? 'red' : 'green'}">
             Mehrheit: {selectedParties}/{majority}
         </p>
@@ -632,7 +656,7 @@
                             {tableView === 'rounds' ? 'Mandat' : 'Divisor'}
                         {/if}
                     </th>
-                    {#each eligibleIndices as idx}
+                    {#each eligibleIndices.filter(idx => electionState.voteData.datasets[idx]) as idx}
                         <th>
                             <div class="party-header">
                                 <span class="color-bar" style="background-color: {electionState.voteData.datasets[idx].backgroundColor}"></span>

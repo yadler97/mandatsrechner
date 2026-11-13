@@ -23,12 +23,12 @@ export function getTwoThirdsMajority(mandateCount: number) {
     return Math.ceil((mandateCount / 3 * 2));
 }
 
-export function generateElectionStructs(input, countryCode) {
+export function generateElectionStructs(input, countryCode?) {
 	const { partyOrder, mandateOrder, parties } = input;
 
     const getColour = (partyName, partyData) => {
 		const key = partyData?.colourKey ?? partyName;
-		if (key.startsWith('rgb')) {
+		if (key.startsWith('rgb') || key.startsWith('#')) {
 			return key;
 		}
 		return PartyColours[countryCode]?.[key] ?? 'rgb(170, 170, 170)';

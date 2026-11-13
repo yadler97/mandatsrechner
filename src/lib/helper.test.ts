@@ -192,14 +192,15 @@ describe('generateElectionStructs', () => {
 		expect(mandateData.datasets[0].data).toEqual([23, 6]);
 	});
 
-	it('should resolve colours via colourKey (party key or direct rgb string) and falls back to default grey', () => {
+	it('should resolve colours via colourKey (party key or direct colour) and falls back to default grey', () => {
 		const colourInput = {
-			partyOrder: ['P1', 'P2', 'P3'],
-			mandateOrder: ['P1', 'P2', 'P3'],
+			partyOrder: ['P1', 'P2', 'P3', 'P4'],
+			mandateOrder: ['P1', 'P2', 'P3', 'P4'],
 			parties: {
 				P1: { votes: 10, mandates: 1, colourKey: 'A' },
-				P2: { votes: 10, mandates: 1, colourKey: 'rgb(12, 34, 56)' },
-				P3: { votes: 10, mandates: 1 }, // Unknown party -> fallback
+				P2: { votes: 10, mandates: 1, colourKey: '#123456' },
+				P3: { votes: 10, mandates: 1, colourKey: 'rgb(12, 34, 56)' },
+				P4: { votes: 10, mandates: 1 }, // Unknown party -> fallback
 			},
 		};
 
@@ -207,11 +208,13 @@ describe('generateElectionStructs', () => {
 
 		expect(voteData.datasets.map((d) => d.backgroundColor)).toEqual([
 			'rgb(230, 25, 75)',
+			'#123456',
 			'rgb(12, 34, 56)',
 			'rgb(170, 170, 170)',
 		]);
 		expect(mandateData.datasets[0].backgroundColor).toEqual([
 			'rgb(230, 25, 75)',
+			'#123456',
 			'rgb(12, 34, 56)',
 			'rgb(170, 170, 170)',
 		]);
