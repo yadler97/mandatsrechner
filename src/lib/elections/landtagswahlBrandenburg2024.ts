@@ -20,7 +20,7 @@ export const data = {
     CDU:      { votes: 15.57, mandates: 15, inGovernment: true },
     Grüne:    { votes: 10.78, mandates: 10, inGovernment: true },
     Linke:    { votes: 10.72, mandates: 10, inGovernment: false },
-    'BVB/FW': { votes: 5.05,  mandates: 5,  inGovernment: false, colorKey: 'FW' },
+    'BVB/FW': { votes: 5.05,  mandates: 5,  inGovernment: false, colourKey: 'FW' },
     FDP:      { votes: 4.08,  mandates: 0,  inGovernment: false },
     BSW:      { votes: 0,     mandates: 0,  inGovernment: false },
   }

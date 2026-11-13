@@ -7,7 +7,7 @@
 </svelte:head>
 
 <script>
-    import { data as districtInputs, date, lastDate, name } from '../../lib/elections/europawahl2024';
+    import { data as countryInputs, date, lastDate, name } from '../../lib/elections/europawahl2024';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
@@ -17,8 +17,8 @@
 	import { generateElectionStructs } from '$lib/helper';
 
     // Generate all structs dynamically from the district inputs array
-    const allStructs = districtInputs.map(districtInput => generateElectionStructs(districtInput, districtInput.countryCode));
-    const data = allStructs.map(s => s.data);
+    const allStructs = countryInputs.map(countryInput => generateElectionStructs(countryInput, countryInput.countryCode));
+    const voteData = allStructs.map(s => s.voteData);
     const mandateData = allStructs.map(s => s.mandateData);
     const majorityData = allStructs.map(s => s.majorityData);
 
@@ -41,7 +41,7 @@
         mandateCount: 0,
         threshold: 0,
         apportionmentMethod: ApportionmentMethods.DHONDT,
-        data: data[0],
+        voteData: voteData[0],
         mandateData: mandateData[0],
         majorityData: majorityData[0],
         countryCode: 'AT',
@@ -51,7 +51,7 @@
         note: ''
     });
 
-    let previousData = $state(structuredClone(data[0]));
+    let previousData = $state(structuredClone(voteData[0]));
     let previousMandateData = $state(structuredClone(mandateData[0]));
 
     const updateCountry = (selectedCountry) => {
@@ -61,24 +61,24 @@
         let freshMandates;
 
         if (country === 'at') {
-            fresh = structuredClone(data[0]);
+            fresh = structuredClone(voteData[0]);
             freshMandates = structuredClone(mandateData[0]);
             electionState.name = `${name} (AT)`;
             electionState.mandateCount = 20;
             electionState.threshold = 4;
             electionState.apportionmentMethod = ApportionmentMethods.DHONDT;
-            electionState.data = data[0];
+            electionState.voteData = voteData[0];
             electionState.mandateData = mandateData[0];
             electionState.majorityData = majorityData[0];
             electionState.countryCode = "AT";
         } else if (country === 'de') {
-            fresh = structuredClone(data[1]);
+            fresh = structuredClone(voteData[1]);
             freshMandates = structuredClone(mandateData[1]);
             electionState.name = `${name} (DE)`;
             electionState.mandateCount = 96;
             electionState.threshold = 0;
             electionState.apportionmentMethod = ApportionmentMethods.SAINTE_LAGUE;
-            electionState.data = data[1];
+            electionState.voteData = voteData[1];
             electionState.mandateData = mandateData[1];
             electionState.majorityData = majorityData[1];
             electionState.countryCode = "DE";
@@ -98,9 +98,9 @@
         if (v) {
             const voteArray = v.split(',').map(Number);
             voteArray.forEach((votes, i) => {
-                if (electionState.data.datasets[i]) {
-                    const idx = electionState.data.datasets[i].index;
-                    electionState.data.datasets[i].data[idx] = votes;
+                if (electionState.voteData.datasets[i]) {
+                    const idx = electionState.voteData.datasets[i].index;
+                    electionState.voteData.datasets[i].data[idx] = votes;
                 }
             });
         }

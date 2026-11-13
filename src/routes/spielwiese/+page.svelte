@@ -8,12 +8,12 @@
 
 <script>
     import ElectionChartsPlayground from '../../ElectionChartsPlayground.svelte';
-    import { data, mandateData, majorityData } from './data';
+    import { voteData, mandateData, majorityData } from './data';
     import { setContext } from 'svelte';
 
     // svelte-ignore state_referenced_locally
     let electionState = $state({
-        data: data,
+        voteData: voteData,
         mandateData: mandateData,
         majorityData: majorityData
     });

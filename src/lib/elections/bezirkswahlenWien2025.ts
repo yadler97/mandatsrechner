@@ -109,7 +109,7 @@ export const data = [
 			NEOS:  { votes: 7.87,  mandates: 3 },
 			KPÖ:   { votes: 4.76,  mandates: 0 },
 			FPÖ:   { votes: 2.98,  mandates: 1 },
-			VOLT:  { votes: 0.31,  mandates: 0, colorKey: 'rgb(138, 43, 226)' },
+			VOLT:  { votes: 0.31,  mandates: 0, colourKey: 'rgb(138, 43, 226)' },
 			LINKS: { historicalMandates: 2 },
 		}
 	},

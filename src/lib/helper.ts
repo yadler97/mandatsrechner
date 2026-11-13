@@ -26,15 +26,15 @@ export function getTwoThirdsMajority(mandateCount: number) {
 export function generateElectionStructs(input, countryCode) {
 	const { partyOrder, mandateOrder, parties } = input;
 
-    const getColor = (partyName, partyData) => {
-		const key = partyData?.colorKey ?? partyName;
+    const getColour = (partyName, partyData) => {
+		const key = partyData?.colourKey ?? partyName;
 		if (key.startsWith('rgb')) {
 			return key;
 		}
 		return PartyColours[countryCode]?.[key] ?? 'rgb(170, 170, 170)';
 	};
 
-	// 1. Generate `data` (Vote percentages per party dataset layout)
+	// 1. Generate `voteData`
 	const dataDatasets = mandateOrder
         .filter((partyName) => {
                 const partyData = parties[partyName];
@@ -54,24 +54,23 @@ export function generateElectionStructs(input, countryCode) {
                 label: partyName,
                 index: labelIndex,
                 data: dataArray,
-                backgroundColor: getColor(partyName, partyData),
+                backgroundColor: getColour(partyName, partyData),
                 isExemptFromThreshold: partyData.isExemptFromThreshold,
                 reservedSeats: partyData.reservedSeats
             };
         });
 
-	const data = {
+	const voteData = {
 		labels: partyOrder,
 		datasets: dataDatasets,
 	};
 
 	// 2. Generate `mandateData`
-	//const mandateCounts = mandateOrder.map(partyName => parties[partyName].mandates);
     const mandateCounts = mandateOrder.map(partyName => {
 		const partyData = parties[partyName] || {};
 		return partyData.mandates ?? partyData.historicalMandates ?? 0;
 	});
-	const mandateColors = mandateOrder.map(partyName => getColor(partyName, parties[partyName]));
+	const mandateColors = mandateOrder.map(partyName => getColour(partyName, parties[partyName]));
 
 	const mandateData = {
 		labels: mandateOrder,
@@ -95,7 +94,7 @@ export function generateElectionStructs(input, countryCode) {
 		return {
 			label: partyName,
 			data: [partyData.mandates],
-			backgroundColor: getColor(partyName, partyData),
+			backgroundColor: getColour(partyName, partyData),
 			hidden: isHidden,
 		};
 	});
@@ -105,5 +104,5 @@ export function generateElectionStructs(input, countryCode) {
 		datasets: majorityDatasets,
 	};
 
-	return { data, mandateData, majorityData };
+	return { voteData, mandateData, majorityData };
 }

@@ -33,7 +33,7 @@
     let eligibleIndices = $state([]);
 
     let calcResult = $derived(calcMandates(
-        electionState.data.datasets, 
+        electionState.voteData.datasets, 
         mandateCount, 
         apportionmentMethod, 
         threshold
@@ -119,14 +119,14 @@
     }
 
     function validatePartyShare(index, partyIndex) {
-        if (electionState.data.datasets[index].data[partyIndex] > 100) {
-            electionState.data.datasets[index].data[partyIndex] = 100;
+        if (electionState.voteData.datasets[index].data[partyIndex] > 100) {
+            electionState.voteData.datasets[index].data[partyIndex] = 100;
         }
     }
 
     function exportConfig() {
         const config = {
-            data: electionState.data,
+            data: electionState.voteData,
             mandateData: electionState.mandateData,
             majorityData: electionState.majorityData,
             settings: {
@@ -165,7 +165,7 @@
                 apportionmentMethod = config.settings.apportionmentMethod;
 
                 // update svelte stores
-                electionState.data = config.data;
+                electionState.voteData = config.data;
                 electionState.mandateData = config.mandateData;
                 electionState.majorityData = config.majorityData;
 
@@ -181,13 +181,13 @@
     }
 
     function updatePartyName(index, newName) {
-        electionState.data.labels[index] = newName;
-        electionState.data.datasets[index].label = newName;
+        electionState.voteData.labels[index] = newName;
+        electionState.voteData.datasets[index].label = newName;
         electionState.mandateData.labels[index] = newName;
         electionState.majorityData.datasets[index].label = newName;
         
         // trigger reactivity
-        electionState.data = electionState.data;
+        electionState.voteData = electionState.voteData;
         electionState.mandateData = electionState.mandateData;
         electionState.majorityData = electionState.majorityData;
     }
@@ -215,18 +215,18 @@
     function updatePartyColor(index, event) {
         const newColor = event.target.value;
 
-        electionState.data.datasets[index].backgroundColor = newColor;
+        electionState.voteData.datasets[index].backgroundColor = newColor;
         electionState.mandateData.datasets[0].backgroundColor[index] = newColor;
         electionState.majorityData.datasets[index].backgroundColor = newColor;
 
         // trigger reactivity
-        electionState.data = electionState.data;
+        electionState.voteData = electionState.voteData;
         electionState.mandateData = electionState.mandateData;
         electionState.majorityData = electionState.majorityData;
     }
 
     function addParty() {
-        const newIndex = electionState.data.datasets.length;
+        const newIndex = electionState.voteData.datasets.length;
 
         if (newIndex >= 26) {
             alert("Maximale Anzahl von 26 Parteien erreicht.");
@@ -237,16 +237,16 @@
         const defaultColor = '#cccccc';
 
         // 1. update data
-        electionState.data.labels = [...electionState.data.labels, newLabel];
+        electionState.voteData.labels = [...electionState.voteData.labels, newLabel];
         
         // add a 0 to the data array of every EXISTING party
-        electionState.data.datasets.forEach(ds => {
+        electionState.voteData.datasets.forEach(ds => {
             ds.data.push(0);
         });
 
         // add the NEW party's dataset
-        const newDataArray = new Array(electionState.data.labels.length).fill(0);
-        electionState.data.datasets = [...electionState.data.datasets, {
+        const newDataArray = new Array(electionState.voteData.labels.length).fill(0);
+        electionState.voteData.datasets = [...electionState.voteData.datasets, {
             label: newLabel,
             index: newIndex,
             data: newDataArray,
@@ -268,23 +268,23 @@
     }
 
     function removeParty(index) {
-        if (electionState.data.datasets.length <= 1) return;
+        if (electionState.voteData.datasets.length <= 1) return;
 
         eligibleIndices = eligibleIndices
             .filter(idx => idx !== index)
             .map(idx => (idx > index ? idx - 1 : idx));
 
         // 1. update data
-        electionState.data.labels.splice(index, 1);
-        electionState.data.datasets.splice(index, 1);
+        electionState.voteData.labels.splice(index, 1);
+        electionState.voteData.datasets.splice(index, 1);
 
         // remove the specific index from the data array of ALL remaining parties
-        electionState.data.datasets.forEach((ds) => {
+        electionState.voteData.datasets.forEach((ds) => {
             ds.data.splice(index, 1);
         });
 
         // re-sync the 'index' property so the inputs still point to the right array slot
-        electionState.data.datasets.forEach((ds, i) => {
+        electionState.voteData.datasets.forEach((ds, i) => {
             ds.index = i;
         });
 
@@ -297,7 +297,7 @@
         electionState.majorityData.datasets.splice(index, 1);
 
         // trigger reactivity
-        electionState.data = electionState.data;
+        electionState.voteData = electionState.voteData;
         electionState.mandateData = electionState.mandateData;
         electionState.majorityData = electionState.majorityData;
         
@@ -323,7 +323,7 @@
 
         const maxSeats = Math.max(...mandates) + 1;
         const currentShares = eligibleIndices.map(idx =>
-            electionState.data.datasets[idx].data[electionState.data.datasets[idx].index]
+            electionState.voteData.datasets[idx].data[electionState.voteData.datasets[idx].index]
         );
 
         divisorGrid = Array.from({ length: maxSeats }, (_, i) => {
@@ -342,7 +342,7 @@
         }
     });
 
-    let plainBarChartData = $derived(structuredClone($state.snapshot(electionState.data)));
+    let plainBarChartData = $derived(structuredClone($state.snapshot(electionState.voteData)));
     let plainMandateData = $derived(structuredClone($state.snapshot(electionState.mandateData)));
     let plainMajorityData = $derived(structuredClone($state.snapshot(electionState.majorityData)));
 
@@ -376,7 +376,7 @@
     let barChartOptions = $derived(
         createBarChartOptions({
             electionState,
-            filteredData: electionState.data,
+            filteredData: electionState.voteData,
             threshold,
             chartColors
         })
@@ -445,7 +445,7 @@
     </div>
     
     <div class="input_fields_vote element_card">
-        {#each electionState.data.datasets as party, i}
+        {#each electionState.voteData.datasets as party, i}
             <div class="input_field_vote_party">
                 <div class="name-container">
                     {#if editingIndex === i}
@@ -489,8 +489,8 @@
                         id="input_party_{i}"
                         type="number"
                         step="any"
-                        use:formatDefault={electionState.data.datasets[i].data[party.index]}
-                        bind:value={electionState.data.datasets[i].data[party.index]}
+                        use:formatDefault={electionState.voteData.datasets[i].data[party.index]}
+                        bind:value={electionState.voteData.datasets[i].data[party.index]}
                         min=0
                         max=100
                         oninput={() => validatePartyShare(i, party.index)}
@@ -635,8 +635,8 @@
                     {#each eligibleIndices as idx}
                         <th>
                             <div class="party-header">
-                                <span class="color-bar" style="background-color: {electionState.data.datasets[idx].backgroundColor}"></span>
-                                <span class="party-label">{ electionState.data.datasets[idx].label }</span>
+                                <span class="color-bar" style="background-color: {electionState.voteData.datasets[idx].backgroundColor}"></span>
+                                <span class="party-label">{ electionState.voteData.datasets[idx].label }</span>
                             </div>
                         </th>
                     {/each}

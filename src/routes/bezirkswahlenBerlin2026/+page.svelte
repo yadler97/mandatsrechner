@@ -18,7 +18,7 @@
 
     // Generate all structs dynamically from the district inputs array
     const allStructs = districtInputs.map(districtInput => generateElectionStructs(districtInput, countryCode));
-    const data = allStructs.map(s => s.data);
+    const voteData = allStructs.map(s => s.voteData);
     const mandateData = allStructs.map(s => s.mandateData);
     const majorityData = allStructs.map(s => s.majorityData);
 
@@ -55,7 +55,7 @@
         mandateCount: 0,
         threshold: 3,
         apportionmentMethod: ApportionmentMethods.DHONDT,
-        data: data[0],
+        voteData: voteData[0],
         mandateData: mandateData[0],
         majorityData: majorityData[0],
         countryCode: countryCode,
@@ -65,7 +65,7 @@
         note: ''
     });
 
-    let previousData = $state(structuredClone(data[0]));
+    let previousData = $state(structuredClone(voteData[0]));
     let previousMandateData = $state(structuredClone(mandateData[0]));
 
     const updateDistrict = (selectedDistrict) => {
@@ -75,7 +75,7 @@
         const currentDistrictObj = districts.find(d => d.id === district);
         const districtName = currentDistrictObj ? currentDistrictObj.name : '';
 
-        const fresh = structuredClone(data[districtInt - 1]);
+        const fresh = structuredClone(voteData[districtInt - 1]);
         previousData.labels = fresh.labels;
         previousData.datasets = fresh.datasets;
 
@@ -84,7 +84,7 @@
         previousMandateData.datasets = freshMandates.datasets;
 
         electionState.name = `${name} (${district}., ${districtName})`;
-        electionState.data = data[districtInt - 1];
+        electionState.voteData = voteData[districtInt - 1];
         electionState.mandateData = mandateData[districtInt - 1];
         electionState.majorityData = majorityData[1]; // Assuming index mapping
         electionState.majorityData = majorityData[districtInt - 1];
@@ -96,9 +96,9 @@
         if (v) {
             const voteArray = v.split(',').map(Number);
             voteArray.forEach((votes, i) => {
-                if (electionState.data.datasets[i]) {
-                    const idx = electionState.data.datasets[i].index;
-                    electionState.data.datasets[i].data[idx] = votes;
+                if (electionState.voteData.datasets[i]) {
+                    const idx = electionState.voteData.datasets[i].index;
+                    electionState.voteData.datasets[i].data[idx] = votes;
                 }
             });
         }

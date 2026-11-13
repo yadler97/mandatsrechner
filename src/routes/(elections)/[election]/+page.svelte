@@ -23,13 +23,13 @@
     // svelte-ignore state_referenced_locally
     const initialCurrent = generateElectionStructs(data.data, data.countryCode);
 
-    let previousData = $state(initialPrevious.data);
+    let previousData = $state(initialPrevious.voteData);
     let previousMandateData = $state(initialPrevious.mandateData);
 
     // svelte-ignore state_referenced_locally
     let electionState = $state({
     	...data,
-    	data: initialCurrent.data,
+    	voteData: initialCurrent.voteData,
     	mandateData: initialCurrent.mandateData,
     	majorityData: initialCurrent.majorityData,
     	baseMandateRule: data.baseMandateRule || false,
@@ -53,14 +53,14 @@
     $effect(() => {
         // Re-run generator whenever the route's `data` prop changes
         const freshPrevious = generateElectionStructs(data.data, data.countryCode);
-        previousData.labels = freshPrevious.data.labels;
-        previousData.datasets = freshPrevious.data.datasets;
+        previousData.labels = freshPrevious.voteData.labels;
+        previousData.datasets = freshPrevious.voteData.datasets;
         previousMandateData.labels = freshPrevious.mandateData.labels;
         previousMandateData.datasets = freshPrevious.mandateData.datasets;
 
         const freshCurrent = generateElectionStructs(data.data, data.countryCode);
         electionState.name = data.name;
-        electionState.data = freshCurrent.data;
+        electionState.voteData = freshCurrent.voteData;
         electionState.mandateData = freshCurrent.mandateData;
         electionState.majorityData = freshCurrent.majorityData;
         electionState.mandateCount = data.mandateCount;

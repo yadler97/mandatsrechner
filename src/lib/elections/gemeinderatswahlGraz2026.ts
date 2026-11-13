@@ -19,6 +19,6 @@ export const data = {
     'FPÖ':   { votes: 10.61, mandates: 2,  inGovernment: false },
     'SPÖ':   { votes: 9.53,  mandates: 4,  inGovernment: true },
     'NEOS':  { votes: 5.42,  mandates: 2,  inGovernment: false },
-    'KFG':   { votes: 0,     mandates: 3,  inGovernment: false, colorKey: 'rgb(85, 136, 153)' }
+    'KFG':   { votes: 0,     mandates: 3,  inGovernment: false, colourKey: 'rgb(85, 136, 153)' }
   }
 };
