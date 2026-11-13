@@ -8,7 +8,7 @@ export const data = [
 		name: 'Innere Stadt',
 		mandateCount: 40,
 		partyOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
-		mandateOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
+		mandateOrder: ['KPÖ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ', 'BESTE'],
 		parties: {
 			ÖVP:   { votes: 40.52, mandates: 17 },
 			SPÖ:   { votes: 22.97, mandates: 10 },
@@ -23,7 +23,7 @@ export const data = [
 		name: 'Leopoldstadt',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ',  'HC', 'HERZ'],
 		parties: {
 			SPÖ:   { votes: 35.38, mandates: 23 },
 			Grüne: { votes: 30.56, mandates: 19 },
@@ -41,7 +41,7 @@ export const data = [
 		name: 'Landstraße',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE', 'LINKS', 'BIER'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'HERZ', 'FREIE'],
 		parties: {
 			SPÖ:   { votes: 37.02, mandates: 22 },
 			Grüne: { votes: 23.1,  mandates: 13 },
@@ -61,7 +61,7 @@ export const data = [
 		name: 'Wieden',
 		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ'],
 		parties: {
 			SPÖ:   { votes: 33.23, mandates: 15 },
 			Grüne: { votes: 28.1,  mandates: 12 },
@@ -76,7 +76,7 @@ export const data = [
 		name: 'Margareten',
 		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ', 'HC'],
 		parties: {
 			SPÖ:   { votes: 35.31, mandates: 15 },
 			Grüne: { votes: 28.22, mandates: 12 },
@@ -93,7 +93,7 @@ export const data = [
 		name: 'Mariahilf',
 		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ'],
 		parties: {
 			SPÖ:   { votes: 37.2,  mandates: 16 },
 			Grüne: { votes: 30.43, mandates: 13 },
@@ -108,7 +108,7 @@ export const data = [
 		name: 'Neubau',
 		mandateCount: 40,
 		partyOrder: ['Grüne', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT'],
-		mandateOrder: ['Grüne', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SPÖ', 'Grüne', 'VOLT', 'NEOS', 'ÖVP', 'FPÖ'],
 		parties: {
 			Grüne: { votes: 44.91, mandates: 19 },
 			SPÖ:   { votes: 20.6,  mandates: 9 },
@@ -124,7 +124,7 @@ export const data = [
 		name: 'Josefstadt',
 		mandateCount: 40,
 		partyOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ'],
-		mandateOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ'],
 		parties: {
 			Grüne: { votes: 33.59, mandates: 14 },
 			ÖVP:   { votes: 30.55, mandates: 13 },
@@ -139,7 +139,7 @@ export const data = [
 		name: 'Alsergrund',
 		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'DWA'],
 		parties: {
 			SPÖ:   { votes: 31.45, mandates: 13 },
 			Grüne: { votes: 29.21, mandates: 13 },
@@ -156,7 +156,7 @@ export const data = [
 		name: 'Favoriten',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH'],
-		mandateOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH', 'LINKS', 'BIER'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'HERZ', 'POSCH'],
 		parties: {
 			SPÖ:   { votes: 47.4,  mandates: 30 },
 			ÖVP:   { votes: 18.0,  mandates: 11 },
@@ -176,7 +176,7 @@ export const data = [
 		name: 'Simmering',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'FPÖ', 'ÖVP', 'Grüne', 'NEOS', 'HC', 'SÖZ', 'KPÖ'],
-		mandateOrder: ['SPÖ', 'FPÖ', 'ÖVP', 'Grüne', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'BIER'],
+		mandateOrder: ['KPÖ', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC'],
 		parties: {
 			SPÖ:   { votes: 41.49, mandates: 26 },
 			FPÖ:   { votes: 28.44, mandates: 18 },
@@ -193,7 +193,7 @@ export const data = [
 		name: 'Meidling',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE'],
-		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE', 'LINKS', 'BIER'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'PH', 'ÖVP', 'FPÖ', 'HC', 'HERZ', 'STRACHE'],
 		parties: {
 			SPÖ:     { votes: 42.0,   mandates: 26 },
 			ÖVP:     { votes: 16.85,  mandates: 10 },
@@ -214,7 +214,7 @@ export const data = [
 		name: 'Hietzing',
 		mandateCount: 40,
 		partyOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
-		mandateOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
+		mandateOrder: ['KPÖ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ', 'HC'],
 		parties: {
 			ÖVP:   { votes: 44.25, mandates: 19 },
 			SPÖ:   { votes: 22.28, mandates: 10 },
@@ -229,7 +229,7 @@ export const data = [
 		name: 'Penzing',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR'],
-		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR', 'LINKS', 'BIER'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'FAIR'],
 		parties: {
 			SPÖ:   { votes: 36.94, mandates: 22 },
 			ÖVP:   { votes: 23.57, mandates: 14 },
@@ -248,7 +248,7 @@ export const data = [
 		name: 'Rudolfsheim-Fünfhaus',
 		mandateCount: 52,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA', 'LINKS', 'BIER'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'HERZ', 'PDA'],
 		parties: {
 			SPÖ:   { votes: 38.53, mandates: 20 },
 			Grüne: { votes: 23.89, mandates: 12 },
@@ -268,7 +268,7 @@ export const data = [
 		name: 'Ottakring',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS', 'BIER'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'HERZ'],
 		parties: {
 			SPÖ:   { votes: 39.03, mandates: 25 },
 			Grüne: { votes: 20.01, mandates: 13 },
@@ -287,7 +287,7 @@ export const data = [
 		name: 'Hernals',
 		mandateCount: 42,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö', 'LINKS'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'dbö'],
 		parties: {
 			SPÖ:   { votes: 33.21, mandates: 15 },
 			Grüne: { votes: 24.28, mandates: 11 },
@@ -305,7 +305,7 @@ export const data = [
 		name: 'Währing',
 		mandateCount: 40,
 		partyOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
-		mandateOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
+		mandateOrder: ['KPÖ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'WIR'],
 		parties: {
 			Grüne: { votes: 38.7,  mandates: 17 },
 			ÖVP:   { votes: 27.48, mandates: 12 },
@@ -321,7 +321,7 @@ export const data = [
 		name: 'Döbling',
 		mandateCount: 50,
 		partyOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
-		mandateOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
+		mandateOrder: ['KPÖ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ', 'HC'],
 		parties: {
 			ÖVP:   { votes: 36.89, mandates: 19 },
 			SPÖ:   { votes: 26.92, mandates: 14 },
@@ -336,7 +336,7 @@ export const data = [
 		name: 'Brigittenau',
 		mandateCount: 56,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ'],
-		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ', 'LINKS', 'BIER'],
+		mandateOrder: ['KPÖ', 'LINKS', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC'],
 		parties: {
 			SPÖ:   { votes: 45.02, mandates: 27 },
 			Grüne: { votes: 17.27, mandates: 10 },
@@ -354,7 +354,7 @@ export const data = [
 		name: 'Floridsdorf',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP'],
-		mandateOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP', 'BIER'],
+		mandateOrder: ['KPÖ', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'WIFF', 'FPÖ', 'HC', 'LMP'],
 		parties: {
 			SPÖ:   { votes: 44.52, mandates: 29 },
 			ÖVP:   { votes: 18.11, mandates: 11 },
@@ -373,7 +373,7 @@ export const data = [
 		name: 'Donaustadt',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP'],
-		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP', 'BIER'],
+		mandateOrder: ['KPÖ', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'ÖVP', 'FPÖ', 'HC', 'LMP'],
 		parties: {
 			SPÖ:   { votes: 45.08, mandates: 29 },
 			ÖVP:   { votes: 19.81, mandates: 12 },
@@ -391,7 +391,7 @@ export const data = [
 		name: 'Liesing',
 		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ'],
-		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ', 'BIER'],
+		mandateOrder: ['KPÖ', 'SÖZ', 'SPÖ', 'Grüne', 'BIER', 'NEOS', 'PRO', 'ÖVP', 'FPÖ', 'HC'],
 		parties: {
 			SPÖ:   { votes: 40.4,  mandates: 26 },
 			ÖVP:   { votes: 22.85, mandates: 14 },

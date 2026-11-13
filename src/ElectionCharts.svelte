@@ -202,10 +202,16 @@
     });
 
     $effect(() => {
-        electionState.mandateData.datasets[0].data = mandates;
-        for (let i in mandates) {
-            electionState.majorityData.datasets[i].data = [mandates[i]];
-        }
+        const mandatesByParty = new Map(
+            electionState.voteData.datasets.map((party, index) => [party.label, mandates[index] ?? 0])
+        );
+
+        electionState.mandateData.datasets[0].data = electionState.mandateData.labels.map(
+            partyName => mandatesByParty.get(partyName) ?? 0
+        );
+        electionState.majorityData.datasets.forEach((dataset) => {
+            dataset.data = [mandatesByParty.get(dataset.label) ?? 0];
+        });
     });
 
     let selectedParties = $derived.by(() => {
