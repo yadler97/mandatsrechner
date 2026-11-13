@@ -7,13 +7,20 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenBerlin2026';
+    import { data as districtInputs, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenBerlin2026';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
     import { goto } from '$app/navigation';
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
+	import { generateElectionStructs } from '$lib/helper';
+
+    // Generate all structs dynamically from the district inputs array
+    const allStructs = districtInputs.map(districtInput => generateElectionStructs(districtInput, countryCode));
+    const data = allStructs.map(s => s.data);
+    const mandateData = allStructs.map(s => s.mandateData);
+    const majorityData = allStructs.map(s => s.majorityData);
 
     const districts = [
         { id: '1', name: 'Mitte' },

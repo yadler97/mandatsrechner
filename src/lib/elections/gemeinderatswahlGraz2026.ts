@@ -1,5 +1,4 @@
 import { ApportionmentMethods } from "$lib/apportionmentMethods";
-import { PartyColours } from "$lib/partyColours";
 
 export const name = 'Gemeinderatswahl Graz 2026';
 export const date = ['2026-06-28'];
@@ -11,116 +10,15 @@ export const threshold = 0;
 export const apportionmentMethod = ApportionmentMethods.DHONDT;
 
 export const data = {
-  labels: ['KPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'SPÖ', 'NEOS', 'KFG'],
-  datasets: [
-    {
-      label: 'KPÖ',
-      index: 0,
-      data: [28.84, 0, 0, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['KPÖ'],
-    },
-    {
-      label: 'ÖVP',
-      index: 1,
-      data: [0, 25.91, 0, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['ÖVP'],
-    },
-    {
-      label: 'Grüne',
-      index: 2,
-      data: [0, 0, 17.32, 0, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['Grüne'],
-    },
-    {
-      label: 'FPÖ',
-      index: 3,
-      data: [0, 0, 0, 10.61, 0, 0, 0],
-      backgroundColor: PartyColours[countryCode]['FPÖ'],
-    },
-    {
-      label: 'SPÖ',
-      index: 4,
-      data: [0, 0, 0, 0, 9.53, 0, 0],
-      backgroundColor: PartyColours[countryCode]['SPÖ'],
-    },
-    {
-      label: 'NEOS',
-      index: 5,
-      data: [0, 0, 0, 0, 0, 5.42, 0],
-      backgroundColor: PartyColours[countryCode]['NEOS'],
-    },
-    {
-      label: 'KFG',
-      index: 6,
-      data: [0, 0, 0, 0, 0, 0, 0],
-      backgroundColor: '#558899',
-    },
-  ],
-};
-
-export const mandateData = {
-  labels: ['KPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'SPÖ', 'NEOS', 'KFG'],
-  datasets: [
-    {
-      label: 'Mandate',
-      data: [15, 13, 9, 2, 4, 2, 3],
-      backgroundColor: [
-        PartyColours[countryCode]['KPÖ'],
-        PartyColours[countryCode]['ÖVP'],
-        PartyColours[countryCode]['Grüne'],
-        PartyColours[countryCode]['FPÖ'],
-        PartyColours[countryCode]['SPÖ'],
-        PartyColours[countryCode]['NEOS'],
-        'rgb(85, 136, 153)',
-      ],
-    },
-  ],
-};
-
-export const majorityData = {
-  labels: ['Mandate'],
-  datasets: [
-    {
-      label: 'KPÖ',
-      data: [15],
-      backgroundColor: PartyColours[countryCode]['KPÖ'],
-      hidden: false,
-    },
-    {
-      label: 'ÖVP',
-      data: [13],
-      backgroundColor: PartyColours[countryCode]['ÖVP'],
-      hidden: true,
-    },
-    {
-      label: 'Grüne',
-      data: [9],
-      backgroundColor: PartyColours[countryCode]['Grüne'],
-      hidden: false,
-    },
-    {
-      label: 'FPÖ',
-      data: [2],
-      backgroundColor: PartyColours[countryCode]['FPÖ'],
-      hidden: true,
-    },
-    {
-      label: 'SPÖ',
-      data: [4],
-      backgroundColor: PartyColours[countryCode]['SPÖ'],
-      hidden: false,
-    },
-    {
-      label: 'NEOS',
-      data: [2],
-      backgroundColor: PartyColours[countryCode]['NEOS'],
-      hidden: true,
-    },
-    {
-      label: 'KFG',
-      data: [3],
-      backgroundColor: '#558899',
-      hidden: true,
-    },
-  ],
+  partyOrder: ['KPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'SPÖ', 'NEOS', 'KFG'],
+  mandateOrder: ['KPÖ', 'SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'KFG', 'FPÖ'],
+  parties: {
+    'KPÖ':   { votes: 28.84, mandates: 15, inGovernment: true },
+    'ÖVP':   { votes: 25.91, mandates: 13, inGovernment: false },
+    'Grüne': { votes: 17.32, mandates: 9,  inGovernment: true },
+    'FPÖ':   { votes: 10.61, mandates: 2,  inGovernment: false },
+    'SPÖ':   { votes: 9.53,  mandates: 4,  inGovernment: true },
+    'NEOS':  { votes: 5.42,  mandates: 2,  inGovernment: false },
+    'KFG':   { votes: 0,     mandates: 3,  inGovernment: false, colorKey: 'rgb(85, 136, 153)' }
+  }
 };

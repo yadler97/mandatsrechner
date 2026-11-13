@@ -7,13 +7,20 @@
 </svelte:head>
 
 <script>
-    import { data, mandateData, majorityData, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
+    import { data as districtInputs, date, lastDate, countryCode, name } from '../../lib/elections/bezirkswahlenWien2025';
+    import { generateElectionStructs } from '$lib/helper';
     import ElectionCharts from './../../ElectionCharts.svelte';
     import { setContext } from 'svelte';
     import { page } from '$app/state';
     import { goto } from '$app/navigation';
     import { browser } from '$app/environment';
     import { ApportionmentMethods } from '$lib/apportionmentMethods';
+
+    // Generate all structs dynamically from the district inputs array
+    const allStructs = districtInputs.map(districtInput => generateElectionStructs(districtInput, countryCode));
+    const data = allStructs.map(s => s.data);
+    const mandateData = allStructs.map(s => s.mandateData);
+    const majorityData = allStructs.map(s => s.majorityData);
 
     const districts = [
         { id: '1', name: 'Innere Stadt' },
@@ -90,7 +97,6 @@
         electionState.name = `${name} (${district}., ${districtName})`;
         electionState.data = data[districtInt - 1];
         electionState.mandateData = mandateData[districtInt - 1];
-        electionState.majorityData = majorityData[1]; // Assuming index mapping
         electionState.majorityData = majorityData[districtInt - 1];
 
         // Mandate count logic
