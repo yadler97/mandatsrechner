@@ -22,31 +22,10 @@
     const mandateData = allStructs.map(s => s.mandateData);
     const majorityData = allStructs.map(s => s.majorityData);
 
-    const districts = [
-        { id: '1', name: 'Innere Stadt' },
-        { id: '2', name: 'Leopoldstadt' },
-        { id: '3', name: 'Landstraße' },
-        { id: '4', name: 'Wieden' },
-        { id: '5', name: 'Margareten' },
-        { id: '6', name: 'Mariahilf' },
-        { id: '7', name: 'Neubau' },
-        { id: '8', name: 'Josefstadt' },
-        { id: '9', name: 'Alsergrund' },
-        { id: '10', name: 'Favoriten' },
-        { id: '11', name: 'Simmering' },
-        { id: '12', name: 'Meidling' },
-        { id: '13', name: 'Hietzing' },
-        { id: '14', name: 'Penzing' },
-        { id: '15', name: 'Rudolfsheim-Fünfhaus' },
-        { id: '16', name: 'Ottakring' },
-        { id: '17', name: 'Hernals' },
-        { id: '18', name: 'Währing' },
-        { id: '19', name: 'Döbling' },
-        { id: '20', name: 'Brigittenau' },
-        { id: '21', name: 'Floridsdorf' },
-        { id: '22', name: 'Donaustadt' },
-        { id: '23', name: 'Liesing' }
-    ];
+    const districts = districtInputs.map((districtInput, index) => ({
+        id: String(index + 1),
+        name: districtInput.name
+    }));
 
     let district = $state('1');
 
@@ -55,7 +34,7 @@
         // svelte-ignore state_referenced_locally
         let districtInt = parseInt(district);
 
-        if (isNaN(districtInt) || districtInt < 1 || districtInt > 23) {
+        if (isNaN(districtInt) || districtInt < 1 || districtInt > districtInputs.length) {
             districtInt = 1;
             goto(`${page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
         }
@@ -99,20 +78,7 @@
         electionState.mandateData = mandateData[districtInt - 1];
         electionState.majorityData = majorityData[districtInt - 1];
 
-        // Mandate count logic
-        if ([1, 4, 5, 6, 7, 8, 9, 13, 18].includes(districtInt)) {
-            electionState.mandateCount = 40;
-        } else if (districtInt === 17) {
-            electionState.mandateCount = 42;
-        } else if (districtInt === 19) {
-            electionState.mandateCount = 50;
-        } else if (districtInt === 15) {
-            electionState.mandateCount = 52;
-        } else if (districtInt === 20) {
-            electionState.mandateCount = 56;
-        } else if ([2, 3, 10, 11, 12, 14, 16, 21, 22, 23].includes(districtInt)) {
-            electionState.mandateCount = 60;
-        }
+        electionState.mandateCount = districtInputs[districtInt - 1].mandateCount;
     };
 
     $effect(() => {

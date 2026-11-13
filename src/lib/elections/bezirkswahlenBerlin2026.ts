@@ -4,8 +4,8 @@ export const lastDate = ['2023-02-12'];
 export const countryCode = 'DE';
 
 export const data = [
-  // Mitte
   {
+    name: 'Mitte',
     partyOrder: ['Grüne', 'CDU', 'SPD', 'Linke', 'AfD', 'FDP', 'Tierschutz', 'Volt', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'Volt', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -21,8 +21,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Friedrichshain-Kreuzberg
   {
+    name: 'Friedrichshain-Kreuzberg',
     partyOrder: ['Grüne', 'Linke', 'SPD', 'CDU', 'AfD', 'PARTEI', 'FDP', 'Tierschutz', 'Volt', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'Volt', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -38,8 +38,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Pankow
   {
+    name: 'Pankow',
     partyOrder: ['Grüne', 'CDU', 'Linke', 'SPD', 'AfD', 'FDP', 'Tierschutz', 'PARTEI', 'Volt', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'Volt', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -55,8 +55,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Charlottenburg-Wilmersdorf
   {
+    name: 'Charlottenburg-Wilmersdorf',
     partyOrder: ['CDU', 'Grüne', 'SPD', 'Linke', 'FDP', 'AfD', 'Tierschutz', 'Volt', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'Volt', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -72,8 +72,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Spandau
   {
+    name: 'Spandau',
     partyOrder: ['CDU', 'SPD', 'AfD', 'Grüne', 'Tierschutz', 'Linke', 'FDP', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -88,8 +88,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Steglitz-Zehlendorf
   {
+    name: 'Steglitz-Zehlendorf',
     partyOrder: ['CDU', 'Grüne', 'SPD', 'FDP', 'AfD', 'Linke', 'Tierschutz', 'Volt', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'Volt', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -105,8 +105,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Tempelhof-Schöneberg
   {
+    name: 'Tempelhof-Schöneberg',
     partyOrder: ['CDU', 'Grüne', 'SPD', 'Linke', 'AfD', 'FDP', 'Tierschutz', 'PARTEI', 'Volt', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'Volt', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -122,8 +122,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Neukölln
   {
+    name: 'Neukölln',
     partyOrder: ['CDU', 'SPD', 'Grüne', 'Linke', 'AfD', 'Tierschutz', 'FDP', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -138,8 +138,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Treptow-Köpenick
   {
+    name: 'Treptow-Köpenick',
     partyOrder: ['CDU', 'SPD', 'Linke', 'AfD', 'Grüne', 'Tierschutz', 'FDP', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -154,8 +154,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Marzahn-Hellersdorf
   {
+    name: 'Marzahn-Hellersdorf',
     partyOrder: ['CDU', 'AfD', 'SPD', 'Linke', 'Grüne', 'Tierschutz', 'FDP', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -170,8 +170,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Lichtenberg
   {
+    name: 'Lichtenberg',
     partyOrder: ['CDU', 'Linke', 'SPD', 'AfD', 'Grüne', 'Tierschutz', 'FDP', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'FDP', 'CDU', 'AfD'],
     parties: {
@@ -186,8 +186,8 @@ export const data = [
       'BSW':        { votes: 0.00,  mandates: 0 }
     }
   },
-  // Reinickendorf
   {
+    name: 'Reinickendorf',
     partyOrder: ['CDU', 'SPD', 'Grüne', 'AfD', 'FDP', 'Linke', 'Tierschutz', 'PARTEI', 'BSW'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'FDP', 'CDU', 'AfD'],
     parties: {

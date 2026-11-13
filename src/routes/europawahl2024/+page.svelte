@@ -13,7 +13,6 @@
     import { page } from '$app/state';
     import { goto } from '$app/navigation';
     import { browser } from '$app/environment';
-    import { ApportionmentMethods } from '$lib/apportionmentMethods';
 	import { generateElectionStructs } from '$lib/helper';
 
     // Generate all structs dynamically from the district inputs array
@@ -22,16 +21,16 @@
     const mandateData = allStructs.map(s => s.mandateData);
     const majorityData = allStructs.map(s => s.majorityData);
 
-    let country = $state('');
+    let country = $state(countryInputs[0].countryCode.toLowerCase());
 
     if (browser) {
-        country = page.url.searchParams.get('country') || 'at';
+        country = page.url.searchParams.get('country') || countryInputs[0].countryCode.toLowerCase();
 
-        const countries = ["at", "de"];
+        const countries = countryInputs.map(countryInput => countryInput.countryCode.toLowerCase());
 
         // svelte-ignore state_referenced_locally
         if (!countries.includes(country)) {
-            country = 'at';
+            country = countries[0];
             goto(`${page.url.pathname}?country=${country}`, { replaceState: true });
         }
     }
@@ -40,11 +39,11 @@
         name: '',
         mandateCount: 0,
         threshold: 0,
-        apportionmentMethod: ApportionmentMethods.DHONDT,
+        apportionmentMethod: countryInputs[0].apportionmentMethod,
         voteData: voteData[0],
         mandateData: mandateData[0],
         majorityData: majorityData[0],
-        countryCode: 'AT',
+        countryCode: countryInputs[0].countryCode,
         date: date,
         lastDate: lastDate,
         baseMandateRule: false,
@@ -57,32 +56,23 @@
     const updateCountry = (selectedCountry) => {
         country = selectedCountry;
 
-        let fresh;
-        let freshMandates;
+        const countryIndex = countryInputs.findIndex(
+            countryInput => countryInput.countryCode.toLowerCase() === country
+        );
+        if (countryIndex === -1) return;
 
-        if (country === 'at') {
-            fresh = structuredClone(voteData[0]);
-            freshMandates = structuredClone(mandateData[0]);
-            electionState.name = `${name} (AT)`;
-            electionState.mandateCount = 20;
-            electionState.threshold = 4;
-            electionState.apportionmentMethod = ApportionmentMethods.DHONDT;
-            electionState.voteData = voteData[0];
-            electionState.mandateData = mandateData[0];
-            electionState.majorityData = majorityData[0];
-            electionState.countryCode = "AT";
-        } else if (country === 'de') {
-            fresh = structuredClone(voteData[1]);
-            freshMandates = structuredClone(mandateData[1]);
-            electionState.name = `${name} (DE)`;
-            electionState.mandateCount = 96;
-            electionState.threshold = 0;
-            electionState.apportionmentMethod = ApportionmentMethods.SAINTE_LAGUE;
-            electionState.voteData = voteData[1];
-            electionState.mandateData = mandateData[1];
-            electionState.majorityData = majorityData[1];
-            electionState.countryCode = "DE";
-        }
+        const countryInput = countryInputs[countryIndex];
+        const fresh = structuredClone(voteData[countryIndex]);
+        const freshMandates = structuredClone(mandateData[countryIndex]);
+
+        electionState.name = `${name} (${countryInput.countryCode})`;
+        electionState.mandateCount = countryInput.mandateCount;
+        electionState.threshold = countryInput.threshold;
+        electionState.apportionmentMethod = countryInput.apportionmentMethod;
+        electionState.voteData = voteData[countryIndex];
+        electionState.mandateData = mandateData[countryIndex];
+        electionState.majorityData = majorityData[countryIndex];
+        electionState.countryCode = countryInput.countryCode;
 
         previousData.labels = fresh?.labels ?? [];
         previousData.datasets = fresh?.datasets ?? [];
@@ -117,8 +107,9 @@
 </script>
 
 <select bind:value={country} onchange={() => gotoCountry(country)} class="district_select">
-    <option value="at">Österreich</option>
-    <option value="de">Deutschland</option>
+    {#each countryInputs as countryInput}
+        <option value={countryInput.countryCode.toLowerCase()}>{countryInput.countryName}</option>
+    {/each}
 </select>
 
 <ElectionCharts />

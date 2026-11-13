@@ -1,11 +1,16 @@
+import { ApportionmentMethods } from '$lib/apportionmentMethods';
+
 export const name = 'Europawahl 2024';
 export const date = ['2024-06-06', '2024-06-09'];
 export const lastDate = ['2019-05-23', '2019-05-26'];
 
 export const data = [
-  // AT
   {
+    countryName: 'Österreich',
     countryCode: 'AT',
+    mandateCount: 20,
+    threshold: 4,
+    apportionmentMethod: ApportionmentMethods.DHONDT,
     partyOrder: ['ÖVP', 'SPÖ', 'FPÖ', 'Grüne', 'NEOS'],
     mandateOrder: ['SPÖ', 'Grüne', 'NEOS', 'ÖVP', 'FPÖ'],
     parties: {
@@ -16,9 +21,12 @@ export const data = [
       'NEOS':  { votes: 8.44,  mandates: 1 }
     }
   },
-  // DE
   {
+    countryName: 'Deutschland',
     countryCode: 'DE',
+    mandateCount: 96,
+    threshold: 0,
+    apportionmentMethod: ApportionmentMethods.SAINTE_LAGUE,
     partyOrder: ['CDU/CSU', 'Grüne', 'SPD', 'AfD', 'Linke', 'FDP', 'PARTEI', 'FW', 'Tierschutz', 'ÖDP', 'Familie', 'Volt', 'PIRATEN', 'BSW', 'PDF'],
     mandateOrder: ['BSW', 'Linke', 'PARTEI', 'SPD', 'Grüne', 'Tierschutz', 'PIRATEN', 'Volt', 'PDF', 'FDP', 'ÖDP', 'FW', 'CDU', 'CSU', 'Familie', 'AfD'],
     parties: {

@@ -4,8 +4,9 @@ export const lastDate = ['2020-10-11'];
 export const countryCode = 'AT';
 
 export const data = [
-	// 1. Innere Stadt
 	{
+		name: 'Innere Stadt',
+		mandateCount: 40,
 		partyOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
 		mandateOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'KPÖ', 'BESTE'],
 		parties: {
@@ -18,8 +19,9 @@ export const data = [
 			BESTE: { votes: 0,     mandates: 0 },
 		}
 	},
-	// 2. Leopoldstadt
 	{
+		name: 'Leopoldstadt',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS'],
 		parties: {
@@ -35,8 +37,9 @@ export const data = [
 			LINKS: { historicalMandates: 2 },
 		}
 	},
-	// 3. Landstraße
 	{
+		name: 'Landstraße',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'FREIE', 'LINKS', 'BIER'],
 		parties: {
@@ -54,8 +57,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 4. Wieden
 	{
+		name: 'Wieden',
+		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
 		parties: {
@@ -68,8 +72,9 @@ export const data = [
 			LINKS: { historicalMandates: 1 },
 		}
 	},
-	// 5. Margareten
 	{
+		name: 'Margareten',
+		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'SÖZ', 'LINKS'],
 		parties: {
@@ -84,8 +89,9 @@ export const data = [
 			LINKS: { historicalMandates: 2 },
 		}
 	},
-	// 6. Mariahilf
 	{
+		name: 'Mariahilf',
+		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
 		parties: {
@@ -98,8 +104,9 @@ export const data = [
 			LINKS: { historicalMandates: 1 },
 		}
 	},
-	// 7. Neubau
 	{
+		name: 'Neubau',
+		mandateCount: 40,
 		partyOrder: ['Grüne', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT'],
 		mandateOrder: ['Grüne', 'SPÖ', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'VOLT', 'LINKS'],
 		parties: {
@@ -113,8 +120,9 @@ export const data = [
 			LINKS: { historicalMandates: 2 },
 		}
 	},
-	// 8. Josefstadt
 	{
+		name: 'Josefstadt',
+		mandateCount: 40,
 		partyOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ'],
 		mandateOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'KPÖ', 'FPÖ', 'LINKS'],
 		parties: {
@@ -127,8 +135,9 @@ export const data = [
 			LINKS: { historicalMandates: 1 },
 		}
 	},
-	// 9. Alsergrund
 	{
+		name: 'Alsergrund',
+		mandateCount: 40,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'KPÖ', 'FPÖ', 'HC', 'DWA', 'LINKS'],
 		parties: {
@@ -143,8 +152,9 @@ export const data = [
 			LINKS: { historicalMandates: 1 },
 		}
 	},
-	// 10. Favoriten
 	{
+		name: 'Favoriten',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH'],
 		mandateOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'HC', 'NEOS', 'SÖZ', 'KPÖ', 'HERZ', 'POSCH', 'LINKS', 'BIER'],
 		parties: {
@@ -162,8 +172,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 11. Simmering
 	{
+		name: 'Simmering',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'FPÖ', 'ÖVP', 'Grüne', 'NEOS', 'HC', 'SÖZ', 'KPÖ'],
 		mandateOrder: ['SPÖ', 'FPÖ', 'ÖVP', 'Grüne', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'BIER'],
 		parties: {
@@ -178,8 +189,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 12. Meidling
 	{
+		name: 'Meidling',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE'],
 		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PH', 'KPÖ', 'SÖZ', 'HERZ', 'STRACHE', 'LINKS', 'BIER'],
 		parties: {
@@ -198,8 +210,9 @@ export const data = [
 			BIER:    { historicalMandates: 1 },
 		}
 	},
-	// 13. Hietzing
 	{
+		name: 'Hietzing',
+		mandateCount: 40,
 		partyOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
 		mandateOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
 		parties: {
@@ -212,8 +225,9 @@ export const data = [
 			KPÖ:   { votes: 1.23,  mandates: 0 },
 		}
 	},
-	// 14. Penzing
 	{
+		name: 'Penzing',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR'],
 		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ', 'SÖZ', 'FAIR', 'LINKS', 'BIER'],
 		parties: {
@@ -230,8 +244,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 15. Rudolfsheim-Fünfhaus
 	{
+		name: 'Rudolfsheim-Fünfhaus',
+		mandateCount: 52,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'KPÖ', 'NEOS', 'HC', 'SÖZ', 'HERZ', 'PDA', 'LINKS', 'BIER'],
 		parties: {
@@ -249,8 +264,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 16. Ottakring
 	{
+		name: 'Ottakring',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'HERZ', 'LINKS', 'BIER'],
 		parties: {
@@ -267,8 +283,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 17. Hernals
 	{
+		name: 'Hernals',
+		mandateCount: 42,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'SÖZ', 'dbö', 'LINKS'],
 		parties: {
@@ -284,8 +301,9 @@ export const data = [
 			LINKS: { historicalMandates: 1 },
 		}
 	},
-	// 18. Währing
 	{
+		name: 'Währing',
+		mandateCount: 40,
 		partyOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
 		mandateOrder: ['Grüne', 'ÖVP', 'SPÖ', 'NEOS', 'FPÖ', 'KPÖ', 'HC', 'WIR'],
 		parties: {
@@ -299,8 +317,9 @@ export const data = [
 			WIR:   { votes: 0,     mandates: 0 },
 		}
 	},
-	// 19. Döbling
 	{
+		name: 'Döbling',
+		mandateCount: 50,
 		partyOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
 		mandateOrder: ['ÖVP', 'SPÖ', 'Grüne', 'NEOS', 'FPÖ', 'HC', 'KPÖ'],
 		parties: {
@@ -313,8 +332,9 @@ export const data = [
 			KPÖ:   { votes: 1.42,  mandates: 0 },
 		}
 	},
-	// 20. Brigittenau
 	{
+		name: 'Brigittenau',
+		mandateCount: 56,
 		partyOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ'],
 		mandateOrder: ['SPÖ', 'Grüne', 'ÖVP', 'FPÖ', 'NEOS', 'KPÖ', 'HC', 'SÖZ', 'LINKS', 'BIER'],
 		parties: {
@@ -330,8 +350,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 21. Floridsdorf
 	{
+		name: 'Floridsdorf',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP'],
 		mandateOrder: ['SPÖ', 'ÖVP', 'FPÖ', 'Grüne', 'WIFF', 'NEOS', 'HC', 'SÖZ', 'KPÖ', 'LMP', 'BIER'],
 		parties: {
@@ -348,8 +369,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 22. Donaustadt
 	{
+		name: 'Donaustadt',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP'],
 		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'KPÖ', 'SÖZ', 'LMP', 'BIER'],
 		parties: {
@@ -365,8 +387,9 @@ export const data = [
 			BIER:  { historicalMandates: 1 },
 		}
 	},
-	// 23. Liesing
 	{
+		name: 'Liesing',
+		mandateCount: 60,
 		partyOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ'],
 		mandateOrder: ['SPÖ', 'ÖVP', 'Grüne', 'FPÖ', 'NEOS', 'HC', 'PRO', 'KPÖ', 'SÖZ', 'BIER'],
 		parties: {

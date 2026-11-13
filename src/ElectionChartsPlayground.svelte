@@ -488,7 +488,6 @@
                                 value={party.label}
                                 oninput={(e) => handleNameInput(i, e)}
                                 onkeydown={handleKeydown}
-                                autoFocus
                             />
                         </div>
                     {:else}

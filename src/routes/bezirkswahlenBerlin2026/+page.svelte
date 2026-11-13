@@ -22,20 +22,10 @@
     const mandateData = allStructs.map(s => s.mandateData);
     const majorityData = allStructs.map(s => s.majorityData);
 
-    const districts = [
-        { id: '1', name: 'Mitte' },
-        { id: '2', name: 'Friedrichshain-Kreuzberg' },
-        { id: '3', name: 'Pankow' },
-        { id: '4', name: 'Charlottenburg-Wilmersdorf' },
-        { id: '5', name: 'Spandau' },
-        { id: '6', name: 'Steglitz-Zehlendorf' },
-        { id: '7', name: 'Tempelhof-Schöneberg' },
-        { id: '8', name: 'Neukölln' },
-        { id: '9', name: 'Treptow-Köpenick' },
-        { id: '10', name: 'Marzahn-Hellersdorf' },
-        { id: '11', name: 'Lichtenberg' },
-        { id: '12', name: 'Reinickendorf' }
-    ];
+    const districts = districtInputs.map((districtInput, index) => ({
+        id: String(index + 1),
+        name: districtInput.name
+    }));
 
     let district = $state('1');
 
@@ -44,7 +34,7 @@
         // svelte-ignore state_referenced_locally
         let districtInt = parseInt(district);
 
-        if (isNaN(districtInt) || districtInt < 1 || districtInt > 12) {
+        if (isNaN(districtInt) || districtInt < 1 || districtInt > districtInputs.length) {
             districtInt = 1;
             goto(`${page.url.pathname}?bezirk=${districtInt.toString()}`, { replaceState: true });
         }
